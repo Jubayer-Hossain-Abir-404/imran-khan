@@ -45,7 +45,8 @@ export function HeroVideo({ media, className }: { media: HeroMedia; className?: 
     const el = videoRef.current
 
     if (!el) return
-    if (el.paused) void el.play()
+    // Rejects when autoplay is blocked (iOS Low Power Mode); the poster stays.
+    if (el.paused) el.play().catch(() => undefined)
     else el.pause()
   }
 
@@ -94,7 +95,7 @@ export function HeroVideo({ media, className }: { media: HeroMedia; className?: 
               playing ? 'opacity-100' : 'opacity-0',
             )}
           >
-            {sources.webm ? <source src={sources.webm} type="video/webm" /> : null}
+            {sources.webm ? <source src={sources.webm} type='video/webm; codecs="vp9"' /> : null}
             <source src={sources.mp4} type="video/mp4" />
           </video>
         ) : null}

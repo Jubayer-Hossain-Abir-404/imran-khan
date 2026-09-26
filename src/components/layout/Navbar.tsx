@@ -1,4 +1,4 @@
-import { Menu, X } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react'
 import { RollLink } from '@/components/motion/RollLink'
 import { ANCHORS, hash } from '@/lib/links'
@@ -15,6 +15,17 @@ type NavbarProps = {
   name: string
   items: NavItem[]
 }
+
+// Mobile menu row: press feedback (touch has no hover), dot + arrow light up on press or when current.
+const MENU_LINK =
+  '-mx-3 flex items-center gap-3 rounded-[0.5rem] px-3 py-3.5 text-base [-webkit-tap-highlight-color:transparent] active:bg-fg/5 active:text-fg'
+const MENU_DOT =
+  'size-1.5 rounded-full bg-accent transition duration-300 group-hover:scale-100 group-hover:opacity-100 group-active:scale-100 group-active:opacity-100'
+const MENU_ARROW =
+  'size-4 -translate-x-2 text-accent opacity-0 transition duration-500 ease-out-expo group-hover:translate-x-0 group-hover:opacity-100 group-active:translate-x-0 group-active:opacity-100 group-aria-[current]:translate-x-0 group-aria-[current]:opacity-100'
+
+const MENU_ROW =
+  'translate-y-2 opacity-0 transition duration-500 ease-out-expo group-data-open/menu:translate-y-0 group-data-open/menu:opacity-100'
 
 // Past this scroll offset the bar goes solid.
 const SOLID_AFTER = 24
@@ -45,6 +56,8 @@ export function Navbar({ name, items }: NavbarProps) {
   const [open, setOpen] = useState(false)
   const headerRef = useRef<HTMLElement>(null)
   const listRef = useRef<HTMLUListElement>(null)
+  // Hovered or focused bar link; the indicator previews it, then returns to `active`.
+  const [hovered, setHovered] = useState<string | null>(null)
   // One accent line that slides to the active link; `null` until measured.
   const [indicator, setIndicator] = useState<CSSProperties | null>(null)
 
@@ -53,8 +66,10 @@ export function Navbar({ name, items }: NavbarProps) {
 
     if (!list) return
 
+    const target = hovered ?? active
+
     const measure = () => {
-      const link = active ? list.querySelector<HTMLElement>(`[data-nav="${active}"]`) : null
+      const link = target ? list.querySelector<HTMLElement>(`[data-nav="${target}"]`) : null
 
       setIndicator(link ? { left: link.offsetLeft + 12, width: link.offsetWidth - 24 } : null)
     }
@@ -65,7 +80,7 @@ export function Navbar({ name, items }: NavbarProps) {
     window.addEventListener('resize', measure)
 
     return () => window.removeEventListener('resize', measure)
-  }, [active])
+  }, [active, hovered])
 
   // One rAF-throttled passive listener drives both the solid state and the scroll spy.
   useEffect(() => {
@@ -114,10 +129,11 @@ export function Navbar({ name, items }: NavbarProps) {
   }, [open])
 
   const links = (variant: 'bar' | 'menu') =>
-    items.map((item) => {
+    items.map((item, index) => {
       const current = item.id === active
       // In the bar, Contact is the outlined CTA at the end (no underline).
-      const cta = variant === 'bar' && item.id === ANCHORS.contact
+      const bar = variant === 'bar'
+      const cta = bar && item.id === ANCHORS.contact
 
       if (cta) {
         return (
@@ -128,6 +144,7 @@ export function Navbar({ name, items }: NavbarProps) {
               href={hash(item.id)}
               aria-current={current ? 'location' : undefined}
               onClick={() => setOpen(false)}
+              onPointerEnter={() => setHovered(null)}
               className="ml-4"
             >
               {item.label}
@@ -137,26 +154,40 @@ export function Navbar({ name, items }: NavbarProps) {
       }
 
       return (
-        <li key={item.id}>
+        <li
+          key={item.id}
+          className={bar ? undefined : MENU_ROW}
+          // Rows fade up in sequence on open; close is immediate.
+          style={bar ? undefined : { transitionDelay: open ? `${100 + index * 50}ms` : '0ms' }}
+        >
           <a
             href={hash(item.id)}
             aria-current={current ? 'location' : undefined}
             data-nav={variant === 'bar' ? item.id : undefined}
             onClick={() => setOpen(false)}
+            // Mouse only: a tap on a touch laptop would leave the preview stuck.
+            onPointerEnter={
+              bar ? (e) => e.pointerType === 'mouse' && setHovered(item.id) : undefined
+            }
+            onFocus={bar ? () => setHovered(item.id) : undefined}
+            onBlur={bar ? () => setHovered(null) : undefined}
             className={cn(
-              'relative block text-sm transition-colors hover:text-fg',
+              'group relative block text-sm transition-colors hover:text-fg focus-visible:text-fg',
               current ? 'text-fg' : 'text-muted',
-              variant === 'menu' && 'flex items-center gap-3 py-3',
-              variant === 'bar' && 'px-3 py-2',
+              bar ? 'px-3 py-2' : MENU_LINK,
             )}
           >
-            {variant === 'menu' ? (
-              <span
-                aria-hidden
-                className={cn('size-1 rounded-full bg-accent', !current && 'opacity-0')}
-              />
-            ) : null}
-            {item.label}
+            {bar ? (
+              <RollLabel label={item.label} />
+            ) : (
+              <>
+                <span aria-hidden className={cn(MENU_DOT, !current && 'scale-0 opacity-0')} />
+                <span className="flex-1 transition-transform duration-500 ease-out-expo group-hover:translate-x-1.5 group-active:translate-x-1.5">
+                  {item.label}
+                </span>
+                <ArrowRight aria-hidden className={MENU_ARROW} />
+              </>
+            )}
           </a>
         </li>
       )
@@ -168,9 +199,12 @@ export function Navbar({ name, items }: NavbarProps) {
       data-print="hide"
       className={cn(
         'fixed inset-x-0 top-0 z-40 border-b transition-[background-color,border-color,backdrop-filter] duration-500 ease-cinema',
-        solid || open
-          ? 'border-rule bg-bg/80 backdrop-blur-md backdrop-saturate-150'
-          : 'border-transparent bg-transparent',
+        // Open menu sits over content: opaque, so nothing bleeds through the links.
+        open
+          ? 'border-rule bg-bg'
+          : solid
+            ? 'border-rule bg-bg/80 backdrop-blur-md backdrop-saturate-150'
+            : 'border-transparent bg-transparent',
       )}
     >
       {/* Condenses once solid. Signature left; links + Contact CTA right. */}
@@ -190,7 +224,11 @@ export function Navbar({ name, items }: NavbarProps) {
 
         <div className="flex items-center gap-2 justify-self-end">
           <nav aria-label="Primary" className="hidden md:block">
-            <ul ref={listRef} className="relative flex items-center">
+            <ul
+              ref={listRef}
+              onPointerLeave={() => setHovered(null)}
+              className="relative flex items-center"
+            >
               {links('bar')}
               <li
                 aria-hidden
@@ -208,21 +246,63 @@ export function Navbar({ name, items }: NavbarProps) {
             aria-controls="mobile-menu"
             aria-label={open ? 'Close menu' : 'Open menu'}
             onClick={() => setOpen((value) => !value)}
-            className="-mr-2 flex size-10 items-center justify-center text-fg md:hidden"
+            className="-mr-2 flex size-10 items-center justify-center text-fg transition-transform [-webkit-tap-highlight-color:transparent] active:scale-90 md:hidden"
           >
-            {open ? <X aria-hidden className="size-5" /> : <Menu aria-hidden className="size-5" />}
+            {/* Two bars that cross into an X. */}
+            <span aria-hidden className="relative block h-[11px] w-5">
+              <span
+                className={cn(
+                  'absolute inset-x-0 top-0 h-px bg-current transition-transform duration-500 ease-out-expo',
+                  open && 'translate-y-[5px] rotate-45',
+                )}
+              />
+              <span
+                className={cn(
+                  'absolute inset-x-0 bottom-0 h-px bg-current transition-transform duration-500 ease-out-expo',
+                  open && '-translate-y-[5px] -rotate-45',
+                )}
+              />
+            </span>
           </button>
         </div>
       </div>
 
+      {/* Height animates via grid rows. Closed = inert, not hidden, so it can animate. */}
       <nav
         id="mobile-menu"
         aria-label="Primary"
-        hidden={!open}
-        className="border-t border-rule px-gutter pb-4 md:hidden"
+        inert={!open}
+        data-open={open ? '' : undefined}
+        className="group/menu grid grid-rows-[0fr] border-t border-transparent transition-[grid-template-rows,border-color] duration-500 ease-cinema md:hidden data-open:grid-rows-[1fr] data-open:border-rule"
       >
-        <ul className="divide-y divide-rule">{links('menu')}</ul>
+        <div className="overflow-hidden">
+          <ul className="divide-y divide-rule px-gutter pb-4">{links('menu')}</ul>
+        </div>
       </nav>
     </header>
+  )
+}
+
+/** Label exits upward while a copy rises from below, on hover or focus of a `group`. */
+function RollLabel({ label }: { label: string }) {
+  const line = 'block transition-transform duration-500 ease-out-expo'
+
+  return (
+    <span className="relative block overflow-hidden">
+      <span
+        className={cn(line, 'group-hover:-translate-y-full group-focus-visible:-translate-y-full')}
+      >
+        {label}
+      </span>
+      <span
+        aria-hidden
+        className={cn(
+          line,
+          'absolute inset-0 translate-y-full group-hover:translate-y-0 group-focus-visible:translate-y-0',
+        )}
+      >
+        {label}
+      </span>
+    </span>
   )
 }

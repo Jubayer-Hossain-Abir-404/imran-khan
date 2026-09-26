@@ -15,6 +15,8 @@ export type Channel = Draftable & {
   label: string
   name: string
   href: string
+  /** Channel picture, self-hosted by `scripts/fetch-thumbnails.ts`; without it a YouTube disc shows. */
+  avatar?: string
   description: string
   /** Hand-picked (most viewed); links out, never embedded on load. */
   featured?: Video

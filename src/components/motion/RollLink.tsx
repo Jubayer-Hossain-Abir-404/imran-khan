@@ -2,10 +2,16 @@ import type { ComponentProps } from 'react'
 import { cn } from '@/lib/utils'
 
 // Fill = the colour that wipes in; `over` = label colour on top of it.
+// Outline uses an inset ring, not a border: the fill then covers the full box, so no seam between
+// border and fill at fractional zoom (Firefox at 125/150%).
 const VARIANT = {
-  solid: { root: 'border-fg bg-fg text-bg', fill: 'bg-bg', over: 'text-fg' },
+  solid: {
+    root: 'border border-fg bg-fg text-bg transition-colors',
+    fill: 'bg-bg',
+    over: 'text-fg',
+  },
   outline: {
-    root: 'border-fg/30 text-fg hover:border-fg aria-[current]:border-fg',
+    root: 'text-fg ring-1 ring-fg/30 transition-[color,box-shadow] ring-inset hover:ring-fg aria-[current]:ring-fg',
     fill: 'bg-fg',
     over: 'text-bg',
   },
@@ -40,18 +46,19 @@ export function RollLink({
     <a
       className={cn(
         // Rounded like oddmanproductions.com (8 px); the theme's rounded-lg is 2 px.
-        'roll relative isolate inline-flex items-center overflow-hidden rounded-[0.5rem] border text-sm font-medium transition-colors',
+        'roll relative isolate inline-flex items-center overflow-hidden rounded-[0.5rem] text-sm font-medium',
         pad,
         css.root,
         className,
       )}
       {...props}
     >
-      {/* Origin flips on hover, so it grows from the top and shrinks to the bottom. */}
+      {/* Origin flips on hover, so it grows from the top and shrinks to the bottom.
+          -inset-px overshoots the clip, so rounding never leaves a gap at the edges. */}
       <span
         aria-hidden
         className={cn(
-          'absolute inset-0 -z-10 origin-bottom scale-y-0 transition-transform duration-500 ease-out-quart roll-on:origin-top roll-on:scale-y-100',
+          'absolute -inset-px -z-10 origin-bottom scale-y-0 transition-transform duration-500 ease-out-quart roll-on:origin-top roll-on:scale-y-100',
           css.fill,
         )}
       />

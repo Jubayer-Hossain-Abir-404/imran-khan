@@ -118,9 +118,24 @@ export function ChannelCard({ channel, onPlay, headingId, layout = 'split' }: Ch
         )}
         {...externalLinkProps(channel.href)}
       >
-        <span className="grid size-11 shrink-0 place-items-center rounded-full bg-[#ff0033] text-white transition-transform duration-500 ease-spring motion-safe:group-hover:scale-110">
-          <SocialIcon kind="youtube" className="size-5" />
-        </span>
+        {channel.avatar ? (
+          <span className="relative shrink-0 transition-transform duration-500 ease-spring motion-safe:group-hover:scale-110">
+            <img
+              src={channel.avatar}
+              alt=""
+              width={44}
+              height={44}
+              loading="lazy"
+              decoding="async"
+              className="size-11 rounded-full bg-bg ring-1 ring-rule"
+            />
+            <YouTubeBadge className="absolute -right-1 -bottom-0.5 h-3.5 w-5 rounded-[4px] ring-2 ring-surface" />
+          </span>
+        ) : (
+          <span className="grid size-11 shrink-0 place-items-center rounded-full bg-[#ff0033] text-white transition-transform duration-500 ease-spring motion-safe:group-hover:scale-110">
+            <SocialIcon kind="youtube" className="size-5" />
+          </span>
+        )}
         <span className="flex-1 font-medium transition-colors group-hover:text-accent">
           {channel.name}
         </span>
@@ -128,5 +143,15 @@ export function ChannelCard({ channel, onPlay, headingId, layout = 'split' }: Ch
         <RollArrow className="text-muted group-hover:text-fg" />
       </a>
     </div>
+  )
+}
+
+/** YouTube's play mark (red rounded rect, white triangle) as a corner badge. */
+function YouTubeBadge({ className }: { className?: string }) {
+  return (
+    <svg aria-hidden viewBox="0 0 20 14" className={className}>
+      <rect width="20" height="14" rx="4" fill="#ff0033" />
+      <path d="M8 4.2v5.6L12.8 7z" fill="#fff" />
+    </svg>
   )
 }
