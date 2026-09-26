@@ -5,14 +5,16 @@
   "type": "module",
   "scripts": {
     "dev": "react-router dev",
-    "build": "react-router build",
+    "build": "react-router build && npm run build:assets",
     "start": "vite preview",
     "typecheck": "react-router typegen && tsc --noEmit",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
     "format": "prettier --write .",
     "check:contrast": "node scripts/check-contrast.ts",
-    "fetch:thumbnails": "node scripts/fetch-thumbnails.ts"
+    "fetch:thumbnails": "node scripts/fetch-thumbnails.ts",
+    "build:assets": "node scripts/generate-og.ts && node scripts/generate-sitemap.ts",
+    "encode:hero": "node scripts/encode-hero.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",
@@ -20,7 +22,6 @@
     "cn": "^0.3.0",
     "isbot": "^5",
     "lucide-react": "^1.47.0",
-    "motion": "^13.4.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-router": "^8.4.0",

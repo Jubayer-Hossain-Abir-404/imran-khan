@@ -4,6 +4,19 @@ import { LOADER_SCRIPT } from '@/components/layout/Loader'
 import { ANCHORS, hash } from '@/lib/links'
 import type { Route } from './+types/root'
 import './styles/index.css'
+// Same files index.css pulls in, so Vite emits one hashed asset each.
+import serifUrl from '@fontsource/cormorant-garamond/files/cormorant-garamond-latin-500-normal.woff2?url'
+import sansUrl from '@fontsource-variable/geist/files/geist-latin-wght-normal.woff2?url'
+
+// Hero name (LCP) + body text: fetch with the CSS instead of after it.
+export const links: Route.LinksFunction = () =>
+  [serifUrl, sansUrl].map((href) => ({
+    rel: 'preload',
+    href,
+    as: 'font',
+    type: 'font/woff2',
+    crossOrigin: 'anonymous',
+  }))
 
 export function Layout({ children }: { children: ReactNode }) {
   return (
@@ -15,6 +28,8 @@ export function Layout({ children }: { children: ReactNode }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#0a0c0c" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        {/* Rendered at build by scripts/generate-og.ts; 404s in dev. */}
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         {/* Before first paint, so the loader never flashes in late. */}
         <script dangerouslySetInnerHTML={{ __html: LOADER_SCRIPT }} />
         <Meta />
