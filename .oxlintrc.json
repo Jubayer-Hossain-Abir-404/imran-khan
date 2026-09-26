@@ -8,16 +8,32 @@
   },
   "rules": {
     "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }],
+    "react/only-export-components": [
+      "warn",
+      {
+        "allowConstantExport": true
+      }
+    ],
     "react/react-in-jsx-scope": "off",
     "eqeqeq": ["error", "smart"],
-    "no-console": ["warn", { "allow": ["warn", "error"] }]
+    "no-console": [
+      "warn",
+      {
+        "allow": ["warn", "error"]
+      }
+    ]
   },
   "overrides": [
     {
       "files": ["scripts/**"],
       "rules": {
         "no-console": "off"
+      }
+    },
+    {
+      "files": ["src/components/ui/**"],
+      "rules": {
+        "react/only-export-components": "off"
       }
     },
     {

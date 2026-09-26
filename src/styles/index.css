@@ -197,6 +197,26 @@
   }
 }
 
+/* Hero entrance. Plain CSS, so it runs without JS; paused while the loader covers the page. */
+@keyframes ik-rise {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+}
+
+@utility rise {
+  animation: ik-rise 900ms var(--ease-cinema) var(--rise-delay, 0ms) both;
+
+  :root[data-loading=''] & {
+    animation-play-state: paused;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
 /* Fixed film grain. */
 @utility grain {
   &::after {

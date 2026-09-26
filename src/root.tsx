@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import { isRouteErrorResponse, Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router'
+import { LOADER_SCRIPT } from '@/components/layout/Loader'
 import { ANCHORS, hash } from '@/lib/links'
 import type { Route } from './+types/root'
 import './styles/index.css'
@@ -14,6 +15,8 @@ export function Layout({ children }: { children: ReactNode }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#0a0c0c" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        {/* Before first paint, so the loader never flashes in late. */}
+        <script dangerouslySetInnerHTML={{ __html: LOADER_SCRIPT }} />
         <Meta />
         <Links />
       </head>
