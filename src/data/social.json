@@ -1,0 +1,12 @@
+[
+  { "label": "YouTube", "href": "https://www.youtube.com/@ImranKhan-pc6ih", "kind": "youtube" },
+  { "label": "Facebook", "href": "https://www.facebook.com/", "kind": "facebook", "draft": true },
+  {
+    "label": "Instagram",
+    "href": "https://www.instagram.com/",
+    "kind": "instagram",
+    "draft": true
+  },
+  { "label": "LinkedIn", "href": "https://www.linkedin.com/", "kind": "linkedin", "draft": true },
+  { "label": "X", "href": "https://x.com/", "kind": "x", "draft": true }
+]

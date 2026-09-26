@@ -1,0 +1,46 @@
+# `$URL` is Netlify's production origin — needed for canonical, og:image and sitemap.
+[build]
+  command = "VITE_SITE_URL=$URL npm run build"
+  publish = "build/client"
+
+[build.environment]
+  NODE_VERSION = "24"
+
+# Only `/` is prerendered; everything else is a real 404, not a soft 200.
+[[redirects]]
+  from = "/*"
+  to = "/__spa-fallback.html"
+  status = 404
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+
+# Content-hashed bundles and fonts.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Not hashed, so revalidate — but cache a week.
+[[headers]]
+  for = "/media/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800, must-revalidate"
+
+# Previews carry the production canonical; keep them out of the index.
+[context.deploy-preview]
+  [[context.deploy-preview.headers]]
+    for = "/*"
+    [context.deploy-preview.headers.values]
+      X-Robots-Tag = "noindex"
+
+[context.branch-deploy]
+  [[context.branch-deploy.headers]]
+    for = "/*"
+    [context.branch-deploy.headers.values]
+      X-Robots-Tag = "noindex"

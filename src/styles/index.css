@@ -1,0 +1,232 @@
+@import 'tailwindcss';
+
+/* Serif for display only, sans for everything else. Unicode-range means Latin pages load the Latin subset only. */
+@import '@fontsource-variable/geist';
+@import '@fontsource/cormorant-garamond/500.css';
+@import '@fontsource/cormorant-garamond/600.css';
+
+/* Keyframes and data-open/closed variants used by components/ui. */
+@import 'shadcn/tailwind.css';
+@import 'tw-animate-css';
+
+/*
+ * Fixed dark palette; `tone-warm` re-points the same tokens for paper sections,
+ * so utilities like `bg-bg`/`text-muted` follow without variants.
+ * `--ik-` prefix avoids shadcn's bare `--muted`/`--accent` (background colours).
+ * Run `npm run check:contrast` after any colour change.
+ */
+:root {
+  --ik-bg: #0a0c0c;
+  --ik-surface: #121616;
+  --ik-fg: #f1ede5;
+  --ik-muted: #a29e96;
+  --ik-rule: #262a2a;
+  /* Use sparingly. */
+  --ik-accent: #c6ae7b;
+
+  color-scheme: dark;
+}
+
+@utility tone-warm {
+  /* Gold is 1.72:1 on paper, so warm uses a darker bronze of the same hue. */
+  --ik-bg: #ebe5da;
+  --ik-surface: #e2dbce;
+  --ik-fg: #1a1a18;
+  --ik-muted: #5c5850;
+  --ik-rule: #cfc7b8;
+  --ik-accent: #6b5628;
+
+  color-scheme: light;
+  background-color: var(--ik-bg);
+  color: var(--ik-fg);
+}
+
+/* shadcn tokens aliased onto the palette — they follow `tone-warm` too. */
+:root {
+  --background: var(--ik-bg);
+  --foreground: var(--ik-fg);
+  --card: var(--ik-surface);
+  --card-foreground: var(--ik-fg);
+  --popover: var(--ik-surface);
+  --popover-foreground: var(--ik-fg);
+  --primary: var(--ik-fg);
+  --primary-foreground: var(--ik-bg);
+  --secondary: var(--ik-surface);
+  --secondary-foreground: var(--ik-fg);
+  --muted: var(--ik-surface);
+  --muted-foreground: var(--ik-muted);
+  --accent: var(--ik-surface);
+  --accent-foreground: var(--ik-fg);
+  --destructive: #e0715c;
+  --border: var(--ik-rule);
+  --input: var(--ik-rule);
+  --ring: var(--ik-accent);
+  --radius: 2px;
+}
+
+@theme inline {
+  --color-bg: var(--ik-bg);
+  --color-surface: var(--ik-surface);
+  --color-fg: var(--ik-fg);
+  --color-muted: var(--ik-muted);
+  --color-rule: var(--ik-rule);
+  --color-accent: var(--ik-accent);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --font-serif: 'Cormorant Garamond', ui-serif, Georgia, serif;
+  --font-sans: 'Geist Variable', ui-sans-serif, system-ui, sans-serif;
+
+  /* Fluid scale. Display steps run large for Cormorant's small x-height. */
+  --text-meta: 0.6875rem;
+  --text-meta--line-height: 1.45;
+  --text-body: clamp(0.9375rem, 0.9rem + 0.2vw, 1.0625rem);
+  --text-body--line-height: 1.65;
+  --text-lead: clamp(1.0625rem, 0.98rem + 0.45vw, 1.25rem);
+  --text-lead--line-height: 1.55;
+  --text-h3: clamp(1.375rem, 1.2rem + 0.8vw, 1.875rem);
+  --text-h3--line-height: 1.15;
+  --text-h2: clamp(2.25rem, 1.7rem + 2.4vw, 3.75rem);
+  --text-h2--line-height: 1.02;
+  --text-display: clamp(3.25rem, 2rem + 6vw, 7.5rem);
+  --text-display--line-height: 0.92;
+
+  /* Near-square corners. */
+  --radius-sm: 1px;
+  --radius-md: 2px;
+  --radius-lg: 2px;
+  --radius-xl: 3px;
+
+  --spacing-gutter: clamp(1rem, 0.5rem + 2.5vw, 4rem);
+  --spacing-section: clamp(4.5rem, 2.5rem + 7vw, 8.5rem);
+  --spacing-nav: 4.5rem;
+
+  --ease-cinema: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    border-color: var(--ik-rule);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    /* Anchors land below the fixed navbar. */
+    scroll-padding-top: var(--spacing-nav);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    background-color: var(--ik-bg);
+    color: var(--ik-fg);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background-color: var(--ik-accent);
+    color: var(--ik-bg);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ik-accent);
+    outline-offset: 3px;
+    border-radius: 1px;
+  }
+}
+
+/* Uppercase section label. */
+@utility meta {
+  font-family: var(--font-sans);
+  font-size: var(--text-meta);
+  font-weight: 500;
+  line-height: 1.45;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+/* Serif display type. */
+@utility display {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+
+/* Scroll reveal; `pending` is set by script only, so no-JS HTML stays visible. */
+@utility reveal {
+  &[data-reveal='pending'] {
+    opacity: 0;
+    transform: translateY(0.75rem);
+  }
+
+  &[data-reveal] {
+    transition:
+      opacity 700ms var(--ease-cinema) var(--reveal-delay, 0ms),
+      transform 700ms var(--ease-cinema) var(--reveal-delay, 0ms);
+  }
+
+  &[data-reveal='in'] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Fixed film grain. */
+@utility grain {
+  &::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+}
+
+/* Intro loader: shown only while <html data-loading> is set by the head script, so never without JS. */
+@utility loader {
+  display: none;
+
+  :root[data-loading] & {
+    display: flex;
+  }
+}
+
+@media print {
+  .grain::after,
+  [data-print='hide'] {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+  }
+}

@@ -1,0 +1,30 @@
+[
+  {
+    "id": "writing-1",
+    "title": "Placeholder piece one",
+    "kind": "Script",
+    "image": null,
+    "draft": true
+  },
+  {
+    "id": "writing-2",
+    "title": "Placeholder piece two",
+    "kind": "Creative direction",
+    "image": null,
+    "draft": true
+  },
+  {
+    "id": "writing-3",
+    "title": "Placeholder piece three",
+    "kind": "Copy",
+    "image": null,
+    "draft": true
+  },
+  {
+    "id": "writing-4",
+    "title": "Placeholder piece four",
+    "kind": "Screenplay",
+    "image": null,
+    "draft": true
+  }
+]

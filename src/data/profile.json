@@ -1,0 +1,44 @@
+{
+  "name": "Imran Khan",
+  "roles": ["Director", "Screenwriter", "Former Producer"],
+  "eyebrow": "Stories beyond the frame",
+  "summary": "Director and screenwriter making documentary, fiction, animated and corporate films for development organisations and brands.",
+  "about": [
+    "Placeholder bio. A filmmaker and storyteller with a deep interest in people, culture and social change, working across documentary, fiction, animation and digital content.",
+    "Placeholder bio. Years of directing and producing for development organisations and brands, alongside writing and creative supervision — and, more recently, the Shongolpo channel.",
+    "Placeholder bio. The aim throughout: meaningful stories that inspire and resonate."
+  ],
+  "location": "Bangladesh",
+  "email": null,
+  "portrait": {
+    "src": "/media/portrait-placeholder.svg",
+    "alt": "Portrait placeholder",
+    "width": 800,
+    "height": 1000
+  },
+  "quote": "Placeholder quote — stories have the power to change perspectives.",
+  "facts": [
+    { "label": "Director", "icon": "camera" },
+    { "label": "Screenwriter", "icon": "pen" },
+    { "label": "Former Producer", "icon": "clapperboard" },
+    { "label": "Based in Bangladesh", "icon": "map-pin" }
+  ],
+  "hero": {
+    "poster": {
+      "src": "/media/films/pjbekhbiU8w.webp",
+      "alt": "Still from Control and Access over Income",
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "reel": null,
+  "unverified": [
+    "eyebrow",
+    "summary",
+    "about (dummy)",
+    "portrait (dummy)",
+    "quote (dummy)",
+    "location",
+    "hero.poster (interim still, not the reel)"
+  ]
+}

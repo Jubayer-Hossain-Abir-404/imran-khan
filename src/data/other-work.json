@@ -1,0 +1,30 @@
+[
+  {
+    "id": "book-translation",
+    "title": "Book Translation",
+    "description": "Placeholder — details to be supplied.",
+    "image": null,
+    "draft": true
+  },
+  {
+    "id": "awards",
+    "title": "Awards",
+    "description": "Placeholder — details to be supplied.",
+    "image": null,
+    "draft": true
+  },
+  {
+    "id": "pala",
+    "title": "Pala",
+    "description": "Placeholder — details to be supplied.",
+    "image": null,
+    "draft": true
+  },
+  {
+    "id": "others",
+    "title": "Others",
+    "description": "Placeholder — details to be supplied.",
+    "image": null,
+    "draft": true
+  }
+]
