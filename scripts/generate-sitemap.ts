@@ -6,7 +6,10 @@ import { existsSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 
 const clientDir = fileURLToPath(new URL('../build/client/', import.meta.url))
-const origin = (process.env.VITE_SITE_URL ?? 'https://imran-khan.netlify.app').replace(/\/+$/, '')
+const origin = (process.env.VITE_SITE_URL ?? 'https://imran-khan-director.netlify.app').replace(
+  /\/+$/,
+  '',
+)
 const PATHS = ['/']
 
 /** lastmod = mtime of the HTML the build just wrote, never a hand-kept date. */

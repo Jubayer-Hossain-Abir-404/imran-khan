@@ -4,7 +4,7 @@ import { isExternal } from './links'
 import { isoDuration, watchUrl } from './youtube'
 
 // Crawlers drop relative og:image URLs, so the origin must be known at build time.
-const FALLBACK_ORIGIN = 'https://imran-khan.netlify.app'
+const FALLBACK_ORIGIN = 'https://imran-khan-director.netlify.app'
 
 export const SITE_URL = (import.meta.env.VITE_SITE_URL || FALLBACK_ORIGIN).replace(/\/+$/, '')
 

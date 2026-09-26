@@ -19,11 +19,16 @@ type Timing = typeof TIMING
 /**
  * The whole intro, inlined in <head> via `toString()` — so it must stay self-contained (no imports,
  * no async/await or spread helpers). Runs from first paint, before hydration.
- * Reduced motion or already shown this session → no loader.
+ * Reduced motion or already shown this session → no loader (head cleanup still runs).
  */
 function intro(t: Timing) {
   try {
     const root = document.documentElement
+
+    // Hosts (Netlify) inject comments + whitespace into <head>; React's hydration rejects them.
+    for (const node of Array.from(document.head.childNodes)) {
+      if (node.nodeType === Node.TEXT_NODE || node.nodeType === Node.COMMENT_NODE) node.remove()
+    }
 
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) return
     if (sessionStorage.getItem(t.storageKey)) return

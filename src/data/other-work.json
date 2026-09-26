@@ -4,28 +4,24 @@
     "title": "Book Translation",
     "description": "Placeholder — selected works and contributions.",
     "image": { "src": "/media/placeholders/other-1.webp", "alt": "", "width": 1200, "height": 675 },
-    "href": "https://example.com/",
-    "draft": true
+    "href": "https://example.com/"
   },
   {
     "id": "awards",
     "title": "Awards",
     "description": "Placeholder — recognition and milestones.",
-    "image": { "src": "/media/placeholders/other-2.webp", "alt": "", "width": 1200, "height": 675 },
-    "draft": true
+    "image": { "src": "/media/placeholders/other-2.webp", "alt": "", "width": 1200, "height": 675 }
   },
   {
     "id": "pala",
     "title": "Pala",
     "description": "Placeholder — traditional performance work.",
-    "image": { "src": "/media/placeholders/other-3.webp", "alt": "", "width": 1200, "height": 675 },
-    "draft": true
+    "image": { "src": "/media/placeholders/other-3.webp", "alt": "", "width": 1200, "height": 675 }
   },
   {
     "id": "others",
     "title": "Others",
     "description": "Placeholder — talks, workshops and more.",
-    "image": { "src": "/media/placeholders/other-4.webp", "alt": "", "width": 1200, "height": 675 },
-    "draft": true
+    "image": { "src": "/media/placeholders/other-4.webp", "alt": "", "width": 1200, "height": 675 }
   }
 ]

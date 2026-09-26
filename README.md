@@ -2,6 +2,8 @@
 
 Single-page portfolio for Imran Khan, director and screenwriter. It's a statically prerendered React site deployed on Netlify: a hero with a background reel, a filmography of YouTube films, writer/creator work, about, other works, clients and a contact footer.
 
+**Live:** https://imran-khan-director.netlify.app/
+
 ---
 
 ## Tech stack
@@ -50,11 +52,13 @@ Before pushing, run `lint`, `typecheck`, `build` and `check:contrast`.
 
 ### Environment
 
-The only custom variable is `VITE_SITE_URL`, the absolute origin used for canonical URLs, `og:image` and the sitemap. On Netlify, `netlify.toml` sets it from `$URL`. Locally it falls back to `https://imran-khan.netlify.app` (see `src/lib/seo.ts`, `scripts/generate-*.ts`).
+The only custom variable is `VITE_SITE_URL`, the absolute origin used for canonical URLs, `og:image` and the sitemap. On Netlify, `netlify.toml` sets it from `$URL`. Locally it falls back to `https://imran-khan-director.netlify.app` (see `src/lib/seo.ts`, `scripts/generate-*.ts`).
 
 ### Deploy
 
 When you push, Netlify builds with `VITE_SITE_URL=$URL npm run build` and publishes `build/client`. Only `/` is prerendered, and any other path returns a real 404. Deploy previews and branch deploys get `X-Robots-Tag: noindex`.
+
+Netlify injects an HTML comment into `<head>` on `*.netlify.app`, which breaks React hydration (error #418). The inline head script in `Loader.tsx` strips comments and whitespace text from `<head>` before React loads.
 
 ---
 

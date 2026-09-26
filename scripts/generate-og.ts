@@ -99,7 +99,7 @@ async function main() {
   }
 
   const profile = JSON.parse(await readFile(path('src/data/profile.json'), 'utf8')) as Profile
-  const host = (process.env.VITE_SITE_URL ?? 'https://imran-khan.netlify.app').replace(
+  const host = (process.env.VITE_SITE_URL ?? 'https://imran-khan-director.netlify.app').replace(
     /^https?:\/\/|\/+$/g,
     '',
   )
