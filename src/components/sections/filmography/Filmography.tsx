@@ -40,7 +40,7 @@ export function Filmography({ copy, films }: { copy: SectionCopy; films: Film[] 
           </p>
           <a
             href={CHANNEL_URL}
-            className="group hidden items-center gap-2 transition-colors hover:text-fg md:inline-flex"
+            className="group hidden items-center gap-2 py-1 transition-colors hover:text-fg md:inline-flex"
             {...externalLinkProps(CHANNEL_URL)}
           >
             Watch on YouTube

@@ -72,8 +72,9 @@ export function VideoModal({ video, onClose, opener }: VideoModalProps) {
             />
           </div>
 
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <DialogDescription className="truncate text-xs text-muted">
+          {/* Wraps by modal width, not viewport: on landscape phones the modal is height-bound. */}
+          <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
+            <DialogDescription className="min-w-0 flex-[1_1_16rem] truncate text-xs text-muted">
               {current.youtubeTitle}
             </DialogDescription>
             <div className="flex shrink-0 flex-wrap gap-x-6 gap-y-2">

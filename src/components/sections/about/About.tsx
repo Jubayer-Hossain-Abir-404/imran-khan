@@ -19,7 +19,7 @@ export function About({ copy, profile }: { copy: SectionCopy; profile: Profile }
 
   return (
     <Section id={copy.id} warm>
-      <div className="grid gap-12 md:grid-cols-[minmax(0,16rem)_minmax(0,1fr)] lg:grid-cols-[minmax(0,18rem)_minmax(0,1fr)_minmax(0,15rem)] lg:gap-14">
+      <div className="grid gap-12 md:grid-cols-[minmax(0,16rem)_minmax(0,1fr)] lg:gap-14 xl:grid-cols-[minmax(0,18rem)_minmax(0,1fr)_minmax(0,15rem)]">
         {portrait ? (
           <Reveal className="max-w-72 md:max-w-none">
             <img
@@ -48,7 +48,8 @@ export function About({ copy, profile }: { copy: SectionCopy; profile: Profile }
 
         <Reveal
           delay={180}
-          className="border-t border-rule pt-10 md:col-span-2 lg:col-span-1 lg:border-t-0 lg:border-l lg:pt-2 lg:pl-10"
+          // Below xl: facts under the portrait, quote under the bio (same columns).
+          className="border-t border-rule pt-10 md:col-span-2 md:grid md:grid-cols-[minmax(0,16rem)_minmax(0,1fr)] md:gap-x-12 lg:gap-x-14 xl:col-span-1 xl:block xl:border-t-0 xl:border-l xl:pt-2 xl:pl-10"
         >
           <ul className="space-y-3.5">
             {profile.facts.map((fact) => {
@@ -64,7 +65,7 @@ export function About({ copy, profile }: { copy: SectionCopy; profile: Profile }
           </ul>
 
           {profile.quote ? (
-            <figure className="mt-10 flex gap-3.5">
+            <figure className="mt-10 flex max-w-xl gap-3.5 md:mt-0 xl:mt-10">
               <Quote aria-hidden className="size-4 shrink-0 fill-current text-accent" />
               <div>
                 <blockquote className="display text-xl leading-snug text-pretty">

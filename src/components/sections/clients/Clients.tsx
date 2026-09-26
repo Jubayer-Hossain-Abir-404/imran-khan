@@ -26,7 +26,8 @@ export function Clients({ copy, clients, testimonials }: ClientsProps) {
     <Section id={copy.id} warm>
       <div
         className={cn(
-          'grid gap-12',
+          // Explicit minmax(0,1fr) column: the carousel track's min-content would widen an auto column.
+          'grid grid-cols-1 gap-12',
           hasBoth && 'lg:grid-cols-[minmax(0,1fr)_minmax(0,24rem)] lg:gap-0',
         )}
       >

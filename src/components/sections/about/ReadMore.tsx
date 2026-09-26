@@ -30,7 +30,7 @@ export function ReadMore({ paragraphs }: { paragraphs: string[] }) {
         aria-expanded={open}
         aria-controls={id}
         onClick={() => setOpen((value) => !value)}
-        className="group mt-7 inline-flex items-center gap-2 text-sm font-medium"
+        className="group mt-6 inline-flex py-1 items-center gap-2 text-sm font-medium"
       >
         {open ? 'Read less' : 'Read more'}
         <ArrowRight

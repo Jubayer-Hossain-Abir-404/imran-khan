@@ -48,13 +48,16 @@ export function Hero({ profile }: { profile: Profile }) {
           {name}
         </h1>
 
+        {/* The space after each separator is the only wrap point; roles never split. */}
         <p className="mt-5 rise text-lead text-fg/90" style={rise(180)}>
           {roles.map((role, index) => (
             <Fragment key={role}>
               {index > 0 ? (
-                <span aria-hidden className="mx-3 text-accent">
-                  ·
-                </span>
+                <>
+                  <span aria-hidden className="mx-3 text-accent">
+                    ·
+                  </span>{' '}
+                </>
               ) : null}
               <span className="whitespace-nowrap">{role}</span>
             </Fragment>
