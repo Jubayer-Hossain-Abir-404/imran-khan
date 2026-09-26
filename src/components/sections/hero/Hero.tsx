@@ -1,5 +1,6 @@
 import { ArrowRight } from 'lucide-react'
 import { Fragment, type CSSProperties } from 'react'
+import { RollLink } from '@/components/motion/RollLink'
 import { hash, SECTION_IDS } from '@/lib/links'
 import type { Profile } from '@/types'
 import { HeroVideo } from './HeroVideo'
@@ -17,7 +18,7 @@ export function Hero({ profile }: { profile: Profile }) {
   return (
     <section
       aria-labelledby={HEADING_ID}
-      className="relative isolate flex min-h-[max(34rem,100svh)] items-end overflow-hidden"
+      className="relative isolate flex min-h-[max(28rem,65svh)] items-end overflow-hidden md:min-h-[max(32rem,60svh)] lg:min-h-[max(34rem,100svh)]"
     >
       <HeroVideo media={hero} className="absolute inset-0 -z-20" />
 
@@ -35,21 +36,21 @@ export function Hero({ profile }: { profile: Profile }) {
         className="absolute inset-x-0 top-0 -z-10 h-40 bg-linear-to-b from-bg/70 to-transparent"
       />
 
-      <div className="mx-auto w-full max-w-7xl px-gutter pt-nav pb-[clamp(4rem,12vh,8rem)]">
+      <div className="mx-auto w-full max-w-7xl px-gutter pt-nav pb-[clamp(3rem,10vh,8rem)]">
         <p className="rise meta text-fg/80" style={rise(0)}>
           {eyebrow}
         </p>
 
         <h1
           id={HEADING_ID}
-          className="mt-5 rise display text-display text-balance"
+          className="mt-4 rise display text-display text-balance sm:mt-5"
           style={rise(90)}
         >
           {name}
         </h1>
 
         {/* The space after each separator is the only wrap point; roles never split. */}
-        <p className="mt-5 rise text-lead text-fg/90" style={rise(180)}>
+        <p className="mt-4 rise text-lead text-fg/90 sm:mt-5" style={rise(180)}>
           {roles.map((role, index) => (
             <Fragment key={role}>
               {index > 0 ? (
@@ -64,17 +65,11 @@ export function Hero({ profile }: { profile: Profile }) {
           ))}
         </p>
 
-        <div className="mt-10 flex rise flex-wrap items-center gap-3" style={rise(270)}>
-          <a
-            href={hash(SECTION_IDS.work)}
-            className="group inline-flex h-11 items-center gap-2.5 bg-fg px-5 text-sm font-medium text-bg transition-colors hover:bg-fg/85"
-          >
+        <div className="mt-8 flex rise flex-wrap items-center gap-3 sm:mt-10" style={rise(270)}>
+          <RollLink href={hash(SECTION_IDS.work)}>
             View Work
-            <ArrowRight
-              aria-hidden
-              className="size-4 transition-transform group-hover:translate-x-0.5"
-            />
-          </a>
+            <ArrowRight aria-hidden className="size-4" />
+          </RollLink>
         </div>
       </div>
     </section>

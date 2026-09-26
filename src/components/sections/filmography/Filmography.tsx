@@ -1,5 +1,7 @@
 import { ArrowRight } from 'lucide-react'
 import { Reveal } from '@/components/motion/Reveal'
+import { RollArrow } from '@/components/motion/RollArrow'
+import { RollLink } from '@/components/motion/RollLink'
 import { Section } from '@/components/layout/Section'
 import { SectionHeader } from '@/components/layout/SectionHeader'
 import { SocialIcon } from '@/components/layout/SocialIcon'
@@ -33,21 +35,22 @@ export function Filmography({ copy, films }: { copy: SectionCopy; films: Film[] 
           headingId={sectionHeadingId(copy.id)}
         />
 
-        <Reveal step={2} className="flex items-center gap-8 text-sm text-muted">
+        <Reveal
+          step={2}
+          className="flex items-center gap-8 font-mono text-xs tracking-[0.14em] text-muted uppercase"
+        >
           <p className="flex items-center gap-4">
             <span aria-hidden className="h-px w-10 bg-rule" />
             {tally}
           </p>
+          {/* Hover: underline wipe + accent text (link-wipe), arrow rolls. */}
           <a
             href={CHANNEL_URL}
-            className="group hidden items-center gap-2 py-1 transition-colors hover:text-fg md:inline-flex"
+            className="group hidden items-center gap-2.5 link-wipe py-1 md:inline-flex"
             {...externalLinkProps(CHANNEL_URL)}
           >
             Watch on YouTube
-            <ArrowRight
-              aria-hidden
-              className="size-4 transition-transform group-hover:translate-x-0.5"
-            />
+            <RollArrow />
           </a>
         </Reveal>
       </div>
@@ -63,18 +66,11 @@ export function Filmography({ copy, films }: { copy: SectionCopy; films: Film[] 
 
       <div className="mt-stack flex items-center gap-6">
         <span aria-hidden className="h-px flex-1 bg-rule" />
-        <a
-          href={CHANNEL_URL}
-          className="group inline-flex h-11 items-center gap-3 border border-fg/30 px-5 text-sm font-medium transition-colors hover:border-fg"
-          {...externalLinkProps(CHANNEL_URL)}
-        >
+        <RollLink variant="outline" href={CHANNEL_URL} {...externalLinkProps(CHANNEL_URL)}>
           <SocialIcon kind="youtube" className="size-4 text-[#ff0033]" />
           Watch on YouTube
-          <ArrowRight
-            aria-hidden
-            className="size-4 transition-transform group-hover:translate-x-0.5"
-          />
-        </a>
+          <ArrowRight aria-hidden className="size-4" />
+        </RollLink>
         <span aria-hidden className="h-px flex-1 bg-rule" />
       </div>
 

@@ -80,7 +80,7 @@ export function Testimonials({ items, headingId }: { items: Testimonial[]; headi
       </div>
 
       {many ? (
-        <div className="mt-6 -ml-2.5 flex items-center gap-1">
+        <div className="mt-6 flex items-center justify-center gap-1 lg:-ml-2.5 lg:justify-start">
           <button
             type="button"
             aria-label="Previous testimonial"

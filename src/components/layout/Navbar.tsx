@@ -1,7 +1,9 @@
 import { Menu, X } from 'lucide-react'
 import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react'
+import { RollLink } from '@/components/motion/RollLink'
 import { ANCHORS, hash } from '@/lib/links'
 import { cn } from '@/lib/utils'
+import { Wordmark } from './Wordmark'
 
 export type NavItem = {
   label: string
@@ -117,19 +119,35 @@ export function Navbar({ name, items }: NavbarProps) {
       // In the bar, Contact is the outlined CTA at the end (no underline).
       const cta = variant === 'bar' && item.id === ANCHORS.contact
 
+      if (cta) {
+        return (
+          <li key={item.id}>
+            <RollLink
+              variant="outline"
+              size="sm"
+              href={hash(item.id)}
+              aria-current={current ? 'location' : undefined}
+              onClick={() => setOpen(false)}
+              className="ml-4"
+            >
+              {item.label}
+            </RollLink>
+          </li>
+        )
+      }
+
       return (
         <li key={item.id}>
           <a
             href={hash(item.id)}
             aria-current={current ? 'location' : undefined}
-            data-nav={variant === 'bar' && !cta ? item.id : undefined}
+            data-nav={variant === 'bar' ? item.id : undefined}
             onClick={() => setOpen(false)}
             className={cn(
               'relative block text-sm transition-colors hover:text-fg',
-              current || cta ? 'text-fg' : 'text-muted',
+              current ? 'text-fg' : 'text-muted',
               variant === 'menu' && 'flex items-center gap-3 py-3',
-              variant === 'bar' && !cta && 'px-3 py-2',
-              cta && 'ml-4 border border-fg/30 px-4 py-2 hover:border-fg',
+              variant === 'bar' && 'px-3 py-2',
             )}
           >
             {variant === 'menu' ? (
@@ -165,9 +183,9 @@ export function Navbar({ name, items }: NavbarProps) {
         <a
           href={hash(ANCHORS.top)}
           aria-label={`${name}, back to top`}
-          className="justify-self-start pt-2.5 signature text-[2.375rem] whitespace-nowrap transition-colors hover:text-accent"
+          className="group justify-self-start py-2 text-xl transition-colors hover:text-accent md:text-[1.375rem]"
         >
-          {name}
+          <Wordmark name={name} />
         </a>
 
         <div className="flex items-center gap-2 justify-self-end">

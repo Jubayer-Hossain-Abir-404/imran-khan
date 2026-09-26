@@ -17,6 +17,7 @@ const font = {
   fontFiles: [
     'Geist-Regular.ttf',
     'Geist-Medium.ttf',
+    'GeistMono-Medium.ttf',
     'CormorantGaramond-Medium.ttf',
     'CormorantGaramond-SemiBold.ttf',
   ].map((name) => path(`scripts/fonts/${name}`)),
@@ -58,7 +59,7 @@ function fitSize(text: string, sizes: number[], maxWidth: number) {
 
 function meta(text: string, x: number, y: number, { anchor = 'start', fill = C.muted } = {}) {
   return (
-    `<text x="${x}" y="${y}" font-family="Geist" font-weight="500" font-size="20" letter-spacing="4.4" ` +
+    `<text x="${x}" y="${y}" font-family="Geist Mono" font-weight="500" font-size="20" letter-spacing="2.8" ` +
     `text-anchor="${anchor}" fill="${fill}">${escapeXml(text.toUpperCase())}</text>`
   )
 }

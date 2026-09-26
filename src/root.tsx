@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import { isRouteErrorResponse, Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router'
 import { LOADER_SCRIPT } from '@/components/layout/Loader'
+import { useSmoothScroll } from '@/components/motion/useSmoothScroll'
 import { ANCHORS, hash } from '@/lib/links'
 import type { Route } from './+types/root'
 import './styles/index.css'
@@ -30,8 +31,9 @@ export function Layout({ children }: { children: ReactNode }) {
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         {/* Rendered at build by scripts/generate-og.ts; 404s in dev. */}
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        {/* Before first paint, so the loader never flashes in late. */}
-        <script dangerouslySetInnerHTML={{ __html: LOADER_SCRIPT }} />
+        {/* Before first paint, so the loader never flashes in late. Suppressed: server and client
+            bundles stringify `intro` with different whitespace; only the SSR copy ever runs. */}
+        <script suppressHydrationWarning dangerouslySetInnerHTML={{ __html: LOADER_SCRIPT }} />
         <Meta />
         <Links />
       </head>
@@ -51,6 +53,8 @@ export function Layout({ children }: { children: ReactNode }) {
 }
 
 export default function App() {
+  useSmoothScroll()
+
   return <Outlet />
 }
 

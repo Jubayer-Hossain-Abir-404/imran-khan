@@ -28,7 +28,7 @@ export function WriterCreator({ copy, writing, channel }: WriterCreatorProps) {
     <Section id={copy.id} className="bg-surface">
       <div
         className={cn(
-          'grid gap-14',
+          'grid gap-8 md:gap-14',
           hasWriting && channel && 'xl:grid-cols-[minmax(0,1fr)_minmax(0,21rem)] xl:gap-0',
         )}
       >
@@ -53,7 +53,8 @@ export function WriterCreator({ copy, writing, channel }: WriterCreatorProps) {
           <Reveal
             step={hasWriting ? 2 : 0}
             className={cn(
-              hasWriting && 'border-t border-rule pt-14 xl:border-t-0 xl:border-l xl:pt-0 xl:pl-12',
+              hasWriting &&
+                'border-t border-rule pt-8 md:pt-14 xl:border-t-0 xl:border-l xl:pt-0 xl:pl-12',
             )}
           >
             <ChannelCard

@@ -1,6 +1,8 @@
-import { ArrowRight, Play } from 'lucide-react'
+import { Play } from 'lucide-react'
 import type { MouseEvent } from 'react'
 import { SocialIcon } from '@/components/layout/SocialIcon'
+import { RollArrow } from '@/components/motion/RollArrow'
+import { HoverFrame } from '@/components/video/HoverFrame'
 import { externalLinkProps, isPlainClick } from '@/lib/links'
 import { cn } from '@/lib/utils'
 import { formatDuration, isoDuration, watchUrl } from '@/lib/youtube'
@@ -63,32 +65,34 @@ export function ChannelCard({ channel, onPlay, headingId, layout = 'split' }: Ch
             css.video,
           )}
         >
-          <div className="relative aspect-video overflow-hidden bg-bg">
-            <img
-              src={featured.thumbnail}
-              alt=""
-              width={1280}
-              height={720}
-              loading="lazy"
-              decoding="async"
-              className="size-full object-cover transition-transform duration-700 ease-cinema motion-safe:group-hover:scale-[1.03]"
-            />
-            <div aria-hidden className="absolute inset-0 bg-black/25" />
-            <span
-              aria-hidden
-              className="absolute inset-0 m-auto grid size-12 place-items-center rounded-full border border-fg/60 bg-black/35 text-fg backdrop-blur-sm transition-colors group-hover:border-fg group-hover:bg-fg group-hover:text-bg"
-            >
-              <Play className="size-4 translate-x-px fill-current" />
-            </span>
-            {featured.durationSeconds ? (
-              <time
-                dateTime={isoDuration(featured.durationSeconds)}
-                className="absolute right-2 bottom-2 bg-black/60 px-1.5 py-0.5 text-xs text-fg/85 tabular-nums"
+          <HoverFrame>
+            <div className="relative aspect-video overflow-hidden bg-bg">
+              <img
+                src={featured.thumbnail}
+                alt=""
+                width={1280}
+                height={720}
+                loading="lazy"
+                decoding="async"
+                className="size-full object-cover"
+              />
+              <div aria-hidden className="absolute inset-0 bg-black/25" />
+              <span
+                aria-hidden
+                className="absolute inset-0 m-auto grid size-12 place-items-center rounded-full border border-fg/60 bg-black/35 text-fg backdrop-blur-sm transition-colors group-hover:border-fg group-hover:bg-fg group-hover:text-bg"
               >
-                {formatDuration(featured.durationSeconds)}
-              </time>
-            ) : null}
-          </div>
+                <Play className="size-4 translate-x-px fill-current" />
+              </span>
+              {featured.durationSeconds ? (
+                <time
+                  dateTime={isoDuration(featured.durationSeconds)}
+                  className="absolute right-2 bottom-2 bg-black/60 px-1.5 py-0.5 text-xs text-fg/85 tabular-nums"
+                >
+                  {formatDuration(featured.durationSeconds)}
+                </time>
+              ) : null}
+            </div>
+          </HoverFrame>
 
           <p className="mt-3 meta text-muted">Featured</p>
           <h3 className="mt-1 text-sm leading-snug text-fg/90">
@@ -107,18 +111,21 @@ export function ChannelCard({ channel, onPlay, headingId, layout = 'split' }: Ch
 
       <a
         href={channel.href}
-        className={cn('group mt-6 flex items-center gap-4 border-t border-rule pt-5', css.link)}
+        // Hover: accent line wipes the top rule, badge springs, arrow rolls out right and back in.
+        className={cn(
+          'group relative mt-6 flex items-center gap-4 border-t border-rule pt-5 before:absolute before:inset-x-0 before:-top-px before:h-px before:origin-right before:scale-x-0 before:bg-accent before:transition-transform before:duration-500 before:ease-out-quart hover:before:origin-left hover:before:scale-x-100',
+          css.link,
+        )}
         {...externalLinkProps(channel.href)}
       >
-        <span className="grid size-11 shrink-0 place-items-center rounded-full bg-[#ff0033] text-white">
+        <span className="grid size-11 shrink-0 place-items-center rounded-full bg-[#ff0033] text-white transition-transform duration-500 ease-spring motion-safe:group-hover:scale-110">
           <SocialIcon kind="youtube" className="size-5" />
         </span>
-        <span className="flex-1 font-medium">{channel.name}</span>
+        <span className="flex-1 font-medium transition-colors group-hover:text-accent">
+          {channel.name}
+        </span>
         <span className="sr-only">on YouTube</span>
-        <ArrowRight
-          aria-hidden
-          className="size-4 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-fg"
-        />
+        <RollArrow className="text-muted group-hover:text-fg" />
       </a>
     </div>
   )

@@ -22,7 +22,6 @@
   {
     "label": "X",
     "href": "https://x.com/",
-    "kind": "x",
-    "draft": true
+    "kind": "x"
   }
 ]

@@ -12,9 +12,10 @@ type ClientsProps = {
   testimonials: Testimonial[]
 }
 
-// Monochrome at rest, brand colour on hover. Size comes from the data (per-logo optical sizing).
+// Mobile: centred wrap rows, so an odd last logo centres too; from sm left-aligned.
+// Monochrome at rest; hover: brand colour + 110% spring lift (no brackets). Size comes from the data (per-logo optical sizing).
 const LOGO =
-  'max-w-none object-contain opacity-60 grayscale transition group-hover:opacity-100 group-hover:grayscale-0'
+  'h-auto max-w-full object-contain sm:max-w-none opacity-60 grayscale transition duration-500 ease-spring group-hover:opacity-100 group-hover:grayscale-0 motion-safe:group-hover:scale-110'
 
 /** Logo row ‖ testimonials. */
 export function Clients({ copy, clients, testimonials }: ClientsProps) {
@@ -40,7 +41,7 @@ export function Clients({ copy, clients, testimonials }: ClientsProps) {
           />
 
           {clients.length > 0 ? (
-            <ul className="mt-stack flex flex-wrap items-center gap-x-10 gap-y-6">
+            <ul className="mt-stack flex flex-wrap items-center justify-center gap-x-8 gap-y-8 sm:justify-start sm:gap-x-10 sm:gap-y-6">
               {clients.map((client, index) => {
                 const logo = (
                   <img

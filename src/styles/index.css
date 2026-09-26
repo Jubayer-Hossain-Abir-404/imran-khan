@@ -2,14 +2,18 @@
 
 /* Serif for display only, sans for everything else. Unicode-range means Latin pages load the Latin subset only. */
 @import '@fontsource-variable/geist';
+/* Uppercase labels. */
+@import '@fontsource-variable/geist-mono/wght.css';
 @import '@fontsource/cormorant-garamond/500.css';
 @import '@fontsource/cormorant-garamond/600.css';
-/* Signature wordmark (navbar + footer). */
-@import '@fontsource/mrs-saint-delafield/latin-400.css';
+/* Wordmark surname (navbar + footer). */
+@import '@fontsource/cormorant-garamond/latin-500-italic.css';
 
 /* Keyframes and data-open/closed variants used by components/ui. */
 @import 'shadcn/tailwind.css';
 @import 'tw-animate-css';
+/* Smooth scroll (html.lenis classes). */
+@import 'lenis/dist/lenis.css';
 
 /*
  * Fixed dark palette; `tone-warm` re-points the same tokens for paper sections,
@@ -93,7 +97,7 @@
 
   --font-serif: 'Cormorant Garamond', ui-serif, Georgia, serif;
   --font-sans: 'Geist Variable', ui-sans-serif, system-ui, sans-serif;
-  --font-script: 'Mrs Saint Delafield', cursive;
+  --font-mono: 'Geist Mono Variable', ui-monospace, monospace;
 
   /* Fluid scale. Display steps run large for Cormorant's small x-height. */
   --text-meta: 0.6875rem;
@@ -106,7 +110,7 @@
   --text-h3--line-height: 1.15;
   --text-h2: clamp(2.25rem, 1.7rem + 2.4vw, 3.75rem);
   --text-h2--line-height: 1.02;
-  --text-display: clamp(3.25rem, 2rem + 6vw, 7.5rem);
+  --text-display: clamp(2.75rem, 1.25rem + 7vw, 7.5rem);
   --text-display--line-height: 0.92;
 
   /* Near-square corners. */
@@ -122,6 +126,33 @@
   --spacing-nav: 4.5rem;
 
   --ease-cinema: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+  /* Damped spring (ζ 0.7, ~5% overshoot) for 500 ms hover lifts. */
+  --ease-spring: linear(
+    0,
+    0.069,
+    0.226,
+    0.412,
+    0.591,
+    0.743,
+    0.862,
+    0.946,
+    1,
+    1.03,
+    1.044,
+    1.046,
+    1.041,
+    1.033,
+    1.025,
+    1.017,
+    1.01,
+    1.005,
+    1.002,
+    1,
+    0.998,
+    1
+  );
   /* Two speeds: 300 ms UI (this default), 700 ms images and reveals. */
   --default-transition-duration: 300ms;
   --default-transition-timing-function: var(--ease-cinema);
@@ -188,11 +219,11 @@
 
 /* Uppercase section label. */
 @utility meta {
-  font-family: var(--font-sans);
+  font-family: var(--font-mono);
   font-size: var(--text-meta);
   font-weight: 500;
   line-height: 1.45;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
@@ -203,12 +234,41 @@
   letter-spacing: -0.015em;
 }
 
-/* Handwritten name. The face runs small and sits low, so it gets its own size and line box. */
-@utility signature {
-  font-family: var(--font-script);
-  font-weight: 400;
-  line-height: 1;
-  letter-spacing: 0;
+/* Four 12 px corner marks in the current text colour. */
+@utility brackets {
+  --arm: 0.75rem;
+  background:
+    linear-gradient(currentColor, currentColor) top left / var(--arm) 1px,
+    linear-gradient(currentColor, currentColor) top left / 1px var(--arm),
+    linear-gradient(currentColor, currentColor) top right / var(--arm) 1px,
+    linear-gradient(currentColor, currentColor) top right / 1px var(--arm),
+    linear-gradient(currentColor, currentColor) bottom left / var(--arm) 1px,
+    linear-gradient(currentColor, currentColor) bottom left / 1px var(--arm),
+    linear-gradient(currentColor, currentColor) bottom right / var(--arm) 1px,
+    linear-gradient(currentColor, currentColor) bottom right / 1px var(--arm);
+  background-repeat: no-repeat;
+}
+
+/* Accent underline wipes in from the left over a rule line and exits right. */
+@utility link-wipe {
+  padding-bottom: 0.125rem;
+  background:
+    linear-gradient(var(--ik-accent), var(--ik-accent)) 100% 100% / 0 1px no-repeat,
+    linear-gradient(var(--ik-rule), var(--ik-rule)) 0 100% / 100% 1px no-repeat;
+  transition:
+    background-size 500ms var(--ease-out-quart),
+    color 300ms var(--ease-cinema);
+
+  &:hover,
+  &:focus-visible {
+    color: var(--ik-accent);
+    background-position:
+      0 100%,
+      0 100%;
+    background-size:
+      100% 1px,
+      100% 1px;
+  }
 }
 
 /* Scroll reveal; `pending` is set by script only, so no-JS HTML stays visible. */
@@ -279,6 +339,19 @@
 @keyframes ik-fade {
   from {
     opacity: 0;
+  }
+}
+
+/* RollLink "on": hovered (hover devices only, as Tailwind's hover:), focused, or current. */
+@custom-variant roll-on {
+  @media (hover: hover) {
+    &:where(.roll:hover *) {
+      @slot;
+    }
+  }
+
+  &:where(.roll:focus-visible *, .roll[aria-current] *) {
+    @slot;
   }
 }
 

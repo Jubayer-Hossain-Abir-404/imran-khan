@@ -2,6 +2,7 @@ import { ArrowUp } from 'lucide-react'
 import { ANCHORS, hash, mailto } from '@/lib/links'
 import type { Social } from '@/types'
 import { SocialLinks } from './SocialLinks'
+import { Wordmark } from './Wordmark'
 
 type FooterProps = {
   name: string
@@ -25,13 +26,12 @@ export function Footer({ name, roles, email, social }: FooterProps) {
 
         <div className="flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="signature text-5xl">{name}</p>
+            <p className="text-3xl md:text-4xl">
+              <Wordmark name={name} />
+            </p>
             <p className="mt-3 text-sm text-muted">{roles.join(' · ')}</p>
             {email ? (
-              <a
-                href={mailto(email)}
-                className="mt-6 inline-block text-lead underline decoration-rule underline-offset-4 transition-colors hover:decoration-accent"
-              >
+              <a href={mailto(email)} className="mt-6 inline-block link-wipe text-lead">
                 {email}
               </a>
             ) : null}

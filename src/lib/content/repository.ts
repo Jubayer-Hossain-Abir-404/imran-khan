@@ -62,7 +62,10 @@ const social = published<Social>(
   socialData.map((entry) => {
     if (!isSocialKind(entry.kind)) throw new Error(`social.json: unknown kind "${entry.kind}"`)
 
-    return { label: entry.label, href: entry.href, kind: entry.kind, draft: entry.draft }
+    // Cast: the inferred JSON type drops `draft` when no entry sets it.
+    const { draft } = entry as { draft?: boolean }
+
+    return { label: entry.label, href: entry.href, kind: entry.kind, draft }
   }),
 )
 

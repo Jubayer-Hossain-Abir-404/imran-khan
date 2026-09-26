@@ -7,6 +7,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
+import { HoverFrame } from '@/components/video/HoverFrame'
 import { externalLinkProps } from '@/lib/links'
 import type { OtherWork } from '@/types'
 
@@ -31,21 +32,22 @@ export function OtherWorkCard({ work }: { work: OtherWork }) {
   return (
     <Dialog>
       <article className="group relative flex h-full flex-col outline-offset-3 outline-accent has-focus-visible:outline-2">
-        <div className="aspect-[2.39/1] overflow-hidden bg-surface">
-          <Still
-            work={work}
-            className="size-full object-cover transition-transform duration-700 ease-cinema motion-safe:group-hover:scale-[1.03]"
-          />
-        </div>
+        <HoverFrame>
+          <div className="aspect-[2.39/1] overflow-hidden bg-surface">
+            <Still work={work} className="size-full object-cover" />
+          </div>
+        </HoverFrame>
 
         <div className="flex-1 border-b border-rule py-4 transition-colors group-hover:border-fg/40">
-          <h3 className="font-medium">
+          <h3 className="font-mono font-medium">
             {/* Stretched: the ::after covers the whole card. */}
             <DialogTrigger className="text-left outline-none after:absolute after:inset-0 after:content-['']">
               {work.title}
             </DialogTrigger>
           </h3>
-          <p className="mt-1 line-clamp-2 text-sm text-pretty text-muted">{work.description}</p>
+          <p className="mt-1 line-clamp-2 font-mono text-sm text-pretty text-muted">
+            {work.description}
+          </p>
         </div>
       </article>
 

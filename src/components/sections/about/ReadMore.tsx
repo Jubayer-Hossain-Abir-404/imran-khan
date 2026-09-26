@@ -17,7 +17,7 @@ export function ReadMore({ paragraphs }: { paragraphs: string[] }) {
         data-open={open ? '' : undefined}
       >
         <div className="overflow-hidden">
-          <div className="space-y-4 pt-5 text-pretty text-muted">
+          <div className="space-y-4 pt-4 text-pretty text-muted md:pt-5">
             {paragraphs.map((paragraph) => (
               <p key={paragraph}>{paragraph}</p>
             ))}
@@ -30,7 +30,7 @@ export function ReadMore({ paragraphs }: { paragraphs: string[] }) {
         aria-expanded={open}
         aria-controls={id}
         onClick={() => setOpen((value) => !value)}
-        className="group mt-6 inline-flex py-1 items-center gap-2 text-sm font-medium"
+        className="group mt-4 inline-flex items-center gap-2 py-1 text-sm font-medium md:mt-6"
       >
         {open ? 'Read less' : 'Read more'}
         <ArrowRight
