@@ -9,11 +9,14 @@ import {
 import { cn } from '@/lib/utils'
 import { useMotionSafe } from './useMotionSafe'
 
+/** The one stagger unit for every reveal. */
+export const STAGGER_MS = 80
+
 type RevealProps = {
   children: ReactNode
   className?: string
-  /** Stagger in ms. */
-  delay?: number
+  /** Stagger position; each step waits `STAGGER_MS` longer. */
+  step?: number
   as?: ElementType
 } & Omit<HTMLAttributes<HTMLElement>, 'className' | 'style' | 'children'>
 
@@ -21,7 +24,7 @@ type RevealProps = {
  * Scroll-in fade. The hidden state is set by script only, so prerendered HTML is
  * visible without JS; elements already on screen at load are not animated.
  */
-export function Reveal({ children, className, delay = 0, as: Tag = 'div', ...rest }: RevealProps) {
+export function Reveal({ children, className, step = 0, as: Tag = 'div', ...rest }: RevealProps) {
   const ref = useRef<HTMLElement>(null)
   const motionSafe = useMotionSafe()
 
@@ -62,7 +65,7 @@ export function Reveal({ children, className, delay = 0, as: Tag = 'div', ...res
       {...rest}
       ref={ref}
       className={cn('reveal', className)}
-      style={{ '--reveal-delay': `${delay}ms` } as CSSProperties}
+      style={{ '--reveal-delay': `${step * STAGGER_MS}ms` } as CSSProperties}
     >
       {children}
     </Tag>

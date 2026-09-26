@@ -72,7 +72,7 @@ export function Hero({ profile }: { profile: Profile }) {
             View Work
             <ArrowRight
               aria-hidden
-              className="size-4 transition-transform duration-300 ease-cinema group-hover:translate-x-0.5"
+              className="size-4 transition-transform group-hover:translate-x-0.5"
             />
           </a>
         </div>

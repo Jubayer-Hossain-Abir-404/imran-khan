@@ -40,7 +40,7 @@ export function FilmCard<T extends CardVideo>({ film, onPlay }: FilmCardProps<T>
       />
       <div
         aria-hidden
-        className="absolute inset-0 -z-10 bg-linear-to-t from-black/90 via-black/35 to-black/5 transition-opacity duration-500 group-hover:opacity-90"
+        className="absolute inset-0 -z-10 bg-linear-to-t from-black/90 via-black/35 to-black/5 transition-opacity duration-700 group-hover:opacity-90"
       />
 
       {film.durationSeconds ? (
@@ -72,7 +72,7 @@ export function FilmCard<T extends CardVideo>({ film, onPlay }: FilmCardProps<T>
 
         <span
           aria-hidden
-          className="pointer-events-none grid size-10 shrink-0 place-items-center rounded-full border border-fg/50 bg-black/30 text-fg backdrop-blur-sm transition-colors duration-300 group-hover:border-fg group-hover:bg-fg group-hover:text-bg"
+          className="pointer-events-none grid size-10 shrink-0 place-items-center rounded-full border border-fg/50 bg-black/30 text-fg backdrop-blur-sm transition-colors group-hover:border-fg group-hover:bg-fg group-hover:text-bg"
         >
           <Play className="size-3.5 translate-x-px fill-current" />
         </span>

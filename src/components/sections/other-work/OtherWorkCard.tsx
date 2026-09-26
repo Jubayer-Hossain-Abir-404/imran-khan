@@ -38,7 +38,7 @@ export function OtherWorkCard({ work }: { work: OtherWork }) {
           />
         </div>
 
-        <div className="flex-1 border-b border-rule py-4 transition-colors duration-300 group-hover:border-fg/40">
+        <div className="flex-1 border-b border-rule py-4 transition-colors group-hover:border-fg/40">
           <h3 className="font-medium">
             {/* Stretched: the ::after covers the whole card. */}
             <DialogTrigger className="text-left outline-none after:absolute after:inset-0 after:content-['']">

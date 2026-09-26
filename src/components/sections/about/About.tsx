@@ -40,14 +40,14 @@ export function About({ copy, profile }: { copy: SectionCopy; profile: Profile }
             title={copy.title ?? profile.name}
             headingId={sectionHeadingId(copy.id)}
           />
-          <Reveal delay={120}>
+          <Reveal step={1}>
             <p className="mt-6 text-lead text-pretty">{profile.summary}</p>
             <ReadMore paragraphs={profile.about} />
           </Reveal>
         </div>
 
         <Reveal
-          delay={180}
+          step={2}
           // Below xl: facts under the portrait, quote under the bio (same columns).
           className="border-t border-rule pt-10 md:col-span-2 md:grid md:grid-cols-[minmax(0,16rem)_minmax(0,1fr)] md:gap-x-12 lg:gap-x-14 xl:col-span-1 xl:block xl:border-t-0 xl:border-l xl:pt-2 xl:pl-10"
         >

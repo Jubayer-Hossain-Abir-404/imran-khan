@@ -14,7 +14,7 @@ type ClientsProps = {
 
 // Monochrome at rest, brand colour on hover. Size comes from the data (per-logo optical sizing).
 const LOGO =
-  'max-w-none object-contain opacity-60 grayscale transition duration-300 group-hover:opacity-100 group-hover:grayscale-0'
+  'max-w-none object-contain opacity-60 grayscale transition group-hover:opacity-100 group-hover:grayscale-0'
 
 /** Logo row ‖ testimonials. */
 export function Clients({ copy, clients, testimonials }: ClientsProps) {
@@ -54,7 +54,7 @@ export function Clients({ copy, clients, testimonials }: ClientsProps) {
                 )
 
                 return (
-                  <Reveal as="li" key={client.logo} delay={index * 60} className="group">
+                  <Reveal as="li" key={client.logo} step={Math.min(index, 3)} className="group">
                     {client.href ? (
                       <a href={client.href} className="block" {...externalLinkProps(client.href)}>
                         {logo}
@@ -71,7 +71,7 @@ export function Clients({ copy, clients, testimonials }: ClientsProps) {
 
         {testimonials.length > 0 ? (
           <Reveal
-            delay={120}
+            step={2}
             className={cn(
               hasBoth && 'border-t border-rule pt-12 lg:border-t-0 lg:border-l lg:pt-1 lg:pl-12',
             )}

@@ -76,7 +76,7 @@ export function ChannelCard({ channel, onPlay, headingId, layout = 'split' }: Ch
             <div aria-hidden className="absolute inset-0 bg-black/25" />
             <span
               aria-hidden
-              className="absolute inset-0 m-auto grid size-12 place-items-center rounded-full border border-fg/60 bg-black/35 text-fg backdrop-blur-sm transition-colors duration-300 group-hover:border-fg group-hover:bg-fg group-hover:text-bg"
+              className="absolute inset-0 m-auto grid size-12 place-items-center rounded-full border border-fg/60 bg-black/35 text-fg backdrop-blur-sm transition-colors group-hover:border-fg group-hover:bg-fg group-hover:text-bg"
             >
               <Play className="size-4 translate-x-px fill-current" />
             </span>
@@ -117,7 +117,7 @@ export function ChannelCard({ channel, onPlay, headingId, layout = 'split' }: Ch
         <span className="sr-only">on YouTube</span>
         <ArrowRight
           aria-hidden
-          className="size-4 text-muted transition-transform duration-300 ease-cinema group-hover:translate-x-0.5 group-hover:text-fg"
+          className="size-4 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-fg"
         />
       </a>
     </div>

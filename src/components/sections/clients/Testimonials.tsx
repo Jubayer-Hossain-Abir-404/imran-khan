@@ -52,7 +52,7 @@ export function Testimonials({ items, headingId }: { items: Testimonial[]; headi
         className="mt-5 touch-pan-y overflow-hidden"
       >
         <div
-          className="flex transition-transform duration-700 ease-cinema motion-reduce:transition-none"
+          className="flex transition-transform duration-700 ease-cinema"
           style={{ transform: `translateX(-${index * 100}%)` }}
         >
           {items.map((item, i) => (
@@ -63,7 +63,7 @@ export function Testimonials({ items, headingId }: { items: Testimonial[]; headi
               aria-label={many ? `${i + 1} of ${items.length}` : undefined}
               inert={i !== index}
               className={cn(
-                'flex w-full shrink-0 gap-3.5 transition-opacity duration-700 ease-cinema motion-reduce:transition-none',
+                'flex w-full shrink-0 gap-3.5 transition-opacity duration-700 ease-cinema',
                 i !== index && 'opacity-30',
               )}
             >

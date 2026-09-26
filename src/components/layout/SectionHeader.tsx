@@ -19,7 +19,7 @@ export function SectionHeader({ label, title, lede, className, headingId }: Sect
           <Reveal as="p" className="meta text-muted">
             {label}
           </Reveal>
-          <Reveal as="h2" id={headingId} delay={60} className="mt-3 display text-h2 text-balance">
+          <Reveal as="h2" id={headingId} step={1} className="mt-3 display text-h2 text-balance">
             {title}
           </Reveal>
         </>
@@ -30,7 +30,7 @@ export function SectionHeader({ label, title, lede, className, headingId }: Sect
       )}
 
       {lede ? (
-        <Reveal as="p" delay={120} className="mt-5 max-w-2xl text-lead text-pretty text-muted">
+        <Reveal as="p" step={2} className="mt-5 max-w-2xl text-lead text-pretty text-muted">
           {lede}
         </Reveal>
       ) : null}

@@ -13,7 +13,7 @@ export function ReadMore({ paragraphs }: { paragraphs: string[] }) {
       <div
         id={id}
         inert={!open}
-        className="grid grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-cinema motion-reduce:transition-none data-open:grid-rows-[1fr]"
+        className="grid grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-cinema data-open:grid-rows-[1fr]"
         data-open={open ? '' : undefined}
       >
         <div className="overflow-hidden">
@@ -35,7 +35,7 @@ export function ReadMore({ paragraphs }: { paragraphs: string[] }) {
         {open ? 'Read less' : 'Read more'}
         <ArrowRight
           aria-hidden
-          className="size-4 transition-transform duration-300 ease-cinema group-hover:translate-x-0.5 group-aria-expanded:-rotate-90"
+          className="size-4 transition-transform group-hover:translate-x-0.5 group-aria-expanded:-rotate-90"
         />
       </button>
     </>

@@ -33,7 +33,7 @@ export function Filmography({ copy, films }: { copy: SectionCopy; films: Film[] 
           headingId={sectionHeadingId(copy.id)}
         />
 
-        <Reveal delay={120} className="flex items-center gap-8 text-sm text-muted">
+        <Reveal step={2} className="flex items-center gap-8 text-sm text-muted">
           <p className="flex items-center gap-4">
             <span aria-hidden className="h-px w-10 bg-rule" />
             {tally}
@@ -46,7 +46,7 @@ export function Filmography({ copy, films }: { copy: SectionCopy; films: Film[] 
             Watch on YouTube
             <ArrowRight
               aria-hidden
-              className="size-4 transition-transform duration-300 ease-cinema group-hover:translate-x-0.5"
+              className="size-4 transition-transform group-hover:translate-x-0.5"
             />
           </a>
         </Reveal>
@@ -55,7 +55,7 @@ export function Filmography({ copy, films }: { copy: SectionCopy; films: Film[] 
       <ul className="mt-stack grid gap-4 md:grid-cols-2 md:gap-5 xl:grid-cols-3">
         {films.map((film, index) => (
           // Stagger per row position, so each row cascades left to right.
-          <Reveal as="li" key={film.youtubeId} delay={(index % 3) * 80}>
+          <Reveal as="li" key={film.youtubeId} step={index % 3}>
             <FilmCard film={film} onPlay={play} />
           </Reveal>
         ))}
@@ -72,7 +72,7 @@ export function Filmography({ copy, films }: { copy: SectionCopy; films: Film[] 
           Watch on YouTube
           <ArrowRight
             aria-hidden
-            className="size-4 transition-transform duration-300 ease-cinema group-hover:translate-x-0.5"
+            className="size-4 transition-transform group-hover:translate-x-0.5"
           />
         </a>
         <span aria-hidden className="h-px flex-1 bg-rule" />

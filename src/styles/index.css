@@ -122,6 +122,9 @@
   --spacing-nav: 4.5rem;
 
   --ease-cinema: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Two speeds: 300 ms UI (this default), 700 ms images and reveals. */
+  --default-transition-duration: 300ms;
+  --default-transition-timing-function: var(--ease-cinema);
 }
 
 @layer base {
@@ -138,9 +141,20 @@
     scroll-padding-top: var(--spacing-nav);
   }
 
+  /* Safety net: any transition or animation, including third-party, ends at once. */
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      animation-delay: 0ms !important;
+      transition-duration: 0.01ms !important;
+      transition-delay: 0ms !important;
     }
   }
 

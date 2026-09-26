@@ -165,7 +165,7 @@ export function Navbar({ name, items }: NavbarProps) {
         <a
           href={hash(ANCHORS.top)}
           aria-label={`${name}, back to top`}
-          className="justify-self-start pt-2.5 signature text-[2.375rem] whitespace-nowrap transition-colors duration-300 hover:text-accent"
+          className="justify-self-start pt-2.5 signature text-[2.375rem] whitespace-nowrap transition-colors hover:text-accent"
         >
           {name}
         </a>

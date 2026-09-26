@@ -41,7 +41,7 @@ export function WriterCreator({ copy, writing, channel }: WriterCreatorProps) {
 
             <ul className="mt-stack grid gap-4 md:grid-cols-2 md:gap-5">
               {writing.map((piece, index) => (
-                <Reveal as="li" key={piece.youtubeId} delay={(index % 2) * 80}>
+                <Reveal as="li" key={piece.youtubeId} step={index % 2}>
                   <FilmCard film={piece} onPlay={play} />
                 </Reveal>
               ))}
@@ -51,7 +51,7 @@ export function WriterCreator({ copy, writing, channel }: WriterCreatorProps) {
 
         {channel ? (
           <Reveal
-            delay={hasWriting ? 120 : 0}
+            step={hasWriting ? 2 : 0}
             className={cn(
               hasWriting && 'border-t border-rule pt-14 xl:border-t-0 xl:border-l xl:pt-0 xl:pl-12',
             )}

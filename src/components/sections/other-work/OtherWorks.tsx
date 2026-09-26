@@ -19,7 +19,7 @@ export function OtherWorks({ copy, works }: { copy: SectionCopy; works: OtherWor
 
       <ul className="mt-stack grid gap-x-5 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
         {works.map((work, index) => (
-          <Reveal as="li" key={work.id} delay={(index % 4) * 70}>
+          <Reveal as="li" key={work.id} step={index % 4}>
             <OtherWorkCard work={work} />
           </Reveal>
         ))}
