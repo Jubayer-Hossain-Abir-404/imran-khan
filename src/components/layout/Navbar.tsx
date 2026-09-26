@@ -1,5 +1,5 @@
 import { Menu, X } from 'lucide-react'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react'
 import { ANCHORS, hash } from '@/lib/links'
 import { cn } from '@/lib/utils'
 import type { Social } from '@/types'
@@ -13,6 +13,8 @@ export type NavItem = {
 
 type NavbarProps = {
   name: string
+  /** Small line under the name, e.g. the first role. */
+  tagline?: string
   items: NavItem[]
   social: Social[]
 }
@@ -21,6 +23,16 @@ type NavbarProps = {
 const SOLID_AFTER = 24
 // A section is active once its top crosses this fraction of the viewport.
 const SPY_LINE = 0.4
+
+/** Initials for the monogram: "Imran Khan" → "IK". */
+function initials(name: string) {
+  return name
+    .split(/\s+/)
+    .map((word) => word[0])
+    .join('')
+    .slice(0, 2)
+    .toUpperCase()
+}
 
 /** Last item whose element has crossed the spy line; the last item at page bottom. */
 function activeId(items: NavItem[]) {
@@ -40,11 +52,33 @@ function activeId(items: NavItem[]) {
   return current
 }
 
-export function Navbar({ name, items, social }: NavbarProps) {
+export function Navbar({ name, tagline, items, social }: NavbarProps) {
   const [solid, setSolid] = useState(false)
   const [active, setActive] = useState<string | undefined>(items[0]?.id)
   const [open, setOpen] = useState(false)
   const headerRef = useRef<HTMLElement>(null)
+  const listRef = useRef<HTMLUListElement>(null)
+  // One accent line that slides to the active link; `null` until measured.
+  const [indicator, setIndicator] = useState<CSSProperties | null>(null)
+
+  useLayoutEffect(() => {
+    const list = listRef.current
+
+    if (!list) return
+
+    const measure = () => {
+      const link = active ? list.querySelector<HTMLElement>(`[data-nav="${active}"]`) : null
+
+      setIndicator(link ? { left: link.offsetLeft + 12, width: link.offsetWidth - 24 } : null)
+    }
+
+    measure()
+    // Fonts swapping in shift the link widths.
+    void document.fonts.ready.then(measure)
+    window.addEventListener('resize', measure)
+
+    return () => window.removeEventListener('resize', measure)
+  }, [active])
 
   // One rAF-throttled passive listener drives both the solid state and the scroll spy.
   useEffect(() => {
@@ -101,16 +135,20 @@ export function Navbar({ name, items, social }: NavbarProps) {
           <a
             href={hash(item.id)}
             aria-current={current ? 'location' : undefined}
+            data-nav={variant === 'bar' ? item.id : undefined}
             onClick={() => setOpen(false)}
             className={cn(
               'relative block text-sm transition-colors hover:text-fg',
               current ? 'text-fg' : 'text-muted',
-              variant === 'bar'
-                ? 'px-3 py-2 after:absolute after:inset-x-3 after:bottom-0.5 after:h-px after:origin-left after:bg-accent after:transition-transform after:duration-300 after:ease-cinema'
-                : 'py-3',
-              variant === 'bar' && (current ? 'after:scale-x-100' : 'after:scale-x-0'),
+              variant === 'bar' ? 'px-3 py-2' : 'flex items-center gap-3 py-3',
             )}
           >
+            {variant === 'menu' ? (
+              <span
+                aria-hidden
+                className={cn('size-1 rounded-full bg-accent', !current && 'opacity-0')}
+              />
+            ) : null}
             {item.label}
           </a>
         </li>
@@ -124,24 +162,59 @@ export function Navbar({ name, items, social }: NavbarProps) {
       className={cn(
         'fixed inset-x-0 top-0 z-40 border-b transition-[background-color,border-color,backdrop-filter] duration-500 ease-cinema',
         solid || open
-          ? 'border-rule bg-bg/85 backdrop-blur-md'
+          ? 'border-rule bg-bg/80 backdrop-blur-md backdrop-saturate-150'
           : 'border-transparent bg-transparent',
       )}
     >
-      <div className="mx-auto flex h-nav max-w-7xl items-center justify-between gap-6 px-gutter">
+      {/* Condenses once solid. Three columns keep the links centred on the page, not between siblings. */}
+      <div
+        className={cn(
+          'mx-auto grid max-w-7xl grid-cols-[1fr_auto] items-center gap-6 px-gutter transition-[height] duration-500 ease-cinema md:grid-cols-[1fr_auto_1fr]',
+          solid ? 'h-14' : 'h-nav',
+        )}
+      >
         <a
           href={hash(ANCHORS.top)}
-          className="display text-2xl leading-none whitespace-nowrap transition-colors hover:text-accent"
+          aria-label={`${name}, back to top`}
+          className="group flex items-center gap-3 justify-self-start"
         >
-          {name}
+          <span
+            aria-hidden
+            className="grid size-9 place-items-center border border-fg/35 font-serif text-[0.9375rem] font-semibold tracking-[0.06em] transition-colors duration-300 group-hover:border-accent group-hover:text-accent"
+          >
+            {initials(name)}
+          </span>
+          <span aria-hidden className="flex flex-col gap-1">
+            <span className="display text-xl leading-none whitespace-nowrap">{name}</span>
+            {tagline ? (
+              <span className="text-[0.625rem] leading-none font-medium tracking-[0.28em] text-muted uppercase">
+                {tagline}
+              </span>
+            ) : null}
+          </span>
         </a>
 
         <nav aria-label="Primary" className="hidden md:block">
-          <ul className="flex items-center">{links('bar')}</ul>
+          <ul ref={listRef} className="relative flex items-center">
+            {links('bar')}
+            <li
+              aria-hidden
+              className={cn(
+                'pointer-events-none absolute bottom-0.5 h-px bg-accent transition-[left,width,opacity] duration-500 ease-cinema',
+                !indicator && 'opacity-0',
+              )}
+              style={indicator ?? undefined}
+            />
+          </ul>
         </nav>
 
-        <div className="flex items-center gap-2">
-          <SocialLinks social={social} label="Social" className="-mr-2 hidden lg:flex" />
+        <div className="flex items-center gap-2 justify-self-end">
+          {social.length > 0 ? (
+            <div className="hidden items-center gap-3 lg:flex">
+              <span aria-hidden className="h-5 w-px bg-rule" />
+              <SocialLinks social={social} label="Social" className="-mr-2" />
+            </div>
+          ) : null}
 
           <button
             type="button"

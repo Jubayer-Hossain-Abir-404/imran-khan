@@ -1,12 +1,13 @@
 import { Footer } from '@/components/layout/Footer'
 import { Loader } from '@/components/layout/Loader'
 import { Navbar, type NavItem } from '@/components/layout/Navbar'
+import { Section } from '@/components/layout/Section'
 import { SectionHeader } from '@/components/layout/SectionHeader'
-import { Hero } from '@/components/sections/Hero'
+import { Filmography } from '@/components/sections/filmography/Filmography'
+import { Hero } from '@/components/sections/hero/Hero'
 import { getFilms, getProfile, getSections, getSocial } from '@/lib/content'
 import { ANCHORS, SECTION_IDS, sectionHeadingId, type SectionId } from '@/lib/links'
 import { pageMeta, structuredData } from '@/lib/seo'
-import { cn } from '@/lib/utils'
 import type { Route } from './+types/home'
 
 // Module-level so the navbar's scroll effect keeps a stable reference.
@@ -47,34 +48,31 @@ export function meta({ loaderData }: Route.MetaArgs) {
 }
 
 export default function Home({ loaderData }: Route.ComponentProps) {
-  const { profile, social, sections } = loaderData
+  const { profile, social, films, sections } = loaderData
 
   return (
     <>
-      <Loader name={profile.name} />
-      <Navbar name={profile.name} items={NAV_ITEMS} social={social} />
+      <Loader name={profile.name} roles={profile.roles} />
+      <Navbar name={profile.name} tagline={profile.roles[0]} items={NAV_ITEMS} social={social} />
 
       <main id={ANCHORS.main}>
         <Hero profile={profile} />
 
-        {/* Section bodies land in Phases 4–5; headers now so anchors and landmarks work. */}
-        {sections.map((section) => (
-          <section
-            key={section.id}
-            id={section.id}
-            aria-labelledby={sectionHeadingId(section.id)}
-            className={cn('py-section', WARM.includes(section.id) && 'tone-warm')}
-          >
-            <div className="mx-auto max-w-7xl px-gutter">
+        {sections.map((section) =>
+          section.id === SECTION_IDS.work ? (
+            <Filmography key={section.id} copy={section} films={films} />
+          ) : (
+            // Bodies land in Phase 5; headers now so anchors and landmarks work.
+            <Section key={section.id} id={section.id} warm={WARM.includes(section.id)}>
               <SectionHeader
                 label={section.label}
                 title={section.title}
                 lede={section.lede}
                 headingId={sectionHeadingId(section.id)}
               />
-            </div>
-          </section>
-        ))}
+            </Section>
+          ),
+        )}
       </main>
 
       <Footer name={profile.name} roles={profile.roles} email={profile.email} social={social} />

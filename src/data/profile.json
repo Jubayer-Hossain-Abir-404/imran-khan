@@ -29,9 +29,12 @@
       "alt": "Still from Control and Access over Income",
       "width": 1280,
       "height": 720
+    },
+    "video": {
+      "mp4": "/media/hero/dummy-reel-720.mp4",
+      "mobileMp4": "/media/hero/dummy-reel-360.mp4"
     }
   },
-  "reel": null,
   "unverified": [
     "eyebrow",
     "summary",
@@ -39,6 +42,7 @@
     "portrait (dummy)",
     "quote (dummy)",
     "location",
-    "hero.poster (interim still, not the reel)"
+    "hero.poster (interim still, not the reel)",
+    "hero.video (dummy Mixkit stock clip 43609)"
   ]
 }

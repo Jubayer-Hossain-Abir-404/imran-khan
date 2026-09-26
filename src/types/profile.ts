@@ -26,12 +26,6 @@ export type HeroMedia = {
   }
 }
 
-export type Reel = {
-  youtubeId: string
-  /** Button label, e.g. "35s". */
-  durationLabel?: string
-}
-
 export type Profile = {
   name: string
   roles: string[]
@@ -47,8 +41,6 @@ export type Profile = {
   quote?: string
   facts: Fact[]
   hero: HeroMedia
-  /** `null` hides "Watch Reel". */
-  reel: Reel | null
   /** Fields still holding placeholder copy; the build warns about each. */
   unverified: string[]
 }

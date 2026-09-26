@@ -1,121 +1,108 @@
-import { useEffect, useRef, useState } from 'react'
+import type { CSSProperties } from 'react'
+import { cn } from '@/lib/utils'
 
-// Timings from navigation start. The head script's safety timeout (LOADER_SAFETY_MS) outlasts these.
-const MIN_MS = 400
-const CAP_MS = 700
-const EXIT_MS = 550
-const STORAGE_KEY = 'ik-intro'
-const LOADER_SAFETY_MS = 1800
+// Timings from navigation start.
+const TIMING = {
+  minMs: 700,
+  capMs: 1100,
+  // Content leaves first, then the panels part.
+  contentOutMs: 300,
+  panelDelayMs: 150,
+  panelMs: 600,
+  // Clears the attribute even if something throws mid-run.
+  safetyMs: 3000,
+  storageKey: 'ik-intro',
+}
+
+type Timing = typeof TIMING
 
 /**
- * Runs before first paint. Sets `<html data-loading>` unless reduced motion or already shown this
- * session; removes it after LOADER_SAFETY_MS even if hydration never happens. No JS → no loader.
+ * The whole intro, inlined in <head> via `toString()` — so it must stay self-contained (no imports,
+ * no async/await or spread helpers). Runs from first paint, before hydration.
+ * Reduced motion or already shown this session → no loader.
  */
-export const LOADER_SCRIPT = `(function(){try{var d=document.documentElement;if(matchMedia('(prefers-reduced-motion: reduce)').matches||sessionStorage.getItem('${STORAGE_KEY}'))return;sessionStorage.setItem('${STORAGE_KEY}','1');d.setAttribute('data-loading','');setTimeout(function(){d.removeAttribute('data-loading')},${LOADER_SAFETY_MS})}catch(e){}})()`
-
-function wait(ms: number) {
-  return new Promise<void>((resolve) => setTimeout(resolve, Math.max(0, ms)))
-}
-
-/** Fonts + hero poster decoded, or CAP_MS — whichever comes first — and never before MIN_MS. */
-async function ready() {
-  const poster = document.querySelector<HTMLImageElement>('img[data-hero-poster]')
-  const assets = Promise.all([document.fonts.ready, poster?.decode().catch(() => undefined)]).then(
-    () => undefined,
-  )
-
-  await Promise.race([assets, wait(CAP_MS - performance.now())])
-  await wait(MIN_MS - performance.now())
-}
-
-type Phase = 'loading' | 'exit' | 'done'
-
-/** Split-panel intro. Markup is prerendered so it covers the page before hydration. */
-export function Loader({ name }: { name: string }) {
-  const [phase, setPhase] = useState<Phase>('loading')
-  const counterRef = useRef<HTMLSpanElement>(null)
-  const barRef = useRef<HTMLSpanElement>(null)
-
-  useEffect(() => {
+function intro(t: Timing) {
+  try {
     const root = document.documentElement
 
-    // Not shown this visit: the `loader` utility already hides it.
-    if (!root.hasAttribute('data-loading')) return
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    if (sessionStorage.getItem(t.storageKey)) return
 
-    let frame = 0
-    let shown = 0
-    let target = 0
-    let finished = false
-    let cancelled = false
+    sessionStorage.setItem(t.storageKey, '1')
+    root.setAttribute('data-loading', '')
 
-    // Direct DOM writes: no re-render per frame.
-    const paint = () => {
-      // Creep toward 90 while waiting; snap toward 100 once ready.
-      target = finished ? 100 : Math.min(90, (performance.now() / CAP_MS) * 90)
-      shown += (target - shown) * (finished ? 0.35 : 0.12)
+    const end = () => root.removeAttribute('data-loading')
+    const wait = (ms: number) =>
+      new Promise<void>((resolve) => setTimeout(resolve, Math.max(0, ms)))
 
-      if (finished && target - shown < 0.5) shown = 100
+    setTimeout(end, t.safetyMs)
 
-      const value = Math.round(shown)
+    // Fonts + hero poster decoded, or capMs — whichever first — and never before minMs.
+    const ready = () => {
+      const poster = document.querySelector<HTMLImageElement>('img[data-hero-poster]')
+      const assets = Promise.all([
+        document.fonts.ready,
+        poster ? poster.decode().catch(() => undefined) : undefined,
+      ])
 
-      if (counterRef.current) counterRef.current.textContent = String(value)
-      if (barRef.current) barRef.current.style.transform = `scaleX(${shown / 100})`
-
-      if (value < 100) {
-        frame = requestAnimationFrame(paint)
-        return
-      }
-
-      // Hero entrance starts as the panels part (it is paused only while the value is '').
-      root.setAttribute('data-loading', 'exit')
-      setPhase('exit')
-      setTimeout(() => {
-        if (cancelled) return
-        root.removeAttribute('data-loading')
-        setPhase('done')
-      }, EXIT_MS)
+      Promise.race([assets, wait(t.capMs - performance.now())])
+        .then(() => wait(t.minMs - performance.now()))
+        .then(() => {
+          // CSS runs the exit off this value; hero `rise` starts as the panels part.
+          root.setAttribute('data-loading', 'exit')
+          setTimeout(end, t.panelDelayMs + t.panelMs)
+        })
     }
 
-    frame = requestAnimationFrame(paint)
-    void ready().then(() => {
-      finished = true
-    })
+    // 'interactive' = parsed (poster exists), before module scripts run.
+    if (document.readyState === 'loading') {
+      document.addEventListener('readystatechange', ready, { once: true })
+    } else ready()
+  } catch {
+    document.documentElement.removeAttribute('data-loading')
+  }
+}
 
-    return () => {
-      cancelled = true
-      cancelAnimationFrame(frame)
-    }
-  }, [])
+export const LOADER_SCRIPT = `(${intro.toString()})(${JSON.stringify(TIMING)})`
 
-  if (phase === 'done') return null
+const PANEL = 'absolute inset-x-0 h-1/2 bg-bg transition-transform ease-cinema'
+const panelTiming = {
+  transitionDuration: `${TIMING.panelMs}ms`,
+  transitionDelay: `${TIMING.panelDelayMs}ms`,
+} satisfies CSSProperties
+const contentTiming = { transitionDuration: `${TIMING.contentOutMs}ms` } satisfies CSSProperties
 
-  const exiting = phase === 'exit'
-  const panel = 'absolute inset-x-0 h-1/2 bg-bg transition-transform ease-cinema'
-
+/**
+ * Split-panel intro: name rises out of a mask while a hairline draws under it. Pure CSS; the head
+ * script only flips `data-loading`. The `loader` utility hides it whenever the attribute is absent.
+ */
+export function Loader({ name, roles }: { name: string; roles: string[] }) {
   return (
     <div
       aria-hidden
       data-print="hide"
       className="fixed inset-0 z-50 loader items-center justify-center"
     >
-      <div
-        className={`${panel} top-0 ${exiting ? '-translate-y-full' : ''}`}
-        style={{ transitionDuration: `${EXIT_MS}ms` }}
-      />
-      <div
-        className={`${panel} bottom-0 ${exiting ? 'translate-y-full' : ''}`}
-        style={{ transitionDuration: `${EXIT_MS}ms` }}
-      />
+      <div className={cn(PANEL, 'top-0 loader-exit:-translate-y-full')} style={panelTiming} />
+      <div className={cn(PANEL, 'bottom-0 loader-exit:translate-y-full')} style={panelTiming} />
 
       <div
-        className={`relative flex w-[min(20rem,70vw)] flex-col items-center gap-5 transition-opacity duration-200 ${exiting ? 'opacity-0' : ''}`}
+        className="relative flex flex-col items-center px-gutter text-center transition-[opacity,transform] ease-cinema loader-exit:-translate-y-2 loader-exit:opacity-0"
+        style={contentTiming}
       >
-        <span className="display text-3xl">{name}</span>
-        <span className="relative h-px w-full overflow-hidden bg-rule">
-          <span ref={barRef} className="absolute inset-0 origin-left scale-x-0 bg-accent" />
-        </span>
-        <span className="meta text-muted tabular-nums">
-          <span ref={counterRef}>0</span>
+        <div className="overflow-hidden pb-1">
+          <p className="animate-[ik-mask-up_600ms_var(--ease-cinema)_both] display text-[clamp(2.5rem,1.8rem+3vw,4.5rem)] leading-none">
+            {name}
+          </p>
+        </div>
+
+        <span
+          className="mt-6 h-px w-[min(18rem,60vw)] animate-[ik-draw_var(--draw-ms)_var(--ease-cinema)_both] bg-accent"
+          style={{ '--draw-ms': `${TIMING.minMs + 200}ms` } as CSSProperties}
+        />
+
+        <span className="mt-5 animate-[ik-fade_600ms_ease-out_200ms_both] meta text-balance text-muted">
+          {roles.join(' · ')}
         </span>
       </div>
     </div>

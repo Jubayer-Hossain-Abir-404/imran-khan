@@ -5,7 +5,7 @@ export type Video = {
   youtubeId: string
   /** Cleaned display title. */
   title: string
-  /** YouTube title, verbatim — revealed on hover. */
+  /** YouTube title, verbatim — shown in the video modal. */
   youtubeTitle: string
   /** From the watch page's `lengthSeconds`. */
   durationSeconds?: number

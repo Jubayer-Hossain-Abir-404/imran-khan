@@ -1,7 +1,6 @@
-import { ArrowDown, ArrowRight, Play } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { Fragment, type CSSProperties } from 'react'
-import { hash, externalLinkProps, SECTION_IDS } from '@/lib/links'
-import { watchUrl } from '@/lib/youtube'
+import { hash, SECTION_IDS } from '@/lib/links'
 import type { Profile } from '@/types'
 import { HeroVideo } from './HeroVideo'
 
@@ -13,8 +12,7 @@ function rise(delay: number) {
 }
 
 export function Hero({ profile }: { profile: Profile }) {
-  const { name, roles, eyebrow, hero, reel } = profile
-  const reelHref = reel ? watchUrl(reel.youtubeId) : null
+  const { name, roles, eyebrow, hero } = profile
 
   return (
     <section
@@ -64,24 +62,9 @@ export function Hero({ profile }: { profile: Profile }) {
         </p>
 
         <div className="mt-10 flex rise flex-wrap items-center gap-3" style={rise(270)}>
-          {/* Phase 4 swaps this for the video modal. */}
-          {reel && reelHref ? (
-            <a
-              href={reelHref}
-              className="inline-flex h-11 items-center gap-2.5 bg-fg px-5 text-sm font-medium text-bg transition-colors hover:bg-fg/85"
-              {...externalLinkProps(reelHref)}
-            >
-              <Play aria-hidden className="size-3.5 fill-current" />
-              Watch Reel
-              {reel.durationLabel ? (
-                <span className="text-bg/60">({reel.durationLabel})</span>
-              ) : null}
-            </a>
-          ) : null}
-
           <a
             href={hash(SECTION_IDS.work)}
-            className="group inline-flex h-11 items-center gap-2.5 border border-fg/60 px-5 text-sm font-medium transition-colors hover:border-fg hover:bg-fg/5"
+            className="group inline-flex h-11 items-center gap-2.5 bg-fg px-5 text-sm font-medium text-bg transition-colors hover:bg-fg/85"
           >
             View Work
             <ArrowRight
@@ -91,18 +74,6 @@ export function Hero({ profile }: { profile: Profile }) {
           </a>
         </div>
       </div>
-
-      <a
-        href={hash(SECTION_IDS.work)}
-        aria-label="Scroll to work"
-        data-print="hide"
-        className="absolute right-gutter bottom-[clamp(4rem,12vh,8rem)] hidden rise flex-col items-center gap-3 text-muted transition-colors hover:text-fg md:flex"
-        style={rise(500)}
-      >
-        <span className="meta">Scroll</span>
-        <span aria-hidden className="h-16 w-px bg-current" />
-        <ArrowDown aria-hidden className="-mt-2 size-3.5" />
-      </a>
     </section>
   )
 }

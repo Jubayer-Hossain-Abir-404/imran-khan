@@ -149,6 +149,12 @@
     text-rendering: optimizeLegibility;
   }
 
+  /* Tailwind v4 resets buttons to the default cursor. */
+  button:not(:disabled),
+  [role='button']:not([aria-disabled='true']) {
+    cursor: pointer;
+  }
+
   ::selection {
     background-color: var(--ik-accent);
     color: var(--ik-bg);
@@ -229,6 +235,28 @@
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 }
+
+/* Loader entrance. */
+@keyframes ik-mask-up {
+  from {
+    transform: translateY(105%);
+  }
+}
+
+@keyframes ik-draw {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes ik-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Loader exit state, set by the head script. */
+@custom-variant loader-exit (:root[data-loading='exit'] &);
 
 /* Intro loader: shown only while <html data-loading> is set by the head script, so never without JS. */
 @utility loader {
