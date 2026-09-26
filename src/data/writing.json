@@ -1,30 +1,39 @@
 [
   {
-    "id": "writing-1",
-    "title": "Placeholder piece one",
-    "kind": "Script",
-    "image": null,
+    "youtubeId": "NJsXigQhz3U",
+    "title": "The Story of Liza",
+    "youtubeTitle": "BRAC Migration-The Story of Liza (Trafficking Survivor)",
+    "category": "BRAC Migration",
+    "durationSeconds": 238,
+    "thumbnail": "/media/writing/NJsXigQhz3U.webp",
     "draft": true
   },
   {
-    "id": "writing-2",
-    "title": "Placeholder piece two",
-    "kind": "Creative direction",
-    "image": null,
+    "youtubeId": "nykIzBa7sSI",
+    "title": "Adhar Sheshe (After Darkness)",
+    "youtubeTitle": "BRAC Migration- Adhar Sheshe (After Darkness)",
+    "category": "BRAC Migration",
+    "durationSeconds": 943,
+    "thumbnail": "/media/writing/nykIzBa7sSI.webp",
     "draft": true
   },
   {
-    "id": "writing-3",
-    "title": "Placeholder piece three",
-    "kind": "Copy",
-    "image": null,
+    "youtubeId": "ujgsB0NVP68",
+    "title": "Cheledhora (Child-snatcher)",
+    "youtubeTitle": "BRAC Migration- Cheledhora (Child-snatcher)",
+    "category": "BRAC Migration",
+    "durationSeconds": 46,
+    "thumbnail": "/media/writing/ujgsB0NVP68.webp",
+    "objectPosition": "center 35%",
     "draft": true
   },
   {
-    "id": "writing-4",
-    "title": "Placeholder piece four",
-    "kind": "Screenplay",
-    "image": null,
+    "youtubeId": "DVWGCevrMhg",
+    "title": "The Inspiring Story of Hosanara",
+    "youtubeTitle": "BRAC SDP- The Inspiring story of Hosanara",
+    "category": "BRAC SDP",
+    "durationSeconds": 84,
+    "thumbnail": "/media/writing/DVWGCevrMhg.webp",
     "draft": true
   }
 ]

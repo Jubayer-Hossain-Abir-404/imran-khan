@@ -1,3 +1,5 @@
+import type { MouseEvent } from 'react'
+
 /** Section anchors, shared by the nav and the sections so they can't drift. */
 export const SECTION_IDS = {
   work: 'work',
@@ -31,6 +33,11 @@ export function mailto(email: string) {
 
 export function isExternal(href: string) {
   return /^https?:\/\//.test(href)
+}
+
+/** Plain left click; modified clicks keep the browser's default (new tab etc.). */
+export function isPlainClick(event: MouseEvent) {
+  return event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey
 }
 
 /** External links always open in a new tab with `rel`. */

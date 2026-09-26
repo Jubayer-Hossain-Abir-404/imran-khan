@@ -9,10 +9,16 @@ import {
 } from '@/components/ui/dialog'
 import { externalLinkProps } from '@/lib/links'
 import { embedUrl, playlistUrl, watchUrl } from '@/lib/youtube'
-import type { Film } from '@/types'
+import type { Video } from '@/types'
+
+/** A Film fits as is; other videos pass an eyebrow as `category` and omit the playlist. */
+export type PlayableVideo = Video & {
+  category?: string
+  playlistId?: string
+}
 
 type VideoModalProps = {
-  film: Film | null
+  video: PlayableVideo | null
   onClose: () => void
   /** Focus returns here; Safari doesn't focus links on click, so "previously focused" is unreliable. */
   opener: RefObject<HTMLElement | null>
@@ -22,14 +28,14 @@ const LINK =
   'inline-flex items-center gap-1.5 text-sm text-fg/80 underline decoration-fg/25 underline-offset-4 transition-colors hover:text-fg hover:decoration-accent'
 
 /** The iframe exists only while open; closing unmounts it, which stops playback. */
-export function VideoModal({ film, onClose, opener }: VideoModalProps) {
-  // Keep the last film through the exit animation.
-  const [current, setCurrent] = useState(film)
+export function VideoModal({ video, onClose, opener }: VideoModalProps) {
+  // Keep the last video through the exit animation.
+  const [current, setCurrent] = useState(video)
 
-  if (film && film !== current) setCurrent(film)
+  if (video && video !== current) setCurrent(video)
 
   return (
-    <Dialog open={film !== null} onOpenChange={(open) => !open && onClose()}>
+    <Dialog open={video !== null} onOpenChange={(open) => !open && onClose()}>
       {current ? (
         <DialogContent
           showCloseButton={false}
@@ -39,7 +45,7 @@ export function VideoModal({ film, onClose, opener }: VideoModalProps) {
         >
           <div className="flex items-start justify-between gap-4">
             <div className="min-w-0">
-              <p className="meta text-muted">{current.category}</p>
+              {current.category ? <p className="meta text-muted">{current.category}</p> : null}
               <DialogTitle className="mt-1.5 display text-h3 leading-tight font-medium">
                 {current.title}
               </DialogTitle>
@@ -71,14 +77,16 @@ export function VideoModal({ film, onClose, opener }: VideoModalProps) {
               {current.youtubeTitle}
             </DialogDescription>
             <div className="flex shrink-0 flex-wrap gap-x-6 gap-y-2">
-              <a
-                href={playlistUrl(current.playlistId)}
-                className={LINK}
-                {...externalLinkProps(playlistUrl(current.playlistId))}
-              >
-                {current.category} playlist
-                <ArrowUpRight aria-hidden className="size-3.5" />
-              </a>
+              {current.playlistId ? (
+                <a
+                  href={playlistUrl(current.playlistId)}
+                  className={LINK}
+                  {...externalLinkProps(playlistUrl(current.playlistId))}
+                >
+                  {current.category ? `${current.category} playlist` : 'Playlist'}
+                  <ArrowUpRight aria-hidden className="size-3.5" />
+                </a>
+              ) : null}
               <a
                 href={watchUrl(current.youtubeId)}
                 className={LINK}

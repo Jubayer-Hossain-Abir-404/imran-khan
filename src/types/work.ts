@@ -1,20 +1,19 @@
 import type { Draftable, Media } from './common'
 import type { Video } from './film'
 
-export type WritingPiece = Draftable & {
-  id: string
-  title: string
-  kind: string
-  image: Media | null
-  href?: string
-  year?: string
-}
+/** A channel video credited as writing / creative supervision; shown with the film card. */
+export type WritingPiece = Draftable &
+  Video & {
+    /** Card eyebrow, e.g. the client or project. */
+    category: string
+    year?: string
+  }
 
 /** Shongolpo. */
 export type Channel = Draftable & {
+  /** Block heading, e.g. "Content Creator". */
+  label: string
   name: string
-  /** Name in its original script, e.g. "সংগল্প". */
-  nativeName?: string
   href: string
   description: string
   /** Hand-picked (most viewed); links out, never embedded on load. */
@@ -26,7 +25,7 @@ export type OtherWork = Draftable & {
   title: string
   description: string
   image: Media | null
-  /** No link → non-interactive card, no arrow. */
+  /** Shown as "Visit" inside the detail dialog. */
   href?: string
   year?: string
 }
@@ -35,6 +34,9 @@ export type Client = Draftable & {
   name: string
   /** SVG preferred. */
   logo: string
+  /** Display size in px, tuned per logo so they read at the same visual weight. */
+  width: number
+  height: number
   href?: string
 }
 

@@ -1,33 +1,27 @@
 import { ArrowRight } from 'lucide-react'
-import { useRef, useState } from 'react'
 import { Reveal } from '@/components/motion/Reveal'
 import { Section } from '@/components/layout/Section'
 import { SectionHeader } from '@/components/layout/SectionHeader'
 import { SocialIcon } from '@/components/layout/SocialIcon'
+import { useVideoModal } from '@/components/video/useVideoModal'
+import { VideoModal } from '@/components/video/VideoModal'
 import { externalLinkProps, sectionHeadingId } from '@/lib/links'
 import { CHANNEL_URL } from '@/lib/youtube'
 import type { Film, SectionCopy } from '@/types'
-import { FilmCard } from './FilmCard'
-import { VideoModal } from './VideoModal'
+import { FilmCard } from '@/components/video/FilmCard'
 
 function plural(count: number, one: string, many: string) {
   return `${count} ${count === 1 ? one : many}`
 }
 
 export function Filmography({ copy, films }: { copy: SectionCopy; films: Film[] }) {
-  const [selected, setSelected] = useState<Film | null>(null)
-  const openerRef = useRef<HTMLElement | null>(null)
+  const { selected, play, close, opener } = useVideoModal<Film>()
 
   if (films.length === 0) return null
 
   // Derived, so it can't drift from the data.
   const categories = new Set(films.map((film) => film.category)).size
   const tally = `${plural(categories, 'category', 'categories')}, ${plural(films.length, 'story', 'stories')}`
-
-  const play = (film: Film, opener: HTMLElement) => {
-    openerRef.current = opener
-    setSelected(film)
-  }
 
   return (
     <Section id={copy.id}>
@@ -58,7 +52,7 @@ export function Filmography({ copy, films }: { copy: SectionCopy; films: Film[] 
         </Reveal>
       </div>
 
-      <ul className="mt-10 grid gap-4 md:mt-12 md:grid-cols-2 md:gap-5 xl:grid-cols-3">
+      <ul className="mt-stack grid gap-4 md:grid-cols-2 md:gap-5 xl:grid-cols-3">
         {films.map((film, index) => (
           // Stagger per row position, so each row cascades left to right.
           <Reveal as="li" key={film.youtubeId} delay={(index % 3) * 80}>
@@ -67,7 +61,7 @@ export function Filmography({ copy, films }: { copy: SectionCopy; films: Film[] 
         ))}
       </ul>
 
-      <div className="mt-12 flex items-center gap-6">
+      <div className="mt-stack flex items-center gap-6">
         <span aria-hidden className="h-px flex-1 bg-rule" />
         <a
           href={CHANNEL_URL}
@@ -84,7 +78,7 @@ export function Filmography({ copy, films }: { copy: SectionCopy; films: Film[] 
         <span aria-hidden className="h-px flex-1 bg-rule" />
       </div>
 
-      <VideoModal film={selected} onClose={() => setSelected(null)} opener={openerRef} />
+      <VideoModal video={selected} onClose={close} opener={opener} />
     </Section>
   )
 }

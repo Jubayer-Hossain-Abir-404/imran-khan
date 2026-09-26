@@ -2,8 +2,6 @@ import { Menu, X } from 'lucide-react'
 import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react'
 import { ANCHORS, hash } from '@/lib/links'
 import { cn } from '@/lib/utils'
-import type { Social } from '@/types'
-import { SocialLinks } from './SocialLinks'
 
 export type NavItem = {
   label: string
@@ -13,26 +11,13 @@ export type NavItem = {
 
 type NavbarProps = {
   name: string
-  /** Small line under the name, e.g. the first role. */
-  tagline?: string
   items: NavItem[]
-  social: Social[]
 }
 
 // Past this scroll offset the bar goes solid.
 const SOLID_AFTER = 24
 // A section is active once its top crosses this fraction of the viewport.
 const SPY_LINE = 0.4
-
-/** Initials for the monogram: "Imran Khan" → "IK". */
-function initials(name: string) {
-  return name
-    .split(/\s+/)
-    .map((word) => word[0])
-    .join('')
-    .slice(0, 2)
-    .toUpperCase()
-}
 
 /** Last item whose element has crossed the spy line; the last item at page bottom. */
 function activeId(items: NavItem[]) {
@@ -52,7 +37,7 @@ function activeId(items: NavItem[]) {
   return current
 }
 
-export function Navbar({ name, tagline, items, social }: NavbarProps) {
+export function Navbar({ name, items }: NavbarProps) {
   const [solid, setSolid] = useState(false)
   const [active, setActive] = useState<string | undefined>(items[0]?.id)
   const [open, setOpen] = useState(false)
@@ -129,18 +114,22 @@ export function Navbar({ name, tagline, items, social }: NavbarProps) {
   const links = (variant: 'bar' | 'menu') =>
     items.map((item) => {
       const current = item.id === active
+      // In the bar, Contact is the outlined CTA at the end (no underline).
+      const cta = variant === 'bar' && item.id === ANCHORS.contact
 
       return (
         <li key={item.id}>
           <a
             href={hash(item.id)}
             aria-current={current ? 'location' : undefined}
-            data-nav={variant === 'bar' ? item.id : undefined}
+            data-nav={variant === 'bar' && !cta ? item.id : undefined}
             onClick={() => setOpen(false)}
             className={cn(
               'relative block text-sm transition-colors hover:text-fg',
-              current ? 'text-fg' : 'text-muted',
-              variant === 'bar' ? 'px-3 py-2' : 'flex items-center gap-3 py-3',
+              current || cta ? 'text-fg' : 'text-muted',
+              variant === 'menu' && 'flex items-center gap-3 py-3',
+              variant === 'bar' && !cta && 'px-3 py-2',
+              cta && 'ml-4 border border-fg/30 px-4 py-2 hover:border-fg',
             )}
           >
             {variant === 'menu' ? (
@@ -166,56 +155,35 @@ export function Navbar({ name, tagline, items, social }: NavbarProps) {
           : 'border-transparent bg-transparent',
       )}
     >
-      {/* Condenses once solid. Three columns keep the links centred on the page, not between siblings. */}
+      {/* Condenses once solid. Signature left; links + Contact CTA right. */}
       <div
         className={cn(
-          'mx-auto grid max-w-7xl grid-cols-[1fr_auto] items-center gap-6 px-gutter transition-[height] duration-500 ease-cinema md:grid-cols-[1fr_auto_1fr]',
+          'mx-auto grid max-w-7xl grid-cols-[1fr_auto] items-center gap-6 px-gutter transition-[height] duration-500 ease-cinema',
           solid ? 'h-14' : 'h-nav',
         )}
       >
         <a
           href={hash(ANCHORS.top)}
           aria-label={`${name}, back to top`}
-          className="group flex items-center gap-3 justify-self-start"
+          className="justify-self-start pt-2.5 signature text-[2.375rem] whitespace-nowrap transition-colors duration-300 hover:text-accent"
         >
-          <span
-            aria-hidden
-            className="grid size-9 place-items-center border border-fg/35 font-serif text-[0.9375rem] font-semibold tracking-[0.06em] transition-colors duration-300 group-hover:border-accent group-hover:text-accent"
-          >
-            {initials(name)}
-          </span>
-          <span aria-hidden className="flex flex-col gap-1">
-            <span className="display text-xl leading-none whitespace-nowrap">{name}</span>
-            {tagline ? (
-              <span className="text-[0.625rem] leading-none font-medium tracking-[0.28em] text-muted uppercase">
-                {tagline}
-              </span>
-            ) : null}
-          </span>
+          {name}
         </a>
 
-        <nav aria-label="Primary" className="hidden md:block">
-          <ul ref={listRef} className="relative flex items-center">
-            {links('bar')}
-            <li
-              aria-hidden
-              className={cn(
-                'pointer-events-none absolute bottom-0.5 h-px bg-accent transition-[left,width,opacity] duration-500 ease-cinema',
-                !indicator && 'opacity-0',
-              )}
-              style={indicator ?? undefined}
-            />
-          </ul>
-        </nav>
-
         <div className="flex items-center gap-2 justify-self-end">
-          {social.length > 0 ? (
-            <div className="hidden items-center gap-3 lg:flex">
-              <span aria-hidden className="h-5 w-px bg-rule" />
-              <SocialLinks social={social} label="Social" className="-mr-2" />
-            </div>
-          ) : null}
-
+          <nav aria-label="Primary" className="hidden md:block">
+            <ul ref={listRef} className="relative flex items-center">
+              {links('bar')}
+              <li
+                aria-hidden
+                className={cn(
+                  'pointer-events-none absolute bottom-0.5 h-px bg-accent transition-[left,width,opacity] duration-500 ease-cinema',
+                  !indicator && 'opacity-0',
+                )}
+                style={indicator ?? undefined}
+              />
+            </ul>
+          </nav>
           <button
             type="button"
             aria-expanded={open}
@@ -236,7 +204,6 @@ export function Navbar({ name, tagline, items, social }: NavbarProps) {
         className="border-t border-rule px-gutter pb-4 md:hidden"
       >
         <ul className="divide-y divide-rule">{links('menu')}</ul>
-        <SocialLinks social={social} label="Social" className="mt-2 -ml-2" />
       </nav>
     </header>
   )

@@ -1,7 +1,25 @@
 [
-  { "name": "Placeholder client", "logo": "", "draft": true },
-  { "name": "Placeholder client", "logo": "", "draft": true },
-  { "name": "Placeholder client", "logo": "", "draft": true },
-  { "name": "Placeholder client", "logo": "", "draft": true },
-  { "name": "Placeholder client", "logo": "", "draft": true }
+  { "name": "BRAC", "logo": "/media/clients/brac.svg", "width": 90, "height": 30, "draft": true },
+  {
+    "name": "UNICEF",
+    "logo": "/media/clients/unicef.svg",
+    "width": 117,
+    "height": 28,
+    "draft": true
+  },
+  {
+    "name": "World Food Programme",
+    "logo": "/media/clients/wfp.svg",
+    "width": 107,
+    "height": 50,
+    "draft": true
+  },
+  { "name": "BBC", "logo": "/media/clients/bbc.svg", "width": 84, "height": 24, "draft": true },
+  {
+    "name": "The Asia Foundation",
+    "logo": "/media/clients/asia-foundation.svg",
+    "width": 168,
+    "height": 28,
+    "draft": true
+  }
 ]

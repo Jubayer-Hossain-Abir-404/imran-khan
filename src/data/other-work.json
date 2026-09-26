@@ -2,29 +2,30 @@
   {
     "id": "book-translation",
     "title": "Book Translation",
-    "description": "Placeholder — details to be supplied.",
-    "image": null,
+    "description": "Placeholder — selected works and contributions.",
+    "image": { "src": "/media/placeholders/other-1.webp", "alt": "", "width": 1200, "height": 675 },
+    "href": "https://example.com/",
     "draft": true
   },
   {
     "id": "awards",
     "title": "Awards",
-    "description": "Placeholder — details to be supplied.",
-    "image": null,
+    "description": "Placeholder — recognition and milestones.",
+    "image": { "src": "/media/placeholders/other-2.webp", "alt": "", "width": 1200, "height": 675 },
     "draft": true
   },
   {
     "id": "pala",
     "title": "Pala",
-    "description": "Placeholder — details to be supplied.",
-    "image": null,
+    "description": "Placeholder — traditional performance work.",
+    "image": { "src": "/media/placeholders/other-3.webp", "alt": "", "width": 1200, "height": 675 },
     "draft": true
   },
   {
     "id": "others",
     "title": "Others",
-    "description": "Placeholder — details to be supplied.",
-    "image": null,
+    "description": "Placeholder — talks, workshops and more.",
+    "image": { "src": "/media/placeholders/other-4.webp", "alt": "", "width": 1200, "height": 675 },
     "draft": true
   }
 ]

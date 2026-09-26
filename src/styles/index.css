@@ -4,6 +4,8 @@
 @import '@fontsource-variable/geist';
 @import '@fontsource/cormorant-garamond/500.css';
 @import '@fontsource/cormorant-garamond/600.css';
+/* Signature wordmark (navbar + footer). */
+@import '@fontsource/mrs-saint-delafield/latin-400.css';
 
 /* Keyframes and data-open/closed variants used by components/ui. */
 @import 'shadcn/tailwind.css';
@@ -91,6 +93,7 @@
 
   --font-serif: 'Cormorant Garamond', ui-serif, Georgia, serif;
   --font-sans: 'Geist Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-script: 'Mrs Saint Delafield', cursive;
 
   /* Fluid scale. Display steps run large for Cormorant's small x-height. */
   --text-meta: 0.6875rem;
@@ -113,7 +116,9 @@
   --radius-xl: 3px;
 
   --spacing-gutter: clamp(1rem, 0.5rem + 2.5vw, 4rem);
-  --spacing-section: clamp(4.5rem, 2.5rem + 7vw, 8.5rem);
+  /* Section padding (48→80 px) and header → content gap (32→40 px): the one vertical rhythm. */
+  --spacing-section: clamp(3rem, 2.25rem + 2.5vw, 5rem);
+  --spacing-stack: clamp(2rem, 1.75rem + 0.8vw, 2.5rem);
   --spacing-nav: 4.5rem;
 
   --ease-cinema: cubic-bezier(0.22, 1, 0.36, 1);
@@ -182,6 +187,14 @@
   font-family: var(--font-serif);
   font-weight: 500;
   letter-spacing: -0.015em;
+}
+
+/* Handwritten name. The face runs small and sits low, so it gets its own size and line box. */
+@utility signature {
+  font-family: var(--font-script);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0;
 }
 
 /* Scroll reveal; `pending` is set by script only, so no-JS HTML stays visible. */

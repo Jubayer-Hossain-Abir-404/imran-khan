@@ -1,21 +1,22 @@
 import { Play } from 'lucide-react'
 import type { MouseEvent } from 'react'
-import { externalLinkProps } from '@/lib/links'
+import { externalLinkProps, isPlainClick } from '@/lib/links'
 import { formatDuration, isoDuration, watchUrl } from '@/lib/youtube'
-import type { Film } from '@/types'
+import type { Video } from '@/types'
 
-type FilmCardProps = {
-  film: Film
-  onPlay: (film: Film, opener: HTMLElement) => void
+/** Anything with an eyebrow: films, writing videos. */
+type CardVideo = Video & { category: string }
+
+type FilmCardProps<T extends CardVideo> = {
+  film: T
+  onPlay: (film: T, opener: HTMLElement) => void
 }
 
-/** Plain left-click opens the modal; modified clicks and no-JS fall through to YouTube. */
-function isPlainClick(event: MouseEvent) {
-  return event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey
-}
-
-/** Stretched-link card: the title link covers the tile, so the heading stays navigable. */
-export function FilmCard({ film, onPlay }: FilmCardProps) {
+/**
+ * Stretched-link card: the title link covers the tile, so the heading stays navigable.
+ * Plain left click opens the modal; modified clicks and no-JS fall through to YouTube.
+ */
+export function FilmCard<T extends CardVideo>({ film, onPlay }: FilmCardProps<T>) {
   const href = watchUrl(film.youtubeId)
 
   const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {

@@ -9,19 +9,27 @@
     "Placeholder bio. The aim throughout: meaningful stories that inspire and resonate."
   ],
   "location": "Bangladesh",
-  "email": null,
+  "email": "hello@example.com",
   "portrait": {
-    "src": "/media/portrait-placeholder.svg",
-    "alt": "Portrait placeholder",
-    "width": 800,
-    "height": 1000
+    "src": "/media/portrait-dummy.jpg",
+    "alt": "Portrait (placeholder stock photo)",
+    "width": 960,
+    "height": 1440
   },
   "quote": "Placeholder quote — stories have the power to change perspectives.",
   "facts": [
-    { "label": "Director", "icon": "camera" },
-    { "label": "Screenwriter", "icon": "pen" },
-    { "label": "Former Producer", "icon": "clapperboard" },
-    { "label": "Based in Bangladesh", "icon": "map-pin" }
+    {
+      "label": "Director",
+      "icon": "camera"
+    },
+    {
+      "label": "Screenwriter",
+      "icon": "pen"
+    },
+    {
+      "label": "Former Producer",
+      "icon": "clapperboard"
+    }
   ],
   "hero": {
     "poster": {
@@ -39,9 +47,10 @@
     "eyebrow",
     "summary",
     "about (dummy)",
-    "portrait (dummy)",
+    "portrait (dummy CC0 stock photo, Jeremy Bishop / Unsplash via Wikimedia Commons)",
     "quote (dummy)",
     "location",
+    "email (dummy — reserved example.com domain)",
     "hero.poster (interim still, not the reel)",
     "hero.video (dummy Mixkit stock clip 43609)"
   ]

@@ -1,4 +1,4 @@
-// Downloads the YouTube still (1280×720 WebP) for every film + the channel's featured video into public/. Run: `npm run fetch:thumbnails`.
+// Downloads the YouTube still (1280×720 WebP) for every film, writing video and the channel's featured video into public/. Run: `npm run fetch:thumbnails`.
 
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 
@@ -10,11 +10,12 @@ async function readData<T>(name: string): Promise<T> {
   return JSON.parse(await readFile(new URL(`src/data/${name}.json`, root), 'utf8')) as T
 }
 
-const [films, channel] = await Promise.all([
+const [films, writing, channel] = await Promise.all([
   readData<VideoEntry[]>('films'),
+  readData<VideoEntry[]>('writing'),
   readData<{ featured?: VideoEntry }>('channel'),
 ])
-const videos = channel.featured ? [...films, channel.featured] : films
+const videos = [...films, ...writing, ...(channel.featured ? [channel.featured] : [])]
 
 // maxres is 16:9 without letterboxing; sd is the 4:3 fallback when maxres was never generated.
 const SOURCES = ['maxresdefault', 'sddefault']

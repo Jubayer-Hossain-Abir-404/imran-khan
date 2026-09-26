@@ -25,8 +25,8 @@ export function Footer({ name, roles, email, social }: FooterProps) {
 
         <div className="flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="display text-h3">{name}</p>
-            <p className="mt-2 text-sm text-muted">{roles.join(' · ')}</p>
+            <p className="signature text-5xl">{name}</p>
+            <p className="mt-3 text-sm text-muted">{roles.join(' · ')}</p>
             {email ? (
               <a
                 href={mailto(email)}
@@ -37,10 +37,10 @@ export function Footer({ name, roles, email, social }: FooterProps) {
             ) : null}
           </div>
 
-          {social.length > 0 ? (
+          {social.length > 0 || email ? (
             <div className="flex items-center gap-4">
-              <span className="meta text-muted">Follow</span>
-              <SocialLinks social={social} label="Social" className="-mr-2" />
+              <span className="meta text-muted">Connect</span>
+              <SocialLinks social={social} email={email} label="Contact links" className="-mr-2" />
             </div>
           ) : null}
         </div>
