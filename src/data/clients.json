@@ -1,22 +1,29 @@
 [
-  { "name": "BRAC", "logo": "/media/clients/brac.svg", "width": 90, "height": 30 },
+  { "name": "BRAC", "logo": "/media/clients/brac.webp", "width": 111, "height": 37 },
+  { "name": "UNOPS", "logo": "/media/clients/unops.webp", "width": 164, "height": 28 },
   {
-    "name": "UNICEF",
-    "logo": "/media/clients/unicef.svg",
-    "width": 117,
-    "height": 28
+    "name": "Swisscontact",
+    "logo": "/media/clients/swisscontact.webp",
+    "width": 127,
+    "height": 33
   },
+  { "name": "ILO", "logo": "/media/clients/ilo.webp", "width": 66, "height": 55 },
   {
-    "name": "World Food Programme",
-    "logo": "/media/clients/wfp.svg",
-    "width": 107,
-    "height": 50
+    "name": "Plan International",
+    "logo": "/media/clients/plan-international.webp",
+    "width": 84,
+    "height": 45
   },
-  { "name": "BBC", "logo": "/media/clients/bbc.svg", "width": 84, "height": 24 },
+  { "name": "CARE", "logo": "/media/clients/care.webp", "width": 111, "height": 36 },
+  { "name": "WorldFish", "logo": "/media/clients/worldfish.webp", "width": 92, "height": 42 },
+  { "name": "Helvetas", "logo": "/media/clients/helvetas.webp", "width": 125, "height": 33 },
+  { "name": "RIMES", "logo": "/media/clients/rimes.webp", "width": 56, "height": 56 },
+  { "name": "Omega Exim", "logo": "/media/clients/omega-exim.webp", "width": 103, "height": 39 },
+  { "name": "Smart Air", "logo": "/media/clients/smart-air.webp", "width": 52, "height": 52 },
   {
-    "name": "The Asia Foundation",
-    "logo": "/media/clients/asia-foundation.svg",
-    "width": 168,
-    "height": 28
+    "name": "Reliance Insurance",
+    "logo": "/media/clients/reliance-insurance.webp",
+    "width": 48,
+    "height": 52
   }
 ]

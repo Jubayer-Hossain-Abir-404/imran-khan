@@ -342,6 +342,51 @@
   }
 }
 
+/* Client marquee: the track holds two identical lists and slides one list-width per loop. */
+@keyframes ik-marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@utility marquee {
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+
+  & [data-track] {
+    animation: ik-marquee var(--marquee-duration, 45s) linear infinite;
+  }
+
+  /* Hover pauses; touch skips it (sticky tap hover). */
+  @media (hover: hover) {
+    &:hover [data-track] {
+      animation-play-state: paused;
+    }
+  }
+
+  /* Static centred wrap, clone dropped. */
+  @media (prefers-reduced-motion: reduce) {
+    mask-image: none;
+
+    & [data-track] {
+      animation: none;
+      width: auto;
+      justify-content: center;
+    }
+
+    & [data-list] {
+      flex-wrap: wrap;
+      justify-content: center;
+      row-gap: 2rem;
+      padding-inline: var(--spacing-gutter);
+    }
+
+    & [data-clone] {
+      display: none;
+    }
+  }
+}
+
 /* RollLink "on": hovered (hover devices only, as Tailwind's hover:), focused, or current. */
 @custom-variant roll-on {
   @media (hover: hover) {

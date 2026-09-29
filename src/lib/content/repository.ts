@@ -5,7 +5,6 @@ import otherWorkData from '@/data/other-work.json'
 import profileData from '@/data/profile.json'
 import sectionsData from '@/data/sections.json'
 import socialData from '@/data/social.json'
-import testimonialsData from '@/data/testimonials.json'
 import writingData from '@/data/writing.json'
 import { isFactIcon, isSectionId, isSocialKind } from '@/types'
 import type {
@@ -17,7 +16,6 @@ import type {
   Profile,
   SectionCopy,
   Social,
-  Testimonial,
   WritingPiece,
 } from '@/types'
 
@@ -73,7 +71,6 @@ const films = published<Film>('films.json', filmsData)
 const writing = published<WritingPiece>('writing.json', writingData)
 const otherWork = published<OtherWork>('other-work.json', otherWorkData)
 const clients = published<Client>('clients.json', clientsData)
-const testimonials = published<Testimonial>('testimonials.json', testimonialsData)
 const [channel = null] = published<Channel>('channel.json', [channelData])
 
 export async function getProfile(): Promise<Profile> {
@@ -108,8 +105,4 @@ export async function getOtherWork(): Promise<OtherWork[]> {
 
 export async function getClients(): Promise<Client[]> {
   return clients
-}
-
-export async function getTestimonials(): Promise<Testimonial[]> {
-  return testimonials
 }

@@ -41,10 +41,3 @@ export type Client = Draftable & {
   height: number
   href?: string
 }
-
-export type Testimonial = Draftable & {
-  quote: string
-  name: string
-  role?: string
-  organization?: string
-}

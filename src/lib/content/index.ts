@@ -7,6 +7,5 @@ export {
   getProfile,
   getSections,
   getSocial,
-  getTestimonials,
   getWriting,
 } from './repository'

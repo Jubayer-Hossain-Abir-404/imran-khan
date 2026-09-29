@@ -117,16 +117,16 @@ src/data/*.json  →  src/lib/content/repository.ts  →  routes/home.tsx loader
 
 ### Files
 
-| File                                 | Holds                                                                                                                                                          |
-| ------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `profile.json`                       | Name, roles, eyebrow, summary, bio, portrait, quote, facts, email, **hero media**, `unverified`                                                                |
-| `films.json`                         | Selected Works: `youtubeId`, `title` (cleaned), `youtubeTitle` (verbatim), `category`, `playlistId`, `durationSeconds`, `thumbnail`, optional `objectPosition` |
-| `writing.json`                       | Writer/Creator videos (same `Video` shape + `category`)                                                                                                        |
-| `channel.json`                       | Shonggolpo channel: description, URL, featured video                                                                                                           |
-| `other-work.json`                    | Other Works cards (image, description, optional `href`)                                                                                                        |
-| `clients.json` / `testimonials.json` | Logos (with display `width`/`height`) and quotes                                                                                                               |
-| `social.json`                        | Footer social links                                                                                                                                            |
-| `sections.json`                      | Per-section copy and order                                                                                                                                     |
+| File              | Holds                                                                                                                                                          |
+| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `profile.json`    | Name, roles, eyebrow, summary, bio, portrait, quote, facts, email, **hero media**, `unverified`                                                                |
+| `films.json`      | Selected Works: `youtubeId`, `title` (cleaned), `youtubeTitle` (verbatim), `category`, `playlistId`, `durationSeconds`, `thumbnail`, optional `objectPosition` |
+| `writing.json`    | Writer/Creator videos (same `Video` shape + `category`)                                                                                                        |
+| `channel.json`    | Shonggolpo channel: description, URL, featured video                                                                                                           |
+| `other-work.json` | Other Works cards (image, description, optional `href`)                                                                                                        |
+| `clients.json`    | Logos with display `width`/`height` (tuned per logo for optical weight)                                                                                        |
+| `social.json`     | Footer social links                                                                                                                                            |
+| `sections.json`   | Per-section copy and order                                                                                                                                     |
 
 ### Adding a film
 
@@ -196,7 +196,7 @@ The display and body fonts are `<link rel="preload">`-ed in `root.tsx`, so they 
 ### Other images
 
 - **Other Works:** image cards. The whole card opens a detail dialog, with a "Visit" link when `href` is set.
-- **Client logos:** SVGs with explicit `width`/`height` in `clients.json`, which prevents layout shift.
+- **Client logos:** trimmed, transparent WebP (about 2× display size) with explicit `width`/`height` in `clients.json`, which prevents layout shift. Shown in brand colour in a CSS marquee that pauses on hover; reduced motion gets a static wrap.
 - **Portrait:** explicit dimensions, lazy.
 
 ### Motion

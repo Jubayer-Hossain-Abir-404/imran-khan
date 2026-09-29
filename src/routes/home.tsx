@@ -15,7 +15,6 @@ import {
   getProfile,
   getSections,
   getSocial,
-  getTestimonials,
   getWriting,
 } from '@/lib/content'
 import { ANCHORS, SECTION_IDS, type SectionId } from '@/lib/links'
@@ -33,7 +32,7 @@ const NAV: NavItem[] = [
 ]
 
 export async function loader() {
-  const [profile, social, films, allSections, writing, channel, otherWork, clients, testimonials] =
+  const [profile, social, films, allSections, writing, channel, otherWork, clients] =
     await Promise.all([
       getProfile(),
       getSocial(),
@@ -43,7 +42,6 @@ export async function loader() {
       getChannel(),
       getOtherWork(),
       getClients(),
-      getTestimonials(),
     ])
 
   // A section with nothing published is hidden, along with its nav item.
@@ -52,7 +50,7 @@ export async function loader() {
     [SECTION_IDS.writing]: writing.length > 0 || channel !== null,
     [SECTION_IDS.about]: true,
     [SECTION_IDS.other]: otherWork.length > 0,
-    [SECTION_IDS.clients]: clients.length > 0 || testimonials.length > 0,
+    [SECTION_IDS.clients]: clients.length > 0,
   }
 
   const sections = allSections.filter((section) => hasContent[section.id])
@@ -70,7 +68,6 @@ export async function loader() {
     channel,
     otherWork,
     clients,
-    testimonials,
   }
 }
 
@@ -109,14 +106,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
       case SECTION_IDS.other:
         return <OtherWorks key={copy.id} copy={copy} works={loaderData.otherWork} />
       case SECTION_IDS.clients:
-        return (
-          <Clients
-            key={copy.id}
-            copy={copy}
-            clients={loaderData.clients}
-            testimonials={loaderData.testimonials}
-          />
-        )
+        return <Clients key={copy.id} copy={copy} clients={loaderData.clients} />
     }
   }
 

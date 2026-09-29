@@ -4,4 +4,4 @@ export type { Fact, FactIcon, HeroMedia, Profile, Social, SocialKind } from './p
 export { FACT_ICONS, isFactIcon, isSocialKind, SOCIAL_KINDS } from './profile'
 export type { SectionCopy } from './section'
 export { isSectionId } from './section'
-export type { Channel, Client, OtherWork, Testimonial, WritingPiece } from './work'
+export type { Channel, Client, OtherWork, WritingPiece } from './work'
