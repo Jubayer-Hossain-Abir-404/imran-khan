@@ -11,10 +11,13 @@ import { externalLinkProps } from '@/lib/links'
 import { embedUrl, playlistUrl, watchUrl } from '@/lib/youtube'
 import type { Video } from '@/types'
 
-/** A Film fits as is; other videos pass an eyebrow as `category` and omit the playlist. */
+/** A Film fits as is; other videos pass an eyebrow as `category` and omit the rest. */
 export type PlayableVideo = Video & {
   category?: string
   playlistId?: string
+  year?: string
+  client?: string
+  credits?: string
 }
 
 type VideoModalProps = {
@@ -34,6 +37,10 @@ export function VideoModal({ video, onClose, opener }: VideoModalProps) {
 
   if (video && video !== current) setCurrent(video)
 
+  const eyebrow = current
+    ? [current.category, current.year, current.client].filter(Boolean).join(' · ')
+    : ''
+
   return (
     <Dialog open={video !== null} onOpenChange={(open) => !open && onClose()}>
       {current ? (
@@ -45,7 +52,7 @@ export function VideoModal({ video, onClose, opener }: VideoModalProps) {
         >
           <div className="flex items-start justify-between gap-4">
             <div className="min-w-0">
-              {current.category ? <p className="meta text-muted">{current.category}</p> : null}
+              {eyebrow ? <p className="meta text-muted">{eyebrow}</p> : null}
               <DialogTitle className="mt-1.5 display text-h3 leading-tight font-medium">
                 {current.title}
               </DialogTitle>
@@ -73,10 +80,15 @@ export function VideoModal({ video, onClose, opener }: VideoModalProps) {
           </div>
 
           {/* Wraps by modal width, not viewport: on landscape phones the modal is height-bound. */}
+          {/* No YouTube title here: the header and the player already show it. */}
           <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
-            <DialogDescription className="min-w-0 flex-[1_1_16rem] truncate text-xs text-muted">
-              {current.youtubeTitle}
-            </DialogDescription>
+            {current.credits ? (
+              <DialogDescription className="min-w-0 flex-[1_1_16rem] text-sm text-fg/80">
+                {current.credits}
+              </DialogDescription>
+            ) : (
+              <span aria-hidden className="flex-[1_1_16rem]" />
+            )}
             <div className="flex shrink-0 flex-wrap gap-x-6 gap-y-2">
               {current.playlistId ? (
                 <a

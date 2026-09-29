@@ -355,6 +355,9 @@
   }
 }
 
+/* Hover-capable devices (Tailwind's hover: gate); touch keeps the non-hover layout. */
+@custom-variant can-hover (@media (hover: hover));
+
 /* Loader exit state, set by the head script. */
 @custom-variant loader-exit (:root[data-loading='exit'] &);
 

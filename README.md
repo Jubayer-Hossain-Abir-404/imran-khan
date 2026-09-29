@@ -122,7 +122,7 @@ src/data/*.json  →  src/lib/content/repository.ts  →  routes/home.tsx loader
 | `profile.json`                       | Name, roles, eyebrow, summary, bio, portrait, quote, facts, email, **hero media**, `unverified`                                                                |
 | `films.json`                         | Selected Works: `youtubeId`, `title` (cleaned), `youtubeTitle` (verbatim), `category`, `playlistId`, `durationSeconds`, `thumbnail`, optional `objectPosition` |
 | `writing.json`                       | Writer/Creator videos (same `Video` shape + `category`)                                                                                                        |
-| `channel.json`                       | Shongolpo channel: description, URL, featured video                                                                                                            |
+| `channel.json`                       | Shonggolpo channel: description, URL, featured video                                                                                                           |
 | `other-work.json`                    | Other Works cards (image, description, optional `href`)                                                                                                        |
 | `clients.json` / `testimonials.json` | Logos (with display `width`/`height`) and quotes                                                                                                               |
 | `social.json`                        | Footer social links                                                                                                                                            |

@@ -1,4 +1,12 @@
-import { Camera, Clapperboard, MapPin, PenLine, Quote, type LucideIcon } from 'lucide-react'
+import {
+  Camera,
+  Clapperboard,
+  MapPin,
+  MonitorPlay,
+  PenLine,
+  Quote,
+  type LucideIcon,
+} from 'lucide-react'
 import { Reveal } from '@/components/motion/Reveal'
 import { Section } from '@/components/layout/Section'
 import { SectionHeader } from '@/components/layout/SectionHeader'
@@ -10,6 +18,7 @@ const ICONS: Record<FactIcon, LucideIcon> = {
   camera: Camera,
   pen: PenLine,
   clapperboard: Clapperboard,
+  'monitor-play': MonitorPlay,
   'map-pin': MapPin,
 }
 

@@ -97,7 +97,7 @@ export async function getWriting(): Promise<WritingPiece[]> {
   return writing
 }
 
-/** `null` when Shongolpo has no published entry. */
+/** `null` when Shonggolpo has no published entry. */
 export async function getChannel(): Promise<Channel | null> {
   return channel
 }

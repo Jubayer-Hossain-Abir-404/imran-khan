@@ -5,7 +5,7 @@ export type Video = {
   youtubeId: string
   /** Cleaned display title. */
   title: string
-  /** YouTube title, verbatim — shown in the video modal. */
+  /** YouTube title, verbatim — reference only (the embedded player shows it). */
   youtubeTitle: string
   /** From the watch page's `lengthSeconds`. */
   durationSeconds?: number
@@ -21,5 +21,8 @@ export type Film = Draftable &
     /** Playlist name. */
     category: string
     playlistId: string
-    year?: string
+    year: string
+    client: string
+    /** Roles on this film, e.g. "Director & Screenwriter". */
+    credits: string
   }

@@ -131,7 +131,13 @@ export default function Home({ loaderData }: Route.ComponentProps) {
         {sections.map(renderSection)}
       </main>
 
-      <Footer name={profile.name} roles={profile.roles} email={profile.email} social={social} />
+      <Footer
+        name={profile.name}
+        roles={profile.roles}
+        location={profile.location}
+        email={profile.email}
+        social={social}
+      />
     </>
   )
 }

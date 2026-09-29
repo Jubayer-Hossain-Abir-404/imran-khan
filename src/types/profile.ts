@@ -1,6 +1,6 @@
 import type { Draftable, Link, Media } from './common'
 
-export const FACT_ICONS = ['camera', 'pen', 'clapperboard', 'map-pin'] as const
+export const FACT_ICONS = ['camera', 'pen', 'clapperboard', 'monitor-play', 'map-pin'] as const
 
 export type FactIcon = (typeof FACT_ICONS)[number]
 

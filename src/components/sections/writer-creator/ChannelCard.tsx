@@ -136,11 +136,14 @@ export function ChannelCard({ channel, onPlay, headingId, layout = 'split' }: Ch
             <SocialIcon kind="youtube" className="size-5" />
           </span>
         )}
-        <span className="flex-1 font-medium transition-colors group-hover:text-accent">
-          {channel.name}
+        {/* Arrow follows the name, not the row edge; the whole row stays the hit area. */}
+        <span className="flex min-w-0 items-center gap-2">
+          <span className="display text-xl leading-tight transition-colors group-hover:text-accent">
+            {channel.name}
+          </span>
+          <span className="sr-only">on YouTube</span>
+          <RollArrow className="text-muted group-hover:text-fg" />
         </span>
-        <span className="sr-only">on YouTube</span>
-        <RollArrow className="text-muted group-hover:text-fg" />
       </a>
     </div>
   )

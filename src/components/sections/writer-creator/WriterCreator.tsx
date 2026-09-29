@@ -16,7 +16,7 @@ type WriterCreatorProps = {
   channel: Channel | null
 }
 
-/** Writing videos ‖ Shongolpo (side by side from xl). Either can be empty; the other takes the width. */
+/** Writing videos ‖ Shonggolpo (side by side from xl). Either can be empty; the other takes the width. */
 export function WriterCreator({ copy, writing, channel }: WriterCreatorProps) {
   const { selected, play, close, opener } = useVideoModal<PlayableVideo>()
   const headingId = sectionHeadingId(copy.id)

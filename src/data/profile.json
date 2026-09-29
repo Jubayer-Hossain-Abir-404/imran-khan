@@ -1,22 +1,22 @@
 {
   "name": "Imran Khan",
-  "roles": ["Director", "Screenwriter", "Former Producer"],
+  "roles": ["Director", "Screenwriter", "Producer", "Content Creator"],
   "eyebrow": "Stories beyond the frame",
   "summary": "Director and screenwriter making documentary, fiction, animated and corporate films for development organisations and brands.",
   "about": [
     "Placeholder bio. A filmmaker and storyteller with a deep interest in people, culture and social change, working across documentary, fiction, animation and digital content.",
-    "Placeholder bio. Years of directing and producing for development organisations and brands, alongside writing and creative supervision — and, more recently, the Shongolpo channel.",
+    "Placeholder bio. Years of directing and producing for development organisations and brands, alongside writing and creative supervision — and, more recently, the Shonggolpo channel.",
     "Placeholder bio. The aim throughout: meaningful stories that inspire and resonate."
   ],
-  "location": "Bangladesh",
-  "email": "hello@example.com",
+  "location": "Dhaka, Bangladesh",
+  "email": "imran.khan366350@gmail.com",
   "portrait": {
-    "src": "/media/portrait-dummy.jpg",
-    "alt": "Portrait (placeholder stock photo)",
+    "src": "/media/portrait.webp",
+    "alt": "Portrait of Imran Khan",
     "width": 960,
-    "height": 1440
+    "height": 1200
   },
-  "quote": "Placeholder quote — stories have the power to change perspectives.",
+  "quote": "Every frame captures truth from the present, the past, and the untold future.",
   "facts": [
     {
       "label": "Director",
@@ -27,8 +27,16 @@
       "icon": "pen"
     },
     {
-      "label": "Former Producer",
+      "label": "Producer",
       "icon": "clapperboard"
+    },
+    {
+      "label": "Content Creator",
+      "icon": "monitor-play"
+    },
+    {
+      "label": "Dhaka, Bangladesh",
+      "icon": "map-pin"
     }
   ],
   "hero": {
@@ -47,10 +55,6 @@
     "eyebrow",
     "summary",
     "about (dummy)",
-    "portrait (dummy CC0 stock photo, Jeremy Bishop / Unsplash via Wikimedia Commons)",
-    "quote (dummy)",
-    "location",
-    "email (dummy — reserved example.com domain)",
     "hero.poster (interim still, not the reel)",
     "hero.video (dummy Mixkit stock clip 43609)"
   ]

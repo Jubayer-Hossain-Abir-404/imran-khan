@@ -9,7 +9,7 @@ export type WritingPiece = Draftable &
     year?: string
   }
 
-/** Shongolpo. */
+/** Shonggolpo. */
 export type Channel = Draftable & {
   /** Block heading, e.g. "Content Creator". */
   label: string

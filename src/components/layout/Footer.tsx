@@ -1,4 +1,4 @@
-import { ArrowUp } from 'lucide-react'
+import { ArrowUp, MapPin } from 'lucide-react'
 import { ANCHORS, hash, mailto } from '@/lib/links'
 import { cn } from '@/lib/utils'
 import type { Social } from '@/types'
@@ -8,6 +8,7 @@ import { Wordmark } from './Wordmark'
 type FooterProps = {
   name: string
   roles: string[]
+  location: string
   email: string | null
   social: Social[]
 }
@@ -16,7 +17,7 @@ const HEADING_ID = 'contact-heading'
 
 const ARROW = 'absolute inset-0 size-4 transition-transform duration-500 ease-out-expo'
 
-export function Footer({ name, roles, email, social }: FooterProps) {
+export function Footer({ name, roles, location, email, social }: FooterProps) {
   // Fixed at build time (prerendered); correct as long as the site rebuilds yearly.
   const year = new Date().getFullYear()
 
@@ -33,6 +34,10 @@ export function Footer({ name, roles, email, social }: FooterProps) {
               <Wordmark name={name} />
             </p>
             <p className="mt-2 text-sm text-muted">{roles.join(' · ')}</p>
+            <p className="mt-1.5 flex items-center gap-1.5 text-sm text-muted">
+              <MapPin aria-hidden className="size-3.5 shrink-0 text-accent" />
+              {location}
+            </p>
           </div>
 
           {social.length > 0 || email ? (
