@@ -23,7 +23,11 @@ export type HeroMedia = {
     mp4: string
     /** Without it, narrow screens get the poster only. */
     mobileMp4?: string
+    /** 1080p for large or high-density screens; falls back to the 720p pair. */
+    large?: { webm?: string; mp4: string }
   }
+  /** "View Full Reel" target; `null` hides the button. */
+  fullReel: string | null
 }
 
 export type Profile = {

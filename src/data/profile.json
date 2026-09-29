@@ -41,19 +41,27 @@
   ],
   "hero": {
     "poster": {
-      "src": "/media/films/pjbekhbiU8w.webp",
-      "alt": "Still from Control and Access over Income",
-      "width": 1280,
-      "height": 720
+      "src": "/media/hero/poster.webp",
+      "alt": "Fishing boats anchored off a beach, from Imran Khan's showreel",
+      "width": 2534,
+      "height": 1080
+    },
+    "posterMobile": {
+      "src": "/media/hero/poster-mobile.webp",
+      "alt": "Fishing boats anchored off a beach, from Imran Khan's showreel",
+      "width": 506,
+      "height": 900
     },
     "video": {
-      "mp4": "/media/hero/dummy-reel-720.mp4",
-      "mobileMp4": "/media/hero/dummy-reel-360.mp4"
-    }
+      "webm": "/media/hero/reel-720.webm",
+      "mp4": "/media/hero/reel-720.mp4",
+      "mobileMp4": "/media/hero/reel-360.mp4",
+      "large": {
+        "webm": "/media/hero/reel-1080.webm",
+        "mp4": "/media/hero/reel-1080.mp4"
+      }
+    },
+    "fullReel": "https://www.youtube.com/@ImranKhan-pc6ih"
   },
-  "unverified": [
-    "eyebrow",
-    "hero.poster (interim still, not the reel)",
-    "hero.video (dummy Mixkit stock clip 43609)"
-  ]
+  "unverified": ["eyebrow", "hero.fullReel (channel link until the reel is on YouTube)"]
 }

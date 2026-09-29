@@ -1,4 +1,4 @@
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Play } from 'lucide-react'
 import { Fragment, type CSSProperties } from 'react'
 import { RollLink } from '@/components/motion/RollLink'
 import { hash, SECTION_IDS } from '@/lib/links'
@@ -65,11 +65,27 @@ export function Hero({ profile }: { profile: Profile }) {
           ))}
         </p>
 
-        <div className="mt-8 flex rise flex-wrap items-center gap-3 sm:mt-10" style={rise(270)}>
+        {/* Reel sits on the right edge; wraps under View Work if space runs out. */}
+        <div
+          className="mt-8 flex rise flex-wrap items-center justify-between gap-3 sm:mt-10"
+          style={rise(270)}
+        >
           <RollLink href={hash(SECTION_IDS.work)}>
             View Work
             <ArrowRight aria-hidden className="size-4" />
           </RollLink>
+          {hero.fullReel ? (
+            <RollLink
+              href={hero.fullReel}
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="outline"
+              data-print="hide"
+            >
+              <Play aria-hidden className="size-3.5 fill-current" />
+              View Full Reel
+            </RollLink>
+          ) : null}
         </div>
       </div>
     </section>
