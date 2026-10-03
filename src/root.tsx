@@ -6,12 +6,13 @@ import { ANCHORS, hash } from '@/lib/links'
 import type { Route } from './+types/root'
 import './styles/index.css'
 // Same files index.css pulls in, so Vite emits one hashed asset each.
-import serifUrl from '@fontsource/cormorant-garamond/files/cormorant-garamond-latin-500-normal.woff2?url'
-import sansUrl from '@fontsource-variable/geist/files/geist-latin-wght-normal.woff2?url'
+import nameUrl from '@fontsource/aoboshi-one/files/aoboshi-one-latin-400-normal.woff2?url'
+import labelUrl from '@fontsource-variable/archivo/files/archivo-latin-wght-normal.woff2?url'
+import sansUrl from '@fontsource-variable/noto-sans-jp/files/noto-sans-jp-latin-wght-normal.woff2?url'
 
-// Hero name (LCP) + body text: fetch with the CSS instead of after it.
+// Hero name (LCP), hero roles, body text: fetch with the CSS instead of after it.
 export const links: Route.LinksFunction = () =>
-  [serifUrl, sansUrl].map((href) => ({
+  [nameUrl, labelUrl, sansUrl].map((href) => ({
     rel: 'preload',
     href,
     as: 'font',

@@ -4,9 +4,11 @@ import { RollLink } from '@/components/motion/RollLink'
 import { Section } from '@/components/layout/Section'
 import { SectionHeader } from '@/components/layout/SectionHeader'
 import { SocialIcon } from '@/components/layout/SocialIcon'
+import { VIDEO_GRID_GAPS } from '@/components/video/grid'
 import { useVideoModal } from '@/components/video/useVideoModal'
 import { VideoModal } from '@/components/video/VideoModal'
 import { externalLinkProps, sectionHeadingId } from '@/lib/links'
+import { cn } from '@/lib/utils'
 import { CHANNEL_URL } from '@/lib/youtube'
 import type { Film, SectionCopy } from '@/types'
 import { FilmCard } from '@/components/video/FilmCard'
@@ -17,7 +19,7 @@ export function Filmography({ copy, films }: { copy: SectionCopy; films: Film[] 
   if (films.length === 0) return null
 
   return (
-    <Section id={copy.id}>
+    <Section id={copy.id} tone={copy.tone}>
       <SectionHeader
         label={copy.label}
         title={copy.title}
@@ -25,7 +27,7 @@ export function Filmography({ copy, films }: { copy: SectionCopy; films: Film[] 
         headingId={sectionHeadingId(copy.id)}
       />
 
-      <ul className="mt-stack grid gap-4 md:grid-cols-2 md:gap-5 xl:grid-cols-3">
+      <ul className={cn('mt-stack grid md:grid-cols-2 xl:grid-cols-3', VIDEO_GRID_GAPS)}>
         {films.map((film, index) => (
           // Stagger per row position, so each row cascades left to right.
           <Reveal as="li" key={film.youtubeId} step={index % 3}>

@@ -53,7 +53,7 @@ export function VideoModal({ video, onClose, opener }: VideoModalProps) {
           <div className="flex items-start justify-between gap-4">
             <div className="min-w-0">
               {eyebrow ? <p className="meta text-muted">{eyebrow}</p> : null}
-              <DialogTitle className="mt-1.5 display text-h3 leading-tight font-medium">
+              <DialogTitle className="mt-1.5 display text-h3 leading-tight">
                 {current.title}
               </DialogTitle>
             </div>

@@ -14,15 +14,12 @@ const path = (rel: string) => fileURLToPath(new URL(rel, root))
 const clientDir = path('build/client/')
 
 const font = {
-  fontFiles: [
-    'Geist-Regular.ttf',
-    'Geist-Medium.ttf',
-    'GeistMono-Medium.ttf',
-    'CormorantGaramond-Medium.ttf',
-    'CormorantGaramond-SemiBold.ttf',
-  ].map((name) => path(`scripts/fonts/${name}`)),
+  // Aoboshi One: Google Fonts static instance, subset to printable ASCII + · — – ’.
+  fontFiles: ['AoboshiOne-Regular.ttf', 'GeistMono-Medium.ttf'].map((name) =>
+    path(`scripts/fonts/${name}`),
+  ),
   loadSystemFonts: false,
-  defaultFontFamily: 'Geist',
+  defaultFontFamily: 'Geist Mono',
 }
 
 // Dark palette, in sync with :root in src/styles/index.css.
@@ -38,7 +35,8 @@ const C = {
 const W = 1200
 const H = 630
 const PAD = 80
-const SERIF = 'Cormorant Garamond'
+// The site's name face (hero, wordmark, favicon mark); the name is lowercase here, as in the hero.
+const NAME = 'Aoboshi One'
 
 const escapeXml = (value: string) => value.replace(/[&<>"']/g, (ch) => `&#${ch.charCodeAt(0)};`)
 
@@ -54,7 +52,7 @@ function measure(text: string, size: number, family: string, weight: number) {
 
 /** Largest size that fits one line; falls back to the smallest rather than failing the deploy. */
 function fitSize(text: string, sizes: number[], maxWidth: number) {
-  return sizes.find((size) => measure(text, size, SERIF, 500) <= maxWidth) ?? sizes.at(-1)!
+  return sizes.find((size) => measure(text, size, NAME, 400) <= maxWidth) ?? sizes.at(-1)!
 }
 
 function meta(text: string, x: number, y: number, { anchor = 'start', fill = C.muted } = {}) {
@@ -65,7 +63,8 @@ function meta(text: string, x: number, y: number, { anchor = 'start', fill = C.m
 }
 
 function card({ name, roles }: Profile, host: string) {
-  const size = fitSize(name, [150, 132, 116, 100, 88], W - PAD * 2)
+  const display = name.toLowerCase()
+  const size = fitSize(display, [128, 112, 100, 88, 76], W - PAD * 2)
   const nameBaseline = H / 2 + size * 0.28
   const ruleY = nameBaseline + 44
   const initials = name
@@ -82,11 +81,11 @@ function card({ name, roles }: Profile, host: string) {
     `<rect x="28" y="28" width="${W - 56}" height="${H - 56}" fill="none" stroke="${C.rule}" stroke-width="1.5"/>` +
     // Favicon mark, so card and tab read as one identity.
     `<rect x="${PAD}" y="${PAD - 8}" width="52" height="52" fill="none" stroke="${C.accent}" stroke-width="1.5"/>` +
-    `<text x="${PAD + 26}" y="${PAD + 27}" text-anchor="middle" font-family="${SERIF}" font-weight="600" ` +
+    `<text x="${PAD + 26}" y="${PAD + 27}" text-anchor="middle" font-family="${NAME}" font-weight="400" ` +
     `font-size="26" fill="${C.fg}">${escapeXml(initials)}</text>` +
     meta('Portfolio', W - PAD, PAD + 26, { anchor: 'end' }) +
-    `<text x="${PAD - 4}" y="${nameBaseline}" font-family="${SERIF}" font-weight="500" font-size="${size}" ` +
-    `letter-spacing="${-size * 0.015}" fill="${C.fg}">${escapeXml(name)}</text>` +
+    `<text x="${PAD - 4}" y="${nameBaseline}" font-family="${NAME}" font-weight="400" font-size="${size}" ` +
+    `letter-spacing="${size * 0.02}" fill="${C.fg}">${escapeXml(display)}</text>` +
     `<line x1="${PAD}" y1="${ruleY}" x2="${PAD + 72}" y2="${ruleY}" stroke="${C.accent}" stroke-width="2"/>` +
     meta(roles.join('  ·  '), PAD, ruleY + 52, { fill: C.fg }) +
     meta(host, PAD, H - PAD + 8) +

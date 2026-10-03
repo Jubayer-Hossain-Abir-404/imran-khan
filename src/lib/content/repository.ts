@@ -6,7 +6,7 @@ import profileData from '@/data/profile.json'
 import sectionsData from '@/data/sections.json'
 import socialData from '@/data/social.json'
 import writingData from '@/data/writing.json'
-import { isFactIcon, isSectionId, isSocialKind } from '@/types'
+import { isFactIcon, isSectionId, isSectionTone, isSocialKind } from '@/types'
 import type {
   Channel,
   Client,
@@ -52,7 +52,11 @@ if (!DEV && profile.unverified.length > 0) {
 const sections: SectionCopy[] = sectionsData.map((entry) => {
   if (!isSectionId(entry.id)) throw new Error(`sections.json: unknown section id "${entry.id}"`)
 
-  return { id: entry.id, label: entry.label, title: entry.title, lede: entry.lede }
+  const tone = entry.tone ?? 'dark'
+  if (!isSectionTone(tone))
+    throw new Error(`sections.json: unknown tone "${tone}" on "${entry.id}"`)
+
+  return { id: entry.id, label: entry.label, title: entry.title, lede: entry.lede, tone }
 })
 
 const social = published<Social>(

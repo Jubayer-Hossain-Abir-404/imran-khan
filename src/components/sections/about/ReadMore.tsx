@@ -17,7 +17,7 @@ export function ReadMore({ paragraphs }: { paragraphs: string[] }) {
         data-open={open ? '' : undefined}
       >
         <div className="overflow-hidden">
-          <div className="space-y-4 pt-4 text-pretty text-muted md:pt-5">
+          <div className="space-y-4 pt-4 text-[0.9375rem] leading-relaxed text-pretty text-fg/85 md:pt-5">
             {paragraphs.map((paragraph) => (
               <p key={paragraph}>{paragraph}</p>
             ))}

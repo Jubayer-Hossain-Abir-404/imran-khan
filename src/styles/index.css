@@ -1,19 +1,109 @@
 @import 'tailwindcss';
 
-/* Serif for display only, sans for everything else. Unicode-range means Latin pages load the Latin subset only. */
-@import '@fontsource-variable/geist';
+/* Hero roles (variable weight, Latin + Latin Ext). */
+@import '@fontsource-variable/archivo/wght.css';
 /* Uppercase labels. */
 @import '@fontsource-variable/geist-mono/wght.css';
-@import '@fontsource/cormorant-garamond/500.css';
-@import '@fontsource/cormorant-garamond/600.css';
-/* Wordmark surname (navbar + footer). */
-@import '@fontsource/cormorant-garamond/latin-500-italic.css';
 
 /* Keyframes and data-open/closed variants used by components/ui. */
 @import 'shadcn/tailwind.css';
 @import 'tw-animate-css';
 /* Smooth scroll (html.lenis classes). */
 @import 'lenis/dist/lenis.css';
+
+/*
+ * Name (Aoboshi One), display serif (Noto Serif JP), body (Noto Sans JP): declared here, Latin and
+ * Latin Ext only — the packages' CSS carries ~120 CJK subsets. Ascent/descent overrides replace the
+ * CJK-tall metrics (1.16 / 0.29 em) so caps centre in buttons and tight headings don't crowd.
+ */
+@font-face {
+  font-family: 'Aoboshi One';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url('@fontsource/aoboshi-one/files/aoboshi-one-latin-400-normal.woff2') format('woff2');
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  ascent-override: 100%;
+  descent-override: 25%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Noto Serif JP Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200 900;
+  src: url('@fontsource-variable/noto-serif-jp/files/noto-serif-jp-latin-wght-normal.woff2')
+    format('woff2-variations');
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  ascent-override: 99%;
+  descent-override: 26%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Noto Serif JP Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200 900;
+  src: url('@fontsource-variable/noto-serif-jp/files/noto-serif-jp-latin-ext-wght-normal.woff2')
+    format('woff2-variations');
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
+    U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
+    U+A720-A7FF;
+  ascent-override: 99%;
+  descent-override: 26%;
+  line-gap-override: 0%;
+}
+
+/* Bengali in serif text ("সংগল্প"): static 600, the display weight, at a third of the variable file. */
+@font-face {
+  font-family: 'Noto Serif Bengali';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 600;
+  src: url('@fontsource/noto-serif-bengali/files/noto-serif-bengali-bengali-600-normal.woff2')
+    format('woff2');
+  unicode-range:
+    U+0951-0952, U+0964-0965, U+0980-09FE, U+1CD0, U+1CD2, U+1CD5-1CD6, U+1CD8, U+1CE1, U+1CEA,
+    U+1CED, U+1CF2, U+1CF5-1CF7, U+200C-200D, U+20B9, U+25CC, U+A8F1;
+}
+
+@font-face {
+  font-family: 'Noto Sans JP Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('@fontsource-variable/noto-sans-jp/files/noto-sans-jp-latin-wght-normal.woff2')
+    format('woff2-variations');
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  ascent-override: 99%;
+  descent-override: 26%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Noto Sans JP Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('@fontsource-variable/noto-sans-jp/files/noto-sans-jp-latin-ext-wght-normal.woff2')
+    format('woff2-variations');
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
+    U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
+    U+A720-A7FF;
+  ascent-override: 99%;
+  descent-override: 26%;
+  line-gap-override: 0%;
+}
 
 /*
  * Fixed dark palette; `tone-warm` re-points the same tokens for paper sections,
@@ -108,23 +198,49 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
 
-  --font-serif: 'Cormorant Garamond', ui-serif, Georgia, serif;
-  --font-sans: 'Geist Variable', ui-sans-serif, system-ui, sans-serif;
+  /* Reference-site faces (oishi-eizo.com); labels keep the original Geist Mono. */
+  --font-name: 'Aoboshi One', ui-serif, Georgia, serif;
+  --font-serif: 'Noto Serif JP Variable', 'Noto Serif Bengali', ui-serif, Georgia, serif;
+  --font-sans: 'Noto Sans JP Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-roles: 'Archivo Variable', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'Geist Mono Variable', ui-monospace, monospace;
 
-  /* Fluid scale. Display steps run large for Cormorant's small x-height. */
+  /* Fluid scale. Serif steps sized for Noto Serif JP's x-height (0.514 em). */
   --text-meta: 0.6875rem;
   --text-meta--line-height: 1.45;
   --text-body: clamp(0.9375rem, 0.9rem + 0.2vw, 1.0625rem);
   --text-body--line-height: 1.65;
   --text-lead: clamp(1.0625rem, 0.98rem + 0.45vw, 1.25rem);
   --text-lead--line-height: 1.55;
-  --text-h3: clamp(1.375rem, 1.2rem + 0.8vw, 1.875rem);
-  --text-h3--line-height: 1.15;
-  --text-h2: clamp(2.25rem, 1.7rem + 2.4vw, 3.75rem);
-  --text-h2--line-height: 1.02;
-  --text-display: clamp(2.75rem, 1.25rem + 7vw, 7.5rem);
-  --text-display--line-height: 0.92;
+  --text-h3: clamp(1.125rem, 0.95rem + 0.6vw, 1.5rem);
+  --text-h3--line-height: 1.3;
+  --text-h2: clamp(1.75rem, 1.3rem + 1.8vw, 2.75rem);
+  --text-h2--line-height: 1.2;
+  --text-display: clamp(2rem, 0.95rem + 5.25vw, 5.625rem);
+  --text-display--line-height: 1.05;
+  /*
+   * Hero: the max values (name 1.8rem, roles 2.2rem) are the laptop sizes; adjust them here. Below,
+   * both shrink with the container: the roles line measures ≈24.8em in Archivo 600 (0.02em tracking,
+   * em separators), so /27 keeps it on one line; the name keeps the same ratio (/33).
+   */
+  --text-hero-roles: clamp(
+    1.25rem,
+    calc((min(100vw, 80rem) - 2 * var(--spacing-gutter)) / 27),
+    2.2rem
+  );
+  --text-hero-roles--line-height: 1.2;
+  --text-hero-name: clamp(
+    1.25rem,
+    calc((min(100vw, 80rem) - 2 * var(--spacing-gutter)) / 33),
+    1.8rem
+  );
+  --text-hero-name--line-height: 1.1;
+  /*
+   * Titles on video cards, sized by the card (container query): text width is the card minus 6rem
+   * (padding, play button, gap); /15 fits the longest titles in two lines (measured), 16 → 20 px.
+   */
+  --text-card-title: clamp(1rem, calc((100cqi - 6rem) / 15), 1.25rem);
+  --text-card-title--line-height: 1.25;
 
   /* Near-square corners. */
   --radius-sm: 1px;
@@ -133,8 +249,8 @@
   --radius-xl: 3px;
 
   --spacing-gutter: clamp(1rem, 0.5rem + 2.5vw, 4rem);
-  /* Section padding (48→80 px) and header → content gap (32→40 px): the one vertical rhythm. */
-  --spacing-section: clamp(3rem, 2.25rem + 2.5vw, 5rem);
+  /* Section padding (40→64 px, 8-pt ends) and header → content gap (32→40 px): the one vertical rhythm. */
+  --spacing-section: clamp(2.5rem, 1.5rem + 2.5vw, 4rem);
   --spacing-stack: clamp(2rem, 1.75rem + 0.8vw, 2.5rem);
   --spacing-nav: 4.5rem;
 
@@ -218,6 +334,13 @@
     cursor: pointer;
   }
 
+  /* Touching sections of one tone get a hairline, so adding or reordering sections never merges two. */
+  section[data-tone='dark'] + section[data-tone='dark'],
+  section[data-tone='surface'] + section[data-tone='surface'],
+  section[data-tone='paper'] + section[data-tone='paper'] {
+    border-top: 1px solid var(--ik-rule);
+  }
+
   ::selection {
     background-color: var(--ik-accent);
     color: var(--ik-bg);
@@ -240,11 +363,18 @@
   text-transform: uppercase;
 }
 
-/* Serif display type. */
+/* Serif display type; Noto Serif JP has no italic, so none is used. */
 @utility display {
   font-family: var(--font-serif);
-  font-weight: 500;
-  letter-spacing: -0.015em;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+/* The name (hero, loader, wordmark). Aoboshi One ships 400 only. */
+@utility name {
+  font-family: var(--font-name);
+  font-weight: 400;
+  letter-spacing: 0.02em;
 }
 
 /* Four 12 px corner marks in the current text colour. */

@@ -3,6 +3,7 @@ import { Reveal } from '@/components/motion/Reveal'
 import { Section } from '@/components/layout/Section'
 import { SectionHeader } from '@/components/layout/SectionHeader'
 import { FilmCard } from '@/components/video/FilmCard'
+import { VIDEO_GRID_GAPS } from '@/components/video/grid'
 import { useVideoModal } from '@/components/video/useVideoModal'
 import { VideoModal, type PlayableVideo } from '@/components/video/VideoModal'
 import { sectionHeadingId } from '@/lib/links'
@@ -16,7 +17,10 @@ type WriterCreatorProps = {
   channel: Channel | null
 }
 
-/** Writing videos ‖ Shonggolpo (side by side from xl). Either can be empty; the other takes the width. */
+/**
+ * Writing videos ‖ Shonggolpo. From xl both sit on the Selected Works grid (videos in two of its three
+ * columns, channel in the third), so the cards match in size. Either can be empty; the other takes the width.
+ */
 export function WriterCreator({ copy, writing, channel }: WriterCreatorProps) {
   const { selected, play, close, opener } = useVideoModal<PlayableVideo>()
   const headingId = sectionHeadingId(copy.id)
@@ -25,21 +29,22 @@ export function WriterCreator({ copy, writing, channel }: WriterCreatorProps) {
   if (!hasWriting && !channel) return null
 
   return (
-    <Section id={copy.id} warm>
+    <Section id={copy.id} tone={copy.tone}>
       <div
         className={cn(
           'grid gap-8 md:gap-14',
-          hasWriting && channel && 'xl:grid-cols-[minmax(0,1fr)_minmax(0,21rem)] xl:gap-0',
+          // Column gap = VIDEO_GRID_GAPS at xl, so two of these columns hold two cards exactly.
+          hasWriting && channel && 'xl:grid-cols-3 xl:gap-x-12',
         )}
       >
         {hasWriting ? (
-          <div className={cn(channel && 'xl:pr-12')}>
+          <div className={cn(channel && 'xl:col-span-2')}>
             <Reveal>
               <PenLine aria-hidden className="mb-5 size-5 text-accent" />
             </Reveal>
             <SectionHeader label={copy.label} lede={copy.lede} headingId={headingId} />
 
-            <ul className="mt-stack grid gap-4 md:grid-cols-2 md:gap-5">
+            <ul className={cn('mt-stack grid md:grid-cols-2', VIDEO_GRID_GAPS)}>
               {writing.map((piece, index) => (
                 <Reveal as="li" key={piece.youtubeId} step={index % 2}>
                   <FilmCard film={piece} onPlay={play} />
@@ -54,7 +59,8 @@ export function WriterCreator({ copy, writing, channel }: WriterCreatorProps) {
             step={hasWriting ? 2 : 0}
             className={cn(
               hasWriting &&
-                'border-t border-rule pt-8 md:pt-14 xl:border-t-0 xl:border-l xl:pt-0 xl:pl-12',
+                // xl: divider centred in the column gap, so the channel keeps the full column width.
+                'border-t border-rule pt-8 md:pt-14 xl:relative xl:border-t-0 xl:pt-0 xl:before:absolute xl:before:inset-y-0 xl:before:-left-6 xl:before:w-px xl:before:bg-rule',
             )}
           >
             <ChannelCard

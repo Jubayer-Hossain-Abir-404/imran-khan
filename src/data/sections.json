@@ -1,11 +1,12 @@
 [
-  { "id": "work", "label": "Filmography", "title": "Selected Works" },
+  { "id": "work", "label": "Filmography", "title": "Selected Works", "tone": "dark" },
   {
     "id": "writing",
-    "label": "Content Writer · Creative Supervisor",
-    "lede": "Crafting stories, shaping ideas and bringing authentic voices to life across formats and platforms."
+    "label": "Advertising & Campaigns",
+    "lede": "Crafting stories, shaping ideas and bringing authentic voices to life across formats and platforms.",
+    "tone": "surface"
   },
-  { "id": "about", "label": "About" },
-  { "id": "other-work", "label": "Miscellaneous", "title": "Other Works" },
-  { "id": "clients", "label": "Clients", "title": "Trusted by great people" }
+  { "id": "about", "label": "About", "tone": "dark" },
+  { "id": "other-work", "label": "Miscellaneous", "title": "Other Works", "tone": "dark" },
+  { "id": "clients", "label": "Clients", "title": "Trusted by great people", "tone": "paper" }
 ]

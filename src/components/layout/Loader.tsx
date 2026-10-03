@@ -96,7 +96,7 @@ export function Loader({ name, roles }: { name: string; roles: string[] }) {
         style={contentTiming}
       >
         <div className="overflow-hidden pb-1">
-          <p className="animate-[ik-mask-up_600ms_var(--ease-cinema)_both] display text-[clamp(2.5rem,1.8rem+3vw,4.5rem)] leading-none">
+          <p className="animate-[ik-mask-up_600ms_var(--ease-cinema)_both] name text-[clamp(2.125rem,1.5rem+2.5vw,3.75rem)] leading-none lowercase">
             {name}
           </p>
         </div>

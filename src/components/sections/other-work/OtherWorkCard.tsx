@@ -60,9 +60,7 @@ export function OtherWorkCard({ work }: { work: OtherWork }) {
 
         <div className="p-6 md:p-8">
           <div className="flex items-start justify-between gap-4">
-            <DialogTitle className="display text-h3 leading-tight font-medium">
-              {work.title}
-            </DialogTitle>
+            <DialogTitle className="display text-h3 leading-tight">{work.title}</DialogTitle>
             <DialogClose
               aria-label="Close"
               className="-mt-1 -mr-2 grid size-10 shrink-0 place-items-center rounded-full text-muted transition-colors hover:text-fg"

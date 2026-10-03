@@ -217,7 +217,7 @@ export function Navbar({ name, items }: NavbarProps) {
         <a
           href={hash(ANCHORS.top)}
           aria-label={`${name}, back to top`}
-          className="group justify-self-start py-2 text-xl transition-colors hover:text-accent md:text-[1.375rem]"
+          className="group justify-self-start py-2 text-base transition-colors hover:text-accent md:text-lg"
         >
           <Wordmark name={name} />
         </a>

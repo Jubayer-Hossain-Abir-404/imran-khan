@@ -27,7 +27,7 @@ export function About({ copy, profile }: { copy: SectionCopy; profile: Profile }
   const { portrait } = profile
 
   return (
-    <Section id={copy.id} className="bg-surface">
+    <Section id={copy.id} tone={copy.tone}>
       <div className="grid gap-8 md:grid-cols-[minmax(0,16rem)_minmax(0,1fr)] md:gap-12 lg:gap-14 xl:grid-cols-[minmax(0,18rem)_minmax(0,1fr)_minmax(0,15rem)]">
         {portrait ? (
           <Reveal>
@@ -81,7 +81,7 @@ export function About({ copy, profile }: { copy: SectionCopy; profile: Profile }
             <figure className="mt-8 flex max-w-xl gap-3.5 md:mt-0 xl:mt-10">
               <Quote aria-hidden className="size-4 shrink-0 fill-current text-accent" />
               <div>
-                <blockquote className="display text-xl leading-snug text-pretty">
+                <blockquote className="display text-lg leading-relaxed text-pretty">
                   <p>“{profile.quote}”</p>
                 </blockquote>
                 <figcaption className="mt-3 text-xs text-muted">— {profile.name}</figcaption>

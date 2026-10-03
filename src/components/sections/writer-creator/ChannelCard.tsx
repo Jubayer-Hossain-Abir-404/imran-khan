@@ -138,7 +138,7 @@ export function ChannelCard({ channel, onPlay, headingId, layout = 'split' }: Ch
         )}
         {/* Arrow follows the name, not the row edge; the whole row stays the hit area. */}
         <span className="flex min-w-0 items-center gap-2">
-          <span className="display text-xl leading-tight transition-colors group-hover:text-accent">
+          <span className="display text-lg leading-tight transition-colors group-hover:text-accent">
             {channel.name}
           </span>
           <span className="sr-only">on YouTube</span>

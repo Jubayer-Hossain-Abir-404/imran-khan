@@ -20,7 +20,8 @@ const VARIANT = {
 // Padding is shared by both labels, so the copy lines up with the original.
 const SIZE = { md: 'h-11 px-5', sm: 'h-9 px-4' }
 
-const LABEL = 'flex items-center gap-2.5 transition duration-500 ease-out-expo'
+// Centred, so both labels line up when the link is stretched (hero pair on mobile).
+const LABEL = 'flex items-center justify-center gap-2.5 transition duration-500 ease-out-expo'
 
 type RollLinkProps = ComponentProps<'a'> & {
   variant?: keyof typeof VARIANT
@@ -46,7 +47,7 @@ export function RollLink({
     <a
       className={cn(
         // Rounded like oddmanproductions.com (8 px); the theme's rounded-lg is 2 px.
-        'roll relative isolate inline-flex items-center overflow-hidden rounded-[0.5rem] text-sm font-medium',
+        'roll relative isolate inline-flex items-center justify-center overflow-hidden rounded-[0.5rem] text-sm font-medium',
         pad,
         css.root,
         className,

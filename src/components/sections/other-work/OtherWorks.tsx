@@ -9,7 +9,7 @@ export function OtherWorks({ copy, works }: { copy: SectionCopy; works: OtherWor
   if (works.length === 0) return null
 
   return (
-    <Section id={copy.id}>
+    <Section id={copy.id} tone={copy.tone}>
       <SectionHeader
         label={copy.label}
         title={copy.title}

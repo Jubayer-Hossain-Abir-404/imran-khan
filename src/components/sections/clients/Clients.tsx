@@ -60,7 +60,8 @@ export function Clients({ copy, clients }: ClientsProps) {
   if (clients.length === 0) return null
 
   return (
-    <Section id={copy.id} warm>
+    // A little extra below: uneven logo heights read as tight against the footer edge.
+    <Section id={copy.id} tone={copy.tone} className="pb-[calc(var(--spacing-section)_+_1rem)]">
       <SectionHeader
         label={copy.label}
         title={copy.title}
@@ -69,7 +70,8 @@ export function Clients({ copy, clients }: ClientsProps) {
       />
 
       <Reveal step={1} className="mt-stack">
-        <div className="-mx-gutter marquee">
+        {/* The track's py-4 is room for focus rings inside the clip; -my-4 gives it back, so spacing matches other sections. */}
+        <div className="-mx-gutter -my-4 marquee">
           {/* Two identical lists; the track slides one list-width, then loops. */}
           <div data-track className="flex w-max py-4">
             <LogoList clients={clients} />

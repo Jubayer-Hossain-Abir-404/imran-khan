@@ -38,8 +38,8 @@ export function FilmCard<T extends CardVideo>({ film, meta, credit, onPlay }: Fi
   }
 
   return (
-    // Raised while hovered, so the scaled tile sits over its neighbours.
-    <div className="group relative hover:z-10">
+    // Raised while hovered, so the scaled tile sits over its neighbours. Container: titles size to the card.
+    <div className="group @container relative hover:z-10">
       <HoverFrame>
         <article className="relative isolate flex aspect-[2.39/1] flex-col justify-end overflow-hidden bg-surface outline-offset-3 outline-accent has-focus-visible:outline-2">
           {/* Dark tokens: overlays sit on the scrim, whatever the section tone; the outline stays outside. */}
@@ -83,7 +83,7 @@ export function FilmCard<T extends CardVideo>({ film, meta, credit, onPlay }: Fi
                   {meta ? <span className="can-hover:sr-only"> · {meta}</span> : null}
                 </p>
 
-                <h3 className="mt-1.5 display text-xl leading-tight text-fg md:text-2xl">
+                <h3 className="mt-1.5 display text-card-title text-fg">
                   <a
                     href={href}
                     onClick={handleClick}
@@ -91,7 +91,8 @@ export function FilmCard<T extends CardVideo>({ film, meta, credit, onPlay }: Fi
                     {...externalLinkProps(href)}
                   >
                     <span className="sr-only">Play </span>
-                    <span className="line-clamp-2">{film.title}</span>
+                    {/* Desktop shows up to three lines; touch keeps two, as the meta and credit lines show there. */}
+                    <span className="line-clamp-2 can-hover:line-clamp-3">{film.title}</span>
                   </a>
                 </h3>
 
@@ -123,9 +124,7 @@ export function FilmCard<T extends CardVideo>({ film, meta, credit, onPlay }: Fi
                   {meta ? ` · ${meta}` : null}
                 </p>
                 {/* Same serif and size as the title, so the swap doesn't read as a shrink. */}
-                <p className="mt-1.5 line-clamp-2 display text-xl leading-tight text-fg md:text-2xl">
-                  {credit}
-                </p>
+                <p className="mt-1.5 line-clamp-2 display text-card-title text-fg">{credit}</p>
               </div>
             ) : null}
           </div>
