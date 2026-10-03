@@ -33,6 +33,19 @@
   color-scheme: dark;
 }
 
+/* Dark tokens back inside a warm section, for overlays on video stills. No background of its own. */
+@utility tone-dark {
+  --ik-bg: #0a0c0c;
+  --ik-surface: #121616;
+  --ik-fg: #f1ede5;
+  --ik-muted: #a29e96;
+  --ik-rule: #262a2a;
+  --ik-accent: #c6ae7b;
+
+  color-scheme: dark;
+  color: var(--ik-fg);
+}
+
 @utility tone-warm {
   /* Gold is 1.72:1 on paper, so warm uses a darker bronze of the same hue. */
   --ik-bg: #ebe5da;

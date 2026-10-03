@@ -42,90 +42,93 @@ export function FilmCard<T extends CardVideo>({ film, meta, credit, onPlay }: Fi
     <div className="group relative hover:z-10">
       <HoverFrame>
         <article className="relative isolate flex aspect-[2.39/1] flex-col justify-end overflow-hidden bg-surface outline-offset-3 outline-accent has-focus-visible:outline-2">
-          <img
-            src={film.thumbnail}
-            alt=""
-            width={1280}
-            height={720}
-            loading="lazy"
-            decoding="async"
-            style={film.objectPosition ? { objectPosition: film.objectPosition } : undefined}
-            className="absolute inset-0 -z-10 size-full object-cover"
-          />
-          <div
-            aria-hidden
-            className="absolute inset-0 -z-10 bg-linear-to-t from-black/90 via-black/35 to-black/5 transition-opacity duration-700 group-hover:opacity-90"
-          />
-
-          {film.durationSeconds ? (
-            <time
-              dateTime={isoDuration(film.durationSeconds)}
-              className="pointer-events-none absolute top-3 right-3 bg-black/55 px-1.5 py-0.5 text-xs text-fg/85 tabular-nums"
-            >
-              {formatDuration(film.durationSeconds)}
-            </time>
-          ) : null}
-
-          {/* In flow, not positioned: the link's ::after must resolve to the <article> to cover the tile. */}
-          <div className="flex items-end justify-between gap-4 p-4 md:p-5">
-            <div className={cn('min-w-0', credit && [FADE, OUT])}>
-              {/* Touch: wraps rather than truncates, so the client is never cut. */}
-              <p
-                className={cn(
-                  'meta text-fg/75',
-                  meta ? 'line-clamp-2 can-hover:line-clamp-1' : 'truncate',
-                )}
-              >
-                {film.category}
-                {/* Hover devices read it from the overlay; kept for screen readers. */}
-                {meta ? <span className="can-hover:sr-only"> · {meta}</span> : null}
-              </p>
-
-              <h3 className="mt-1.5 display text-xl leading-tight text-fg md:text-2xl">
-                <a
-                  href={href}
-                  onClick={handleClick}
-                  className="outline-none after:absolute after:inset-0 after:content-['']"
-                  {...externalLinkProps(href)}
-                >
-                  <span className="sr-only">Play </span>
-                  <span className="line-clamp-2">{film.title}</span>
-                </a>
-              </h3>
-
-              {credit ? (
-                <p className="mt-1 line-clamp-2 text-xs text-fg/85 can-hover:sr-only">{credit}</p>
-              ) : null}
-            </div>
-
-            <span
-              aria-hidden
-              className="pointer-events-none grid size-10 shrink-0 place-items-center rounded-full border border-fg/50 bg-black/30 text-fg backdrop-blur-sm transition-colors group-hover:border-fg group-hover:bg-fg group-hover:text-bg"
-            >
-              <Play className="size-3.5 translate-x-px fill-current" />
-            </span>
-          </div>
-
-          {/* Hover overlay, bottom-anchored at its own height; right padding clears the play button (size-10 + gap-4). */}
-          {credit ? (
+          {/* Dark tokens: overlays sit on the scrim, whatever the section tone; the outline stays outside. */}
+          <div className="contents tone-dark">
+            <img
+              src={film.thumbnail}
+              alt=""
+              width={1280}
+              height={720}
+              loading="lazy"
+              decoding="async"
+              style={film.objectPosition ? { objectPosition: film.objectPosition } : undefined}
+              className="absolute inset-0 -z-10 size-full object-cover"
+            />
             <div
               aria-hidden
-              className={cn(
-                'pointer-events-none absolute inset-x-0 bottom-0 hidden p-4 pr-18 md:p-5 md:pr-19 can-hover:block',
-                FADE,
-                IN,
-              )}
-            >
-              <p className="line-clamp-2 meta text-fg/75">
-                {film.category}
-                {meta ? ` · ${meta}` : null}
-              </p>
-              {/* Same serif and size as the title, so the swap doesn't read as a shrink. */}
-              <p className="mt-1.5 line-clamp-2 display text-xl leading-tight text-fg md:text-2xl">
-                {credit}
-              </p>
+              className="absolute inset-0 -z-10 bg-linear-to-t from-black/90 via-black/35 to-black/5 transition-opacity duration-700 group-hover:opacity-90"
+            />
+
+            {film.durationSeconds ? (
+              <time
+                dateTime={isoDuration(film.durationSeconds)}
+                className="pointer-events-none absolute top-3 right-3 bg-black/55 px-1.5 py-0.5 text-xs text-fg/85 tabular-nums"
+              >
+                {formatDuration(film.durationSeconds)}
+              </time>
+            ) : null}
+
+            {/* In flow, not positioned: the link's ::after must resolve to the <article> to cover the tile. */}
+            <div className="flex items-end justify-between gap-4 p-4 md:p-5">
+              <div className={cn('min-w-0', credit && [FADE, OUT])}>
+                {/* Touch: wraps rather than truncates, so the client is never cut. */}
+                <p
+                  className={cn(
+                    'meta text-fg/75',
+                    meta ? 'line-clamp-2 can-hover:line-clamp-1' : 'truncate',
+                  )}
+                >
+                  {film.category}
+                  {/* Hover devices read it from the overlay; kept for screen readers. */}
+                  {meta ? <span className="can-hover:sr-only"> · {meta}</span> : null}
+                </p>
+
+                <h3 className="mt-1.5 display text-xl leading-tight text-fg md:text-2xl">
+                  <a
+                    href={href}
+                    onClick={handleClick}
+                    className="outline-none after:absolute after:inset-0 after:content-['']"
+                    {...externalLinkProps(href)}
+                  >
+                    <span className="sr-only">Play </span>
+                    <span className="line-clamp-2">{film.title}</span>
+                  </a>
+                </h3>
+
+                {credit ? (
+                  <p className="mt-1 line-clamp-2 text-xs text-fg/85 can-hover:sr-only">{credit}</p>
+                ) : null}
+              </div>
+
+              <span
+                aria-hidden
+                className="pointer-events-none grid size-10 shrink-0 place-items-center rounded-full border border-fg/50 bg-black/30 text-fg backdrop-blur-sm transition-colors group-hover:border-fg group-hover:bg-fg group-hover:text-bg"
+              >
+                <Play className="size-3.5 translate-x-px fill-current" />
+              </span>
             </div>
-          ) : null}
+
+            {/* Hover overlay, bottom-anchored at its own height; right padding clears the play button (size-10 + gap-4). */}
+            {credit ? (
+              <div
+                aria-hidden
+                className={cn(
+                  'pointer-events-none absolute inset-x-0 bottom-0 hidden p-4 pr-18 md:p-5 md:pr-19 can-hover:block',
+                  FADE,
+                  IN,
+                )}
+              >
+                <p className="line-clamp-2 meta text-fg/75">
+                  {film.category}
+                  {meta ? ` · ${meta}` : null}
+                </p>
+                {/* Same serif and size as the title, so the swap doesn't read as a shrink. */}
+                <p className="mt-1.5 line-clamp-2 display text-xl leading-tight text-fg md:text-2xl">
+                  {credit}
+                </p>
+              </div>
+            ) : null}
+          </div>
         </article>
       </HoverFrame>
     </div>

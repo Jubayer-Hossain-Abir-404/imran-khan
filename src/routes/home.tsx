@@ -5,7 +5,7 @@ import { About } from '@/components/sections/about/About'
 import { Clients } from '@/components/sections/clients/Clients'
 import { Filmography } from '@/components/sections/filmography/Filmography'
 import { Hero } from '@/components/sections/hero/Hero'
-import { OtherWorks } from '@/components/sections/other-work/OtherWorks'
+// import { OtherWorks } from '@/components/sections/other-work/OtherWorks'
 import { WriterCreator } from '@/components/sections/writer-creator/WriterCreator'
 import {
   getChannel,
@@ -49,7 +49,8 @@ export async function loader() {
     [SECTION_IDS.work]: films.length > 0,
     [SECTION_IDS.writing]: writing.length > 0 || channel !== null,
     [SECTION_IDS.about]: true,
-    [SECTION_IDS.other]: otherWork.length > 0,
+    // Other Works hidden for now; restore `otherWork.length > 0` and the render case to show it.
+    [SECTION_IDS.other]: false,
     [SECTION_IDS.clients]: clients.length > 0,
   }
 
@@ -103,8 +104,9 @@ export default function Home({ loaderData }: Route.ComponentProps) {
         )
       case SECTION_IDS.about:
         return <About key={copy.id} copy={copy} profile={profile} />
-      case SECTION_IDS.other:
-        return <OtherWorks key={copy.id} copy={copy} works={loaderData.otherWork} />
+      // Hidden for now (see `hasContent` in the loader).
+      // case SECTION_IDS.other:
+      //   return <OtherWorks key={copy.id} copy={copy} works={loaderData.otherWork} />
       case SECTION_IDS.clients:
         return <Clients key={copy.id} copy={copy} clients={loaderData.clients} />
     }

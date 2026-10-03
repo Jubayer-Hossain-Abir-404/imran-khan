@@ -25,7 +25,7 @@ export function WriterCreator({ copy, writing, channel }: WriterCreatorProps) {
   if (!hasWriting && !channel) return null
 
   return (
-    <Section id={copy.id} className="bg-surface">
+    <Section id={copy.id} warm>
       <div
         className={cn(
           'grid gap-8 md:gap-14',

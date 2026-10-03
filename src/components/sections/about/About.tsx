@@ -27,7 +27,7 @@ export function About({ copy, profile }: { copy: SectionCopy; profile: Profile }
   const { portrait } = profile
 
   return (
-    <Section id={copy.id} warm>
+    <Section id={copy.id} className="bg-surface">
       <div className="grid gap-8 md:grid-cols-[minmax(0,16rem)_minmax(0,1fr)] md:gap-12 lg:gap-14 xl:grid-cols-[minmax(0,18rem)_minmax(0,1fr)_minmax(0,15rem)]">
         {portrait ? (
           <Reveal>
@@ -38,8 +38,8 @@ export function About({ copy, profile }: { copy: SectionCopy; profile: Profile }
               height={portrait.height}
               loading="lazy"
               decoding="async"
-              // 110% spring lift, as the thumbnails; no brackets (not a video).
-              className="aspect-4/5 w-full bg-surface object-cover transition-transform duration-500 ease-spring motion-safe:hover:scale-110"
+              // 110% spring lift, as the thumbnails; no brackets (not a video). Ring edges the dark photo on surface.
+              className="aspect-4/5 w-full bg-surface object-cover ring-1 ring-rule transition-transform duration-500 ease-spring motion-safe:hover:scale-110"
             />
           </Reveal>
         ) : null}

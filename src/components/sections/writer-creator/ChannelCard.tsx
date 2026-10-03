@@ -66,7 +66,7 @@ export function ChannelCard({ channel, onPlay, headingId, layout = 'split' }: Ch
           )}
         >
           <HoverFrame>
-            <div className="relative aspect-video overflow-hidden bg-bg">
+            <div className="relative aspect-video overflow-hidden bg-bg tone-dark">
               <img
                 src={featured.thumbnail}
                 alt=""
