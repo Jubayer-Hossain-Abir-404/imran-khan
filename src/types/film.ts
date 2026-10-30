@@ -15,6 +15,15 @@ export type Video = {
   objectPosition?: string
 }
 
+/** A public Facebook video (reels included), played in Facebook's own player. */
+export type FacebookVideo = Omit<Video, 'youtubeId' | 'youtubeTitle'> & {
+  /** Canonical `/videos/` URL; the embed plugin is more reliable with it than with `/reel/`. */
+  facebookUrl: string
+}
+
+/** Anything the card and modal can play. */
+export type Clip = Video | FacebookVideo
+
 /** One featured film per YouTube playlist, curated by hand — no YouTube API. */
 export type Film = Draftable &
   Video & {

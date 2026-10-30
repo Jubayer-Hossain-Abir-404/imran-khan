@@ -117,16 +117,16 @@ src/data/*.json  →  src/lib/content/repository.ts  →  routes/home.tsx loader
 
 ### Files
 
-| File              | Holds                                                                                                                                                          |
-| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `profile.json`    | Name, roles, eyebrow, summary, bio, portrait, quote, facts, email, **hero media**, `unverified`                                                                |
-| `films.json`      | Selected Works: `youtubeId`, `title` (cleaned), `youtubeTitle` (verbatim), `category`, `playlistId`, `durationSeconds`, `thumbnail`, optional `objectPosition` |
-| `writing.json`    | Writer/Creator videos (same `Video` shape + `category`)                                                                                                        |
-| `channel.json`    | Shonggolpo channel: description, URL, featured video                                                                                                           |
-| `other-work.json` | Other Works cards (image, description, optional `href`)                                                                                                        |
-| `clients.json`    | Logos with display `width`/`height` (tuned per logo for optical weight)                                                                                        |
-| `social.json`     | Footer social links                                                                                                                                            |
-| `sections.json`   | Per-section copy and order                                                                                                                                     |
+| File              | Holds                                                                                                                                                                  |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `profile.json`    | Name, roles, eyebrow, summary, bio, portrait, quote, facts, email, **hero media**, `unverified`                                                                        |
+| `films.json`      | Selected Works: `youtubeId`, `title` (cleaned), `youtubeTitle` (verbatim), `category`, `playlistId`, `durationSeconds`, `thumbnail`, optional `objectPosition`         |
+| `writing.json`    | Advertising & Campaigns: `title` (client), `category` (role), `credits` ("Agency: …"), plus a YouTube `Video` shape **or** `facebookUrl` with a hand-saved `thumbnail` |
+| `channel.json`    | Shonggolpo channel: description, URL, featured video                                                                                                                   |
+| `other-work.json` | Other Works cards (image, description, optional `href`)                                                                                                                |
+| `clients.json`    | Logos with display `width`/`height` (tuned per logo for optical weight)                                                                                                |
+| `social.json`     | Footer social links                                                                                                                                                    |
+| `sections.json`   | Per-section copy and order                                                                                                                                             |
 
 ### Adding a film
 

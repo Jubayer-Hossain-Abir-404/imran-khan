@@ -7,12 +7,13 @@ import {
   DialogDescription,
   DialogTitle,
 } from '@/components/ui/dialog'
+import { clipEmbedUrl, clipPlatform, clipWatchUrl } from '@/lib/clip'
 import { externalLinkProps } from '@/lib/links'
-import { embedUrl, playlistUrl, watchUrl } from '@/lib/youtube'
-import type { Video } from '@/types'
+import { playlistUrl } from '@/lib/youtube'
+import type { Clip } from '@/types'
 
 /** A Film fits as is; other videos pass an eyebrow as `category` and omit the rest. */
-export type PlayableVideo = Video & {
+export type PlayableVideo = Clip & {
   category?: string
   playlistId?: string
   year?: string
@@ -67,13 +68,13 @@ export function VideoModal({ video, onClose, opener }: VideoModalProps) {
 
           <div className="aspect-video w-full bg-black">
             <iframe
-              src={embedUrl(current.youtubeId)}
+              src={clipEmbedUrl(current)}
               title={current.title}
               allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
               // Cross-origin, so scripts + same-origin is safe; popups for the player's YouTube link.
               // oxlint-disable-next-line react/iframe-missing-sandbox
               sandbox="allow-scripts allow-same-origin allow-presentation allow-popups allow-popups-to-escape-sandbox"
-              // YouTube rejects embeds without a referrer (error 153).
+              // YouTube rejects embeds without a referrer (error 153); Facebook's plugin needs it too.
               referrerPolicy="strict-origin-when-cross-origin"
               className="size-full"
             />
@@ -101,11 +102,11 @@ export function VideoModal({ video, onClose, opener }: VideoModalProps) {
                 </a>
               ) : null}
               <a
-                href={watchUrl(current.youtubeId)}
+                href={clipWatchUrl(current)}
                 className={LINK}
-                {...externalLinkProps(watchUrl(current.youtubeId))}
+                {...externalLinkProps(clipWatchUrl(current))}
               >
-                Watch on YouTube
+                Watch on {clipPlatform(current)}
                 <ArrowUpRight aria-hidden className="size-3.5" />
               </a>
             </div>

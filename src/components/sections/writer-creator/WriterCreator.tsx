@@ -46,8 +46,8 @@ export function WriterCreator({ copy, writing, channel }: WriterCreatorProps) {
 
             <ul className={cn('mt-stack grid md:grid-cols-2', VIDEO_GRID_GAPS)}>
               {writing.map((piece, index) => (
-                <Reveal as="li" key={piece.youtubeId} step={index % 2}>
-                  <FilmCard film={piece} onPlay={play} />
+                <Reveal as="li" key={piece.thumbnail} step={index % 2}>
+                  <FilmCard film={piece} credit={piece.credits} onPlay={play} />
                 </Reveal>
               ))}
             </ul>

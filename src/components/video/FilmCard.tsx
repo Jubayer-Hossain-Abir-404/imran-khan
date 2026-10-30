@@ -1,13 +1,14 @@
 import { Play } from 'lucide-react'
 import type { MouseEvent } from 'react'
+import { clipWatchUrl } from '@/lib/clip'
 import { externalLinkProps, isPlainClick } from '@/lib/links'
 import { cn } from '@/lib/utils'
-import { formatDuration, isoDuration, watchUrl } from '@/lib/youtube'
-import type { Video } from '@/types'
+import { formatDuration, isoDuration } from '@/lib/youtube'
+import type { Clip } from '@/types'
 import { HoverFrame } from './HoverFrame'
 
-/** Anything with an eyebrow: films, writing videos. */
-type CardVideo = Video & { category: string }
+/** Anything with an eyebrow: films, campaign videos. */
+type CardVideo = Clip & { category: string }
 
 type FilmCardProps<T extends CardVideo> = {
   film: T
@@ -25,10 +26,10 @@ const IN = 'opacity-0 group-hover:opacity-100 can-hover:group-has-focus-visible:
 
 /**
  * Stretched-link card: the title link covers the tile, so the heading stays navigable.
- * Plain left click opens the modal; modified clicks and no-JS fall through to YouTube.
+ * Plain left click opens the modal; modified clicks and no-JS fall through to the video's page.
  */
 export function FilmCard<T extends CardVideo>({ film, meta, credit, onPlay }: FilmCardProps<T>) {
-  const href = watchUrl(film.youtubeId)
+  const href = clipWatchUrl(film)
 
   const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
     if (!isPlainClick(event)) return

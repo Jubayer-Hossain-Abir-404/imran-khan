@@ -1,12 +1,14 @@
 import type { Draftable, Media } from './common'
-import type { Video } from './film'
+import type { Clip, Video } from './film'
 
-/** A channel video credited as writing / creative supervision; shown with the film card. */
+/** An ad or campaign video; the card's title is the client. */
 export type WritingPiece = Draftable &
-  Video & {
-    /** Card eyebrow, e.g. the client or project. */
+  Clip & {
+    /** Card eyebrow: the role, e.g. "Copywriter & Content Writer". */
     category: string
     year?: string
+    /** Hover line and modal credit, e.g. "Agency: 360 One". */
+    credits?: string
   }
 
 /** Shonggolpo. */

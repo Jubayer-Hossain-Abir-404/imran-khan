@@ -1,5 +1,5 @@
 export type { Draftable, Link, Media } from './common'
-export type { Film, Video } from './film'
+export type { Clip, FacebookVideo, Film, Video } from './film'
 export type { Fact, FactIcon, HeroMedia, Profile, Social, SocialKind } from './profile'
 export { FACT_ICONS, isFactIcon, isSocialKind, SOCIAL_KINDS } from './profile'
 export type { SectionCopy, SectionTone } from './section'

@@ -1,8 +1,10 @@
-// Downloads the YouTube still (1280×720 WebP) for every film, writing video and the channel's featured video, plus the channel picture, into public/. Run: `npm run fetch:thumbnails`.
+// Downloads the YouTube still (1280×720 WebP) for every film, YouTube campaign video and the channel's featured video, plus the channel picture, into public/. Run: `npm run fetch:thumbnails`.
 
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 
-type VideoEntry = { youtubeId: string; thumbnail: string }
+// Facebook entries have no youtubeId; their still is committed by hand (no public thumbnail endpoint).
+type VideoEntry = { youtubeId?: string; thumbnail: string }
+type YouTubeEntry = VideoEntry & { youtubeId: string }
 
 const root = new URL('../', import.meta.url)
 
@@ -15,12 +17,14 @@ const [films, writing, channel] = await Promise.all([
   readData<VideoEntry[]>('writing'),
   readData<{ href: string; avatar?: string; featured?: VideoEntry }>('channel'),
 ])
-const videos = [...films, ...writing, ...(channel.featured ? [channel.featured] : [])]
+const videos = [...films, ...writing, ...(channel.featured ? [channel.featured] : [])].filter(
+  (video): video is YouTubeEntry => video.youtubeId !== undefined,
+)
 
 // maxres is 16:9 without letterboxing; sd is the 4:3 fallback when maxres was never generated.
 const SOURCES = ['maxresdefault', 'sddefault']
 
-async function download(video: VideoEntry): Promise<boolean> {
+async function download(video: YouTubeEntry): Promise<boolean> {
   const out = new URL(`public${video.thumbnail}`, root)
 
   await mkdir(new URL('.', out), { recursive: true })
