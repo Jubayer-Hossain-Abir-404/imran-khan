@@ -12,6 +12,7 @@ export function OtherWorks({ copy, works }: { copy: SectionCopy; works: OtherWor
     <Section id={copy.id} tone={copy.tone}>
       <SectionHeader
         label={copy.label}
+        icon={copy.icon}
         title={copy.title}
         lede={copy.lede}
         headingId={sectionHeadingId(copy.id)}

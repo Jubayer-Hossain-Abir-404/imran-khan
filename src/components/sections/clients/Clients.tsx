@@ -64,6 +64,7 @@ export function Clients({ copy, clients }: ClientsProps) {
     <Section id={copy.id} tone={copy.tone} className="pb-[calc(var(--spacing-section)_+_1rem)]">
       <SectionHeader
         label={copy.label}
+        icon={copy.icon}
         title={copy.title}
         lede={copy.lede}
         headingId={sectionHeadingId(copy.id)}

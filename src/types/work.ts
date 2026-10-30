@@ -7,7 +7,7 @@ export type WritingPiece = Draftable &
     /** Card eyebrow: the role, e.g. "Copywriter & Content Writer". */
     category: string
     year?: string
-    /** Hover line and modal credit, e.g. "Agency: 360 One". */
+    /** Hover line and modal credit: the agency, e.g. "360 One Agency". */
     credits?: string
   }
 

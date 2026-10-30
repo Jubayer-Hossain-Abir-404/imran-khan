@@ -5,6 +5,11 @@ export const SECTION_TONES = ['dark', 'surface', 'paper'] as const
 
 export type SectionTone = (typeof SECTION_TONES)[number]
 
+/** Lucide glyph beside the section label; mapped in SectionHeader. */
+export const SECTION_ICONS = ['film', 'pen', 'aperture', 'shapes', 'handshake'] as const
+
+export type SectionIcon = (typeof SECTION_ICONS)[number]
+
 /** Homepage section copy. Array order in `sections.json` is render order. */
 export type SectionCopy = {
   id: SectionId
@@ -13,6 +18,11 @@ export type SectionCopy = {
   lede?: string
   /** Optional in JSON; defaults to `dark`. */
   tone: SectionTone
+  icon?: SectionIcon
+}
+
+export function isSectionIcon(value: string): value is SectionIcon {
+  return (SECTION_ICONS as readonly string[]).includes(value)
 }
 
 export function isSectionTone(value: string): value is SectionTone {

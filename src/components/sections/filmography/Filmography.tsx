@@ -22,6 +22,7 @@ export function Filmography({ copy, films }: { copy: SectionCopy; films: Film[] 
     <Section id={copy.id} tone={copy.tone}>
       <SectionHeader
         label={copy.label}
+        icon={copy.icon}
         title={copy.title}
         lede={copy.lede}
         headingId={sectionHeadingId(copy.id)}

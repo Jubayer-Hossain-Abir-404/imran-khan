@@ -47,6 +47,7 @@ export function About({ copy, profile }: { copy: SectionCopy; profile: Profile }
         <div className="max-w-xl">
           <SectionHeader
             label={copy.label}
+            icon={copy.icon}
             title={copy.title ?? profile.name}
             headingId={sectionHeadingId(copy.id)}
           />

@@ -1,4 +1,3 @@
-import { PenLine } from 'lucide-react'
 import { Reveal } from '@/components/motion/Reveal'
 import { Section } from '@/components/layout/Section'
 import { SectionHeader } from '@/components/layout/SectionHeader'
@@ -32,17 +31,19 @@ export function WriterCreator({ copy, writing, channel }: WriterCreatorProps) {
     <Section id={copy.id} tone={copy.tone}>
       <div
         className={cn(
-          'grid gap-8 md:gap-14',
+          'grid gap-6 md:gap-10',
           // Column gap = VIDEO_GRID_GAPS at xl, so two of these columns hold two cards exactly.
           hasWriting && channel && 'xl:grid-cols-3 xl:gap-x-12',
         )}
       >
         {hasWriting ? (
           <div className={cn(channel && 'xl:col-span-2')}>
-            <Reveal>
-              <PenLine aria-hidden className="mb-5 size-5 text-accent" />
-            </Reveal>
-            <SectionHeader label={copy.label} lede={copy.lede} headingId={headingId} />
+            <SectionHeader
+              label={copy.label}
+              icon={copy.icon}
+              lede={copy.lede}
+              headingId={headingId}
+            />
 
             <ul className={cn('mt-stack grid md:grid-cols-2', VIDEO_GRID_GAPS)}>
               {writing.map((piece, index) => (
@@ -60,7 +61,7 @@ export function WriterCreator({ copy, writing, channel }: WriterCreatorProps) {
             className={cn(
               hasWriting &&
                 // xl: divider centred in the column gap, so the channel keeps the full column width.
-                'border-t border-rule pt-8 md:pt-14 xl:relative xl:border-t-0 xl:pt-0 xl:before:absolute xl:before:inset-y-0 xl:before:-left-6 xl:before:w-px xl:before:bg-rule',
+                'border-t border-rule pt-6 md:pt-10 xl:relative xl:border-t-0 xl:pt-0 xl:before:absolute xl:before:inset-y-0 xl:before:-left-6 xl:before:w-px xl:before:bg-rule',
             )}
           >
             <ChannelCard

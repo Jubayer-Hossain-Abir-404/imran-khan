@@ -1,12 +1,31 @@
 [
-  { "id": "work", "label": "Filmography", "title": "Selected Works", "tone": "dark" },
+  {
+    "id": "work",
+    "label": "Filmography",
+    "title": "Selected Works",
+    "tone": "dark",
+    "icon": "film"
+  },
   {
     "id": "writing",
     "label": "Advertising & Campaigns",
     "lede": "Crafting stories, shaping ideas and bringing authentic voices to life across formats and platforms.",
-    "tone": "surface"
+    "tone": "surface",
+    "icon": "pen"
   },
-  { "id": "about", "label": "About", "tone": "dark" },
-  { "id": "other-work", "label": "Miscellaneous", "title": "Other Works", "tone": "dark" },
-  { "id": "clients", "label": "Clients", "title": "Trusted by great people", "tone": "paper" }
+  { "id": "about", "label": "About", "tone": "dark", "icon": "aperture" },
+  {
+    "id": "other-work",
+    "label": "Miscellaneous",
+    "title": "Other Works",
+    "tone": "dark",
+    "icon": "shapes"
+  },
+  {
+    "id": "clients",
+    "label": "Clients",
+    "title": "Trusted by great people",
+    "tone": "paper",
+    "icon": "handshake"
+  }
 ]
