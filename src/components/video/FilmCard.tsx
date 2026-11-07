@@ -21,7 +21,8 @@ type FilmCardProps<T extends CardVideo> = {
 
 // Hover swap is a pure crossfade: the credit overlay is absolute, so layout never moves. Keyboard focus too.
 const FADE = 'transition-opacity duration-300 ease-out-quart'
-const OUT = 'group-hover:opacity-0 can-hover:group-has-focus-visible:opacity-0'
+// From md only: below it the caption sits under the still, with nothing to swap with.
+const OUT = 'md:group-hover:opacity-0 md:can-hover:group-has-focus-visible:opacity-0'
 const IN = 'opacity-0 group-hover:opacity-100 can-hover:group-has-focus-visible:opacity-100'
 
 /**
@@ -42,9 +43,10 @@ export function FilmCard<T extends CardVideo>({ film, meta, credit, onPlay }: Fi
     // Raised while hovered, so the scaled tile sits over its neighbours. Container: titles size to the card.
     <div className="group @container relative hover:z-10">
       <HoverFrame>
-        <article className="relative isolate flex aspect-[2.39/1] flex-col justify-end overflow-hidden bg-surface outline-offset-3 outline-accent has-focus-visible:outline-2">
-          {/* Dark tokens: overlays sit on the scrim, whatever the section tone; the outline stays outside. */}
-          <div className="contents tone-dark">
+        {/* Below md the caption sits under the still, on the section's own tone; from md it overlays the scrim. */}
+        <article className="relative flex flex-col outline-offset-3 outline-accent has-focus-visible:outline-2 md:isolate md:aspect-[2.39/1] md:justify-end md:overflow-hidden md:bg-surface">
+          {/* Still box below md; from md `contents`, so its layers position against the <article>. Dark tokens: overlays sit on the scrim. */}
+          <div className="relative isolate aspect-[2.39/1] overflow-hidden bg-surface tone-dark md:contents">
             <img
               src={film.thumbnail}
               alt=""
@@ -69,53 +71,14 @@ export function FilmCard<T extends CardVideo>({ film, meta, credit, onPlay }: Fi
               </time>
             ) : null}
 
-            {/* In flow, not positioned: the link's ::after must resolve to the <article> to cover the tile. */}
-            <div className="flex items-end justify-between gap-4 p-4 md:p-5">
-              <div className={cn('min-w-0', credit && [FADE, OUT])}>
-                {/* Touch: wraps rather than truncates, so the client is never cut. */}
-                <p
-                  className={cn(
-                    'meta text-fg/75',
-                    meta ? 'line-clamp-2 can-hover:line-clamp-1' : 'truncate',
-                  )}
-                >
-                  {film.category}
-                  {/* Hover devices read it from the overlay; kept for screen readers. */}
-                  {meta ? <span className="can-hover:sr-only"> · {meta}</span> : null}
-                </p>
-
-                <h3 className="mt-1.5 display text-card-title text-fg">
-                  <a
-                    href={href}
-                    onClick={handleClick}
-                    className="outline-none after:absolute after:inset-0 after:content-['']"
-                    {...externalLinkProps(href)}
-                  >
-                    <span className="sr-only">Play </span>
-                    {/* Desktop shows up to three lines; touch keeps two, as the meta and credit lines show there. */}
-                    <span className="line-clamp-2 can-hover:line-clamp-3">{film.title}</span>
-                  </a>
-                </h3>
-
-                {credit ? (
-                  <p className="mt-1 line-clamp-2 text-xs text-fg/85 can-hover:sr-only">{credit}</p>
-                ) : null}
-              </div>
-
-              <span
-                aria-hidden
-                className="pointer-events-none grid size-10 shrink-0 place-items-center rounded-full border border-fg/50 bg-black/30 text-fg backdrop-blur-sm transition-colors group-hover:border-fg group-hover:bg-fg group-hover:text-bg"
-              >
-                <Play className="size-3.5 translate-x-px fill-current" />
-              </span>
-            </div>
+            <PlayButton className="absolute right-3 bottom-3 grid md:hidden" />
 
             {/* Hover overlay, bottom-anchored at its own height; right padding clears the play button (size-10 + gap-4). */}
             {credit ? (
               <div
                 aria-hidden
                 className={cn(
-                  'pointer-events-none absolute inset-x-0 bottom-0 hidden p-4 pr-18 md:p-5 md:pr-19 can-hover:block',
+                  'pointer-events-none absolute inset-x-0 bottom-0 hidden p-5 pr-19 md:can-hover:block',
                   FADE,
                   IN,
                 )}
@@ -129,8 +92,57 @@ export function FilmCard<T extends CardVideo>({ film, meta, credit, onPlay }: Fi
               </div>
             ) : null}
           </div>
+
+          {/* In flow, not positioned: the link's ::after must resolve to the <article> to cover the tile. */}
+          <div className="flex items-end justify-between gap-4 pt-3 md:p-5 md:tone-dark">
+            <div className={cn('min-w-0', credit && [FADE, OUT])}>
+              {/* Wraps rather than truncates, so a long role is never cut; hover devices keep one line when meta moves to the overlay. */}
+              <p
+                className={cn('line-clamp-2 meta text-fg/75', meta && 'md:can-hover:line-clamp-1')}
+              >
+                {film.category}
+                {/* Hover devices read it from the overlay; kept for screen readers. */}
+                {meta ? <span className="md:can-hover:sr-only"> · {meta}</span> : null}
+              </p>
+
+              <h3 className="mt-1.5 display text-card-title text-fg">
+                <a
+                  href={href}
+                  onClick={handleClick}
+                  className="outline-none after:absolute after:inset-0 after:content-['']"
+                  {...externalLinkProps(href)}
+                >
+                  <span className="sr-only">Play </span>
+                  {/* Desktop shows up to three lines; elsewhere two, as the meta and credit lines show there. */}
+                  <span className="line-clamp-2 md:can-hover:line-clamp-3">{film.title}</span>
+                </a>
+              </h3>
+
+              {credit ? (
+                <p className="mt-1 line-clamp-2 text-xs text-fg/85 md:can-hover:sr-only">
+                  {credit}
+                </p>
+              ) : null}
+            </div>
+
+            <PlayButton className="hidden md:grid" />
+          </div>
         </article>
       </HoverFrame>
     </div>
+  )
+}
+
+function PlayButton({ className }: { className: string }) {
+  return (
+    <span
+      aria-hidden
+      className={cn(
+        'pointer-events-none size-10 shrink-0 place-items-center rounded-full border border-fg/50 bg-black/30 text-fg backdrop-blur-sm transition-colors group-hover:border-fg group-hover:bg-fg group-hover:text-bg',
+        className,
+      )}
+    >
+      <Play className="size-3.5 translate-x-px fill-current" />
+    </span>
   )
 }
