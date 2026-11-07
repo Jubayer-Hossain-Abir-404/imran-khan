@@ -72,13 +72,8 @@ export function FilmCard<T extends CardVideo>({ film, meta, credit, onPlay }: Fi
             {/* In flow, not positioned: the link's ::after must resolve to the <article> to cover the tile. */}
             <div className="flex items-end justify-between gap-4 p-4 md:p-5">
               <div className={cn('min-w-0', credit && [FADE, OUT])}>
-                {/* Touch: wraps rather than truncates, so the client is never cut. */}
-                <p
-                  className={cn(
-                    'meta text-fg/75',
-                    meta ? 'line-clamp-2 can-hover:line-clamp-1' : 'truncate',
-                  )}
-                >
+                {/* Wraps rather than truncates, so a long role is never cut; hover devices keep one line when meta moves to the overlay. */}
+                <p className={cn('line-clamp-2 meta text-fg/75', meta && 'can-hover:line-clamp-1')}>
                   {film.category}
                   {/* Hover devices read it from the overlay; kept for screen readers. */}
                   {meta ? <span className="can-hover:sr-only"> · {meta}</span> : null}
