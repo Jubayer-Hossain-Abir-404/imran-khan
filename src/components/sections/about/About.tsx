@@ -39,7 +39,7 @@ export function About({ copy, profile }: { copy: SectionCopy; profile: Profile }
               loading="lazy"
               decoding="async"
               // 110% spring lift, as the thumbnails; no brackets (not a video). Ring edges the dark photo on surface.
-              className="aspect-4/5 w-full bg-surface object-cover ring-1 ring-rule transition-transform duration-500 ease-spring motion-safe:hover:scale-110"
+              className="aspect-square w-full bg-surface object-cover ring-1 ring-rule transition-transform duration-500 ease-spring motion-safe:hover:scale-110"
             />
           </Reveal>
         ) : null}
@@ -52,7 +52,7 @@ export function About({ copy, profile }: { copy: SectionCopy; profile: Profile }
             headingId={sectionHeadingId(copy.id)}
           />
           <Reveal step={1}>
-            <p className="mt-4 text-lead text-pretty md:mt-6">{profile.summary}</p>
+            <p className="mt-4 text-lead text-pretty text-justify hyphens-auto md:mt-6">{profile.summary}</p>
             <ReadMore paragraphs={profile.about} />
           </Reveal>
         </div>
