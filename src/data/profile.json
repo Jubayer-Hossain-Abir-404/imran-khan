@@ -1,18 +1,18 @@
 {
   "name": "Imran Khan",
-  "roles": ["Director", "Screenwriter", "Producer", "Content Creator"],
+  "roles": ["Director", "Screenwriter", "Executive Producer"],
   "eyebrow": "Stories beyond the frame",
-  "summary": "Audio-Visual Director and Content Producer crafting documentary, fiction, animation, and campaign films for global development organisations and brands.",
+  "summary": "Director, Screenwriter and Executive Producer crafting documentary, fiction, animation, and campaign films for global development organisations and brands.",
   "about": [
-    "As an Audio-Visual Director and Content Producer, I treat filmmaking as a timeless artistic practice: every frame captures truth from the present, the past, and the untold future. Specializing in documentary, fiction, animation, and campaign films, I translate raw human experience into resonant visual language. Backed by a degree in Film and Television Production and 5 years of director-producer experience, I direct complete production pipelines with visual precision. For me, audio-visual storytelling is not merely documentation, but a powerful catalyst for emotional connection and truth."
+    "As a Director, Screenwriter and Executive Producer, I treat filmmaking as a timeless artistic practice: every frame captures truth from the present, the past, and the untold future. Specializing in documentary, fiction, animation, and campaign films, I translate raw human experience into resonant visual language. Backed by a degree in Film and Television Production and 5 years of director-producer experience, I direct complete production pipelines with visual precision. For me, audio-visual storytelling is not merely documentation, but a powerful catalyst for emotional connection and truth."
   ],
   "location": "Dhaka, Bangladesh",
   "email": "imran.khan366350@gmail.com",
   "portrait": {
     "src": "/media/portrait.webp",
-    "alt": "Portrait of Imran Khan",
-    "width": 960,
-    "height": 1200
+    "alt": "Imran Khan behind a cinema camera on set",
+    "width": 843,
+    "height": 843
   },
   "quote": "Every frame captures truth from the present, the past, and the untold future.",
   "facts": [
@@ -25,7 +25,7 @@
       "icon": "pen"
     },
     {
-      "label": "Producer",
+      "label": "Executive Producer",
       "icon": "clapperboard"
     },
     {
@@ -59,7 +59,7 @@
         "mp4": "/media/hero/reel-1080.mp4"
       }
     },
-    "fullReel": "https://www.youtube.com/watch?v=cmBqAfRHn9A"
+    "fullReel": "https://www.youtube.com/watch?v=S1J8gv9VGM8"
   },
   "unverified": ["eyebrow"]
 }
